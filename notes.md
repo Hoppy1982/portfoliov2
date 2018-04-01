@@ -7,6 +7,13 @@
 * Modified
 * Staged
 
+*The rough idea is you choose the files that you want to be tracked with git then tinker with changes in a staging area (the index file) then finally commit your changes to the repo.*
+* Create a repo
+* Specify files to track or ignore
+* Add and remove files from the staging area until happy
+* Commit your edits to a branch
+* Push, pull, merge and all that crap ????
+
 ## Git commands
 * git init
 
@@ -22,4 +29,4 @@
 
 * git commit
 
-  *Stores the contents of the index (staging area) in a new commit with a message. Use 'git commit -a' to automatically add changes from tracked files.*
+  *Stores the contents of the index (staging area) in a new commit with a message. Use 'git commit -a' to automatically add changes from modified files. This is basically skipping the staging area.*
