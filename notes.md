@@ -16,6 +16,8 @@
 
 *Files in your project should either be tracked on listed in the .gitignore file. I haven't found a way to add files to .gitignore other than editing .gitignore in a text editor.*
 
+*If you move or rename a tracked file then `git rm <oldfilename>` then `git add <newfilename>` seems to work.*
+
 ## Git commands
 * `$ git init`
 
