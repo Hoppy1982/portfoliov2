@@ -18,4 +18,8 @@
 
 * git status
 
-  *Shows the working tree status, --short gives consise output. *
+  *Shows the working tree status, --short gives consise output.*
+
+* git commit
+
+  *Stores the contents of the index (staging area) in a new commit with a message. Use 'git commit -a' to automatically add changes from tracked files.*
