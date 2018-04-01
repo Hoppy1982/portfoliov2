@@ -21,13 +21,13 @@
 
   *Creates a git repo in current working dir*
 
-* git add \[file/dir\]
+* git add `<filename>`
 
    *Starts tracking the file(s) & adds the file(s) to the staged area, ready for next commit. Use this command every time before commits on the files you want to update on git, NOT just once after you initially create the file(s).*
 
-* git rm \[file/dir\]
+* git rm `<filename>`
 
-*Removes file(s) from the staging area *
+*Removes file(s) from the staging area and deletes the file. If you modified the file after adding it to the staging area you must use -f to force removal. Use git rm --cached `<filename>` to keep the file locally in the working dir but have Git stop tracking it. Useful if you accidently added something to the staging area.*
 
 * git status
 
