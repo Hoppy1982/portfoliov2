@@ -38,3 +38,7 @@
 * `$ git commit`
 
   *Stores the contents of the index (staging area) in a new commit with a message. Use 'git commit -a' to automatically add changes from modified files. This is basically skipping the staging area.*
+
+* `$ git log`
+
+*Lists commits with SHA-1 hash, author and timestamp. Use `git log --patch -2` to see the actual edits of the last 2 commits. The log command assumes the current branch but you can specify other bracnhes. `git log --stat` for summary of commit changes.*
