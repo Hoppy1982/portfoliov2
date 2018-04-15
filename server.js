@@ -1,12 +1,8 @@
-const port = 3000;
 
-const express = require('express');
+const express = require('express')
+const PORT = 3000
 
 var server = express();
 
-server.listen(port);
-console.log('Server listening on port: ' + port);
-
-//test comment to see what git does
-//another test edit
-const blah = false;
+server.listen(PORT);
+console.log(`Server started on port: ${PORT}`);
