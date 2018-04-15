@@ -9,8 +9,8 @@
   "author": "mark hopcraft",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.18.2",
     "browserify": "^16.2.0",
-    "express": "^4.16.3",
-    "npm": "^5.8.0"
+    "express": "^4.16.3"
   }
 }
