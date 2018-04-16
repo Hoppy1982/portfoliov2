@@ -1,0 +1,19 @@
+:root {
+  --main-bg-color: #1f2633;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0px;
+  background-color: var(--main-bg-color);
+}
+
+canvas{
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  z-index: -1;
+}
