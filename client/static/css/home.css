@@ -60,7 +60,7 @@ canvas {
   border: solid white 1px;
   color: white;
 }
-#navigatorleftRightControls {
+#navigatorleftRight {
   width: 100%;
   height: 20%;
   border-bottom: solid white 1px;
@@ -69,24 +69,32 @@ canvas {
   align-items: center;
   justify-content: space-between;
 }
-#navigatorLeftControl {
-  flex: 0 1 auto;
-  height: 100%;
-  width: 25%;
-  border-left: solid white 1px;
-}
 #navigatorNavTopics {
   flex: 1 1 auto;
   height: 100%;
 }
-#navigatorRightControl {
+#navigatorLeft {
   flex: 0 1 auto;
   height: 100%;
   width: 25%;
   border-left: solid white 1px;
 }
-#navigatorUpDownControls {
+#navigatorRight {
+  flex: 0 1 auto;
+  height: 100%;
+  width: 25%;
+  border-left: solid white 1px;
+}
+#navigatorUpDown {
   height: 80%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+#navigatorUpDownControls {
+  height: 100%;
   width: 15%;
   border-right: solid white 1px;
   display: flex;
@@ -94,20 +102,42 @@ canvas {
   align-items: center;
   justify-content: space-around;
 }
-#navigatorUpControl {
+#navigatorUp {
   flex: 1 1 auto;
   width: 100%;
   border-bottom: solid white 1px;
 }
-#navigatorDownControl {
+#navigatorDown {
   flex: 1 1 auto;
   width: 100%;
+}
+#navigatorNavItems {
+  height: 100%;
+  width: 85%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+.navItem {
+  flex: 1 1 auto;
+  width: 100%;
+  border-bottom: solid white 1px
+}
+.navItem:last-child {
+  border: none;
 }
 
 #navigatorDesc {
   border: solid white 1px;
   padding: 10px;
   color: white;
+}
+
+.centered {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 }
 /*----------------------------------------------------------------BREAK POINTS*/
 /*REPLACE WIDTH WITH DEVICE-WIDTH AFTER TESTING!*/
@@ -140,14 +170,6 @@ canvas {
       flex-direction: column;
       border-left: solid white 2px;/*temporary for dev*/
     }
-    #navigatorCarousel {
-      width: 80%;
-      height: 40%;
-    }
-    #navigatorDesc {
-      width: 80%;
-      height: 40%;
-    }
   }
 /*small screen portrait*/
 @media only screen
@@ -161,6 +183,14 @@ canvas {
       width: 100%;
       height: 50%;
     }
+    #navigatorCarousel {
+      width: 50%;
+      height: 100%;
+    }
+    #navigatorDesc {
+      width: 50%;
+      height: 100%;
+    }
 }
 /*small screen landscape*/
 @media only screen
@@ -173,6 +203,14 @@ canvas {
     #navigatorContainer {
       width: 50%;
       height: 100%;
+    }
+    #navigatorCarousel {
+      width: 100%;
+      height: 50%;
+    }
+    #navigatorDesc {
+      width: 100%;
+      height: 50%;
     }
 }
 /*medium screen portrait*/
@@ -188,6 +226,14 @@ canvas {
       width: 100%;
       height: 30%;
     }
+    #navigatorCarousel {
+      width: 40%;
+      height: 80%;
+    }
+    #navigatorDesc {
+      width: 40%;
+      height: 80%;
+    }
 }
 /*medium screen landscape*/
 @media only screen
@@ -202,11 +248,19 @@ canvas {
       width: 35%;
       height: 100%;
     }
+    #navigatorCarousel {
+      width: 80%;
+      height: 40%;
+    }
+    #navigatorDesc {
+      width: 80%;
+      height: 40%;
+    }
 }
 /*large screen portrait*/
 @media only screen
 and (orientation: portrait)
-  and (min-width: 1025px) {
+  and (min-height: 1025px) {
     #canvasOverlayContainer {
       width: 100%;
       height: 65%;
@@ -215,11 +269,19 @@ and (orientation: portrait)
       width: 100%;
       height: 35%;
     }
+    #navigatorCarousel {
+      width: 30%;
+      height: 60%;
+    }
+    #navigatorDesc {
+      width: 30%;
+      height: 60%;
+    }
 }
 /*large screen landscape*/
 @media only screen
 and (orientation: landscape)
-  and (min-height: 1025px) {
+  and (min-width: 1025px) {
     #canvasOverlayContainer {
       width: 65%;
       height: 100%;
@@ -227,5 +289,13 @@ and (orientation: landscape)
     #navigatorContainer {
       width: 35%;
       height: 100%;
+    }
+    #navigatorCarousel {
+      width: 60%;
+      height: 30%;
+    }
+    #navigatorDesc {
+      width: 60%;
+      height: 30%;
     }
 }

@@ -11,20 +11,26 @@ html
         canvas(width=20 height=20)
           
       section(id='navigatorContainer')
+        
         div(id='navigatorCarousel')
-          div(id='navigatorleftRightControls')
-            div(id='navigatorNavTopics') ..nav topic
-            div(id='navigatorLeftControl') L
-            div(id='navigatorRightControl') R
-              
-          div(id='navigatorUpDownControls')
-            div(id='navigatorUpControl') U
-            div(id='navigatorDownControl') D
+          div(id='navigatorleftRight')
+            div(id='navigatorNavTopics' class='centered') ..nav topic
+            div(id='navigatorLeft' class='centered') L
+            div(id='navigatorRight' class='centered') R
+          div(id='navigatorUpDown')
+            div(id='navigatorUpDownControls')
+              div(id='navigatorUp' class='centered') U
+              div(id='navigatorDown' class='centered') D   
+            ul(id='navigatorNavItems')
+              li(class='navItem centered') nav item
+              li(class='navItem centered') nav item
+              li(class='navItem centered') nav item
             
-          div(id='navigatorNavItems') ..nav item
-            
-        div(id='navigatorDesc') 
-          p words words and more words lots of words words words
+        div(id='navigatorDesc' class='centered') 
+          p 
+          | one two three four five 
+          | six seven eight nine ten
+          | eleven twelve thirteen fourteen fifteen
           
   
   script(src='/bundled-js/bundled-home.js')
