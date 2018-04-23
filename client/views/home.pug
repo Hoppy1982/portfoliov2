@@ -7,7 +7,24 @@ html
   body
     main
       section(id='canvasOverlayContainer')
+        div(id='wormholeContainer')
         canvas(width=20 height=20)
+          
       section(id='navigatorContainer')
+        div(id='navigatorCarousel')
+          div(id='navigatorleftRightControls')
+            div(id='navigatorNavTopics') ..nav topic
+            div(id='navigatorLeftControl') L
+            div(id='navigatorRightControl') R
+              
+          div(id='navigatorUpDownControls')
+            div(id='navigatorUpControl') U
+            div(id='navigatorDownControl') D
+            
+          div(id='navigatorNavItems') ..nav item
+            
+        div(id='navigatorDesc') 
+          p words words and more words lots of words words words
+          
   
   script(src='/bundled-js/bundled-home.js')

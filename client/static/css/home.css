@@ -15,6 +15,7 @@ main {
   justify-content: center;
 }
 
+/*canvas*/
 #canvasOverlayContainer {
   flex: 1 1 auto;
 }
@@ -23,10 +24,91 @@ main {
   flex: 1 1 auto;
 }
 
-canvas {
-  z-index: -1;
+#canvasOverlayContainer {
+  position: relative;
+  top: 0px;
+  left: 0px;
 }
 
+#wormholeContainer {
+  position: absolute;
+  top: 5%;
+  left: 15%;
+  width: 10%;
+  padding-top: 10%;
+  z-index: 0;
+  height: auto;
+  background-color: black;
+  border: solid black 1px;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #064ce0,0 0 50px #7f95c1;
+}
+
+canvas {
+  position: relative;
+  z-index: 1;
+}
+
+/*navigator*/
+#navigatorContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  text-align: center;
+}
+#navigatorCarousel {
+  border: solid white 1px;
+  color: white;
+}
+#navigatorleftRightControls {
+  width: 100%;
+  height: 20%;
+  border-bottom: solid white 1px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+#navigatorLeftControl {
+  flex: 0 1 auto;
+  height: 100%;
+  width: 25%;
+  border-left: solid white 1px;
+}
+#navigatorNavTopics {
+  flex: 1 1 auto;
+  height: 100%;
+}
+#navigatorRightControl {
+  flex: 0 1 auto;
+  height: 100%;
+  width: 25%;
+  border-left: solid white 1px;
+}
+#navigatorUpDownControls {
+  height: 80%;
+  width: 15%;
+  border-right: solid white 1px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+#navigatorUpControl {
+  flex: 1 1 auto;
+  width: 100%;
+  border-bottom: solid white 1px;
+}
+#navigatorDownControl {
+  flex: 1 1 auto;
+  width: 100%;
+}
+
+#navigatorDesc {
+  border: solid white 1px;
+  padding: 10px;
+  color: white;
+}
 /*----------------------------------------------------------------BREAK POINTS*/
 /*REPLACE WIDTH WITH DEVICE-WIDTH AFTER TESTING!*/
 /*portrait*/
@@ -36,7 +118,16 @@ canvas {
     #canvasOverlayContainer {order: 2;}
     #navigatorContainer {
       order: 1;
+      flex-direction: row;
       border-bottom: solid white 2px;/*temporary for dev*/
+    }
+    #navigatorCarousel {
+      width: 40%;
+      height: 80%;
+    }
+    #navigatorDesc {
+      width: 40%;
+      height: 80%;
     }
   }
 /*landscape*/
@@ -46,7 +137,16 @@ canvas {
     #canvasOverlayContainer {order: 1;}
     #navigatorContainer {
       order: 2;
+      flex-direction: column;
       border-left: solid white 2px;/*temporary for dev*/
+    }
+    #navigatorCarousel {
+      width: 80%;
+      height: 40%;
+    }
+    #navigatorDesc {
+      width: 80%;
+      height: 40%;
     }
   }
 /*small screen portrait*/
