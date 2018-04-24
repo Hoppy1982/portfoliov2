@@ -74,6 +74,9 @@ function setLayout() {
   console.log(...holdingPatternWaypointsActual)
   drawHoldingPatternWaypoints()
   drawTempShape()
+  createRandomHoldingPatternParticle()
+  console.log(holdingPatternParticles[0].coords)
+  console.log(holdingPatternParticles[0].endCoords)
 }
 
 function initHoldingPatternWaypointsActual() {
@@ -138,6 +141,34 @@ class HoldingPatternParticle extends PathFollowingParticle {
     this.cp1Coords = cp1Coords
     this.cp2Coords = cp2Coords
   }
+}
+
+function createRandomHoldingPatternParticle() {
+  let randomWP = Math.floor(Math.random() * 6)
+
+  let age = 0
+  let speed = 10
+  let distMoved = 0//randomise 0-1??
+  let coords = holdingPatternWaypointsActual[randomWP]
+  let endCoords = randomWP === 5 ? holdingPatternWaypointsActual[0] : holdingPatternWaypointsActual[randomWP + 1]
+  let cp1Coords = () => {
+    let x = 'maths shit'
+    let y = 'maths shit'
+    return {x: x, y: y}
+  }
+  let cp2Coords = () => {
+    let x = 'maths shit'
+    let y = 'maths shit'
+    return {x: x, y: y}
+  }
+
+  function randPointBetweenPoints(p1, p2) {
+    let pointToPointAngle = Math.random() >= 0.5 ? Math.atan2(p2.y - p1.y, p2.x - p1.x) : Math.atan2(p1.y - p2.y, p1.x - p2.x)
+    let randAngle = pointToPointAngle - (Math.PI / 2) + (Math.random() * Math.PI)
+  }
+
+  let particle = new HoldingPatternParticle(coords, age, speed, endCoords, distMoved, cp1Coords, cp2Coords)
+  holdingPatternParticles.push(particle)
 }
 
 //function to goes over every holdingPatternParticle in
