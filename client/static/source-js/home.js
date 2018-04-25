@@ -20,13 +20,15 @@ let holdingPatternWaypoints = [
 //Holding pattern WP coords in pixels, recalcumalated on resize
 let holdingPatternWaypointsActual = []
 
-//Particles move about between these arrays, changing behaviour as thy do
+//Particles move about between these arrays, changing behaviour as they do
 let holdingPatternParticles = []
+//array for nav target lettering particles
+//array for spawning pool particles
+//array for wormhole leaving particles
+//array for particles transitioning between main arrays???
 
 //------------------------------------------------------------------BREAK POINTS
 function setLayout() {
-  console.log(`body.clientWidth: ${body.clientWidth}, body.clientHeight: ${body.clientHeight}`)
-
   //small width in portrait
   if (body.clientHeight > body.clientWidth && body.clientWidth <= 480) {
     console.log('SCREEN: small width in portrait')
@@ -39,7 +41,6 @@ function setLayout() {
     canvasWidth = body.clientWidth * 0.5
     canvasHeight = body.clientHeight
   }
-
   //medium width in portrait
   if (body.clientHeight > body.clientWidth && body.clientWidth <= 1024 && body.clientWidth > 480) {
     console.log('SCREEN: medium width in portrait')
@@ -52,7 +53,6 @@ function setLayout() {
     canvasWidth = body.clientWidth * 0.65
     canvasHeight = body.clientHeight
   }
-
   //large width in portrait
   if (body.clientHeight > body.clientWidth && body.clientWidth > 1024) {
     console.log('SCREEN: large width in portrait')
@@ -116,6 +116,7 @@ class HoldingPatternParticle extends PathFollowingParticle {
   }
 }
 
+//this currently sucks
 function createRandomHoldingPatternParticle() {
   let randomWP = Math.floor(Math.random() * 6)
 
