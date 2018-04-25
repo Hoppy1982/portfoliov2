@@ -1,3 +1,28 @@
+//--------------------------------------------------------------GEOMETRY HELPERS
+function randPointBetweenTwoPoints(p1, p2) {
+  const MIN_DIST = 40
+  const DIST_MOD = 0.5
+  const ANGLE_WITHIN = Math.PI
+  let a = p2.x - p1.x
+  let b = p2.y - p1.y
+  let p1P2Dist = Math.sqrt(a*a + b*b)
+  let randDist = (Math.random() * p1P2Dist * DIST_MOD) + MIN_DIST
+  let angleMod = (Math.random() * ANGLE_WITHIN) - (ANGLE_WITHIN / 2)
+  let randAngle
+  let coords = {x: null, y: null}
+
+  if(Math.random() >= 0.5) {
+    randAngle = Math.atan2(p2.y - p1.y, p1.x - p2.x) + angleMod
+    coords.x = p2.x + Math.cos(randAngle) * randDist
+    coords.y = p2.y - Math.sin(randAngle) * randDist
+  } else {
+    randAngle = Math.atan2(p1.y - p2.y, p2.x - p1.x) + angleMod
+    coords.x = p1.x + Math.cos(randAngle) * randDist
+    coords.y = p1.y - Math.sin(randAngle) * randDist
+  }
+
+  return coords
+}
 //-----------------------------DEV FUNCTIONS WOT FOR VISUALISING WHAT'S OCCURING
 function renderBoundingCircle(ctx, canvasWidth, canvasHeight) {
   let centerX = canvasWidth / 2
@@ -61,6 +86,8 @@ function renderChosenHoldPatternParticlePath(ctx, particle) {
 
 //------------------------------------------------------------exported functions
 module.exports = {
+  randPointBetweenTwoPoints,
+  //dev
   renderBoundingCircle,
   renderHoldPatternWPs,
   renderChosenHoldPatternParticlePath

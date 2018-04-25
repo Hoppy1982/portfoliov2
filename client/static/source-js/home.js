@@ -1,4 +1,4 @@
-const canvasHelpers = require('./utils/canvasHelpers.js')
+const canvasHelpers = require('./utils/canvas-helpers.js')
 
 let body = document.getElementsByTagName('body')[0]
 let canvas1 = document.getElementsByTagName('canvas')[0]
@@ -125,9 +125,9 @@ function createRandomHoldingPatternParticle() {
   let distMoved = 0//randomise 0-1??
   let coords = holdingPatternWaypointsActual[randomWP]
   let endCoords = randomWP === 5 ? holdingPatternWaypointsActual[0] : holdingPatternWaypointsActual[randomWP + 1]
-  let cp1Coords = randControlPoint(coords, endCoords)
-  let cp2Coords = randControlPoint(coords, endCoords)
-
+  let cp1Coords = canvasHelpers.randPointBetweenTwoPoints(coords, endCoords)
+  let cp2Coords = canvasHelpers.randPointBetweenTwoPoints(coords, endCoords)
+/*
   function randControlPoint(p1, p2) {
     let a = p2.x - p1.x
     let b = p2.y - p1.y
@@ -158,7 +158,7 @@ function createRandomHoldingPatternParticle() {
 
     return coords
   }
-
+*/
   let particle = new HoldingPatternParticle(coords, age, speed, endCoords, distMoved, cp1Coords, cp2Coords)
   holdingPatternParticles.push(particle)
 }
