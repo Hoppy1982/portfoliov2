@@ -1,13 +1,14 @@
+const canvasHelpers = require('./utils/canvasHelpers.js')
+
 let body = document.getElementsByTagName('body')[0]
 let canvas1 = document.getElementsByTagName('canvas')[0]
 let ctx1 = canvas1.getContext('2d')
 
-let CANVAS1_TOP = 0
-let CANVAS1_LEFT = 0
-let CANVAS1_BOTTOM
-let CANVAS1_RIGHT
+let canvasWidth
+let canvasHeight
 
-let holdingPatternWaypoints = [//as ratio of canvas size
+//Holding pattern WP coords as ratio of canvas size
+let holdingPatternWaypoints = [
   {x: 0.125, y: 0.5},//0
   {x: 0.25, y: 0.125},//1
   {x: 0.75, y: 0.125},//2
@@ -16,101 +17,73 @@ let holdingPatternWaypoints = [//as ratio of canvas size
   {x: 0.25, y: 0.875}//5
 ]
 
+//Holding pattern WP coords in pixels, recalcumalated on resize
 let holdingPatternWaypointsActual = []
 
-//Particles
+//Particles move about between these arrays, changing behaviour as thy do
 let holdingPatternParticles = []
 
-/*----------------------------------------------------------------BREAK POINTS*/
+//------------------------------------------------------------------BREAK POINTS
 function setLayout() {
   console.log(`body.clientWidth: ${body.clientWidth}, body.clientHeight: ${body.clientHeight}`)
 
-  //-------------------------------------------------------------SMALL SCREENS
   //small width in portrait
   if (body.clientHeight > body.clientWidth && body.clientWidth <= 480) {
     console.log('SCREEN: small width in portrait')
-    CANVAS1_RIGHT = body.clientWidth
-    CANVAS1_BOTTOM = body.clientHeight * 0.5
+    canvasWidth = body.clientWidth
+    canvasHeight = body.clientHeight * 0.5
   }
   //small height in landscape
   if (body.clientHeight < body.clientWidth && body.clientHeight <= 480) {
     console.log('SCREEN: small height in landscape')
-    CANVAS1_RIGHT = body.clientWidth * 0.5
-    CANVAS1_BOTTOM = body.clientHeight
+    canvasWidth = body.clientWidth * 0.5
+    canvasHeight = body.clientHeight
   }
 
-  //------------------------------------------------------------MEDIUM SCREENS
   //medium width in portrait
   if (body.clientHeight > body.clientWidth && body.clientWidth <= 1024 && body.clientWidth > 480) {
     console.log('SCREEN: medium width in portrait')
-    CANVAS1_RIGHT = body.clientWidth
-    CANVAS1_BOTTOM = body.clientHeight * 0.7
+    canvasWidth = body.clientWidth
+    canvasHeight = body.clientHeight * 0.7
   }
   //medium height in landscape
   if (body.clientHeight < body.clientWidth && body.clientHeight <= 1024 && body.clientHeight > 480) {
     console.log('SCREEN: medium height in landscape')
-    CANVAS1_RIGHT = body.clientWidth * 0.65
-    CANVAS1_BOTTOM = body.clientHeight
+    canvasWidth = body.clientWidth * 0.65
+    canvasHeight = body.clientHeight
   }
 
-  //------------------------------------------------------------LARGE SCREENS
   //large width in portrait
   if (body.clientHeight > body.clientWidth && body.clientWidth > 1024) {
     console.log('SCREEN: large width in portrait')
-    CANVAS1_RIGHT = body.clientWidth
-    CANVAS1_BOTTOM = body.clientHeight * 0.65
+    canvasWidth = body.clientWidth
+    canvasHeight = body.clientHeight * 0.65
   }
   //large height in landscape
   if (body.clientHeight < body.clientWidth && body.clientHeight > 1024) {
     console.log('SCREEN: large height in landscape')
-    CANVAS1_RIGHT = body.clientWidth * 0.65
-    CANVAS1_BOTTOM = body.clientHeight
+    canvasWidth = body.clientWidth * 0.65
+    canvasHeight = body.clientHeight
   }
 
-  canvas1.width = CANVAS1_RIGHT
-  canvas1.height = CANVAS1_BOTTOM
+  canvas1.width = canvasWidth
+  canvas1.height = canvasHeight
 
+  //move this lot somewhere more betterer
   initHoldingPatternWaypointsActual()
-  console.log(...holdingPatternWaypointsActual)
-  drawHoldingPatternWaypoints()
-  drawTempShape()
   createRandomHoldingPatternParticle()
-  console.log(holdingPatternParticles[0].coords)
-  console.log(holdingPatternParticles[0].endCoords)
+  canvasHelpers.renderBoundingCircle(ctx1, canvasWidth, canvasHeight)
+  canvasHelpers.renderHoldPatternWPs(ctx1, holdingPatternWaypointsActual)
+  canvasHelpers.renderChosenHoldPatternParticlePath(ctx1, holdingPatternParticles[0])
 }
 
 function initHoldingPatternWaypointsActual() {
   holdingPatternWaypointsActual.length = 0
   holdingPatternWaypointsActual = holdingPatternWaypoints.map(el => {
-    let x = el.x * CANVAS1_RIGHT
-    let y = el.y * CANVAS1_BOTTOM
+    let x = el.x * canvasWidth
+    let y = el.y * canvasHeight
     return {x: x, y: y}
   })
-}
-//----------------------------------------------temporary to see if wp's correct
-function drawHoldingPatternWaypoints() {
-  ctx1.fillStyle = 'red'
-  holdingPatternWaypointsActual.forEach(wp => {
-    ctx1.fillRect(wp.x, wp.y, 8, 8)
-  })
-}
-//-----------------------------------------------temporary to test canvas layout
-function drawTempShape() {
-  console.log('clearing canvas...')
-  ctx1.fillStyle = 'transparent'
-  ctx1.fillRect(CANVAS1_LEFT, CANVAS1_TOP, CANVAS1_RIGHT, CANVAS1_BOTTOM)
-
-  console.log('drawing...')
-  ctx1.strokeStyle = 'white'
-  ctx1.lineWidth = 4
-  ctx1.beginPath()
-  let x = CANVAS1_RIGHT / 2
-  let y = CANVAS1_BOTTOM / 2
-  let radius = y > x ? x - 8 : y - 8
-  startAngle = 0
-  endAngle = 2 * Math.PI
-  ctx1.arc(x, y, radius, startAngle, endAngle)
-  ctx1.stroke()
 }
 
 //------------------------------------------------------------PARTICLE CLASSES
@@ -151,20 +124,38 @@ function createRandomHoldingPatternParticle() {
   let distMoved = 0//randomise 0-1??
   let coords = holdingPatternWaypointsActual[randomWP]
   let endCoords = randomWP === 5 ? holdingPatternWaypointsActual[0] : holdingPatternWaypointsActual[randomWP + 1]
-  let cp1Coords = () => {
-    let x = 'maths shit'
-    let y = 'maths shit'
-    return {x: x, y: y}
-  }
-  let cp2Coords = () => {
-    let x = 'maths shit'
-    let y = 'maths shit'
-    return {x: x, y: y}
-  }
+  let cp1Coords = randControlPoint(coords, endCoords)
+  let cp2Coords = randControlPoint(coords, endCoords)
 
-  function randPointBetweenPoints(p1, p2) {
-    let pointToPointAngle = Math.random() >= 0.5 ? Math.atan2(p2.y - p1.y, p2.x - p1.x) : Math.atan2(p1.y - p2.y, p1.x - p2.x)
-    let randAngle = pointToPointAngle - (Math.PI / 2) + (Math.random() * Math.PI)
+  function randControlPoint(p1, p2) {
+    let a = p2.x - p1.x
+    let b = p2.y - p1.y
+    let p1P2Dist = Math.sqrt(a*a + b*b)
+    let randDist = (Math.random() * p1P2Dist * 0.5) + 40
+    let p1P2Angle
+    let randAngle
+    let coords = {x: null, y: null}
+
+    if(Math.random() >= 0.5) {
+      tPoint = 'p2'
+      p1P2Angle = Math.atan2(p2.y - p1.y, p1.x - p2.x)
+    } else {
+      p1P2Angle = Math.atan2(p1.y - p2.y, p2.x - p1.x)
+      tPoint = 'p1'
+    }
+
+    randAngle = p1P2Angle - (Math.PI / 2) + (Math.random() * Math.PI)
+
+    if (tPoint === 'p1') {
+      coords.x = p1.x + Math.cos(randAngle) * randDist
+      coords.y = p1.y - Math.sin(randAngle) * randDist
+    }
+    if (tPoint === 'p2') {
+      coords.x = p2.x + Math.cos(randAngle) * randDist
+      coords.y = p2.y - Math.sin(randAngle) * randDist
+    }
+
+    return coords
   }
 
   let particle = new HoldingPatternParticle(coords, age, speed, endCoords, distMoved, cp1Coords, cp2Coords)
