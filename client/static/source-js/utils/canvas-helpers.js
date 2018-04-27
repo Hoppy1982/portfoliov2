@@ -23,6 +23,22 @@ function randPointBetweenTwoPoints(p1, p2) {
 
   return coords
 }
+
+function randPointNearPoint(p) {
+
+}
+
+//stolen from stackoverflow, I understand shit all but it works
+function coordsOnCubicBezier(percent, startPt, cp1, cp2, endPt) {
+  let t2 = percent * percent
+  let t3 = t2 * percent
+
+  return startPt + (-startPt * 3 + percent * (3 * startPt - startPt * percent)) * percent
+  + (3 * cp1 + percent * (-6 * cp1 + cp1 * 3 * percent)) * percent
+  + (cp2 * 3 - cp2 * 3 * percent) * t2
+  + endPt * t3
+}
+
 //-----------------------------DEV FUNCTIONS WOT FOR VISUALISING WHAT'S OCCURING
 function renderBoundingCircle(ctx, canvasWidth, canvasHeight) {
   let centerX = canvasWidth / 2
@@ -51,11 +67,11 @@ function renderChosenHoldPatternParticlePath(ctx, particle) {
   let cp1Y = particle.cp1Coords.y
   let cp2X = particle.cp2Coords.x
   let cp2Y = particle.cp2Coords.y
-  let startX = particle.coords.x
-  let startY = particle.coords.y
+  let startX = particle.startCoords.x
+  let startY = particle.startCoords.y
   let endX = particle.endCoords.x
   let endY = particle.endCoords.y
-  ctx.lineWidth = 2
+  ctx.lineWidth = 1
   //render start point
   ctx.beginPath()
   ctx.strokeStyle = 'green'
@@ -87,6 +103,7 @@ function renderChosenHoldPatternParticlePath(ctx, particle) {
 //------------------------------------------------------------exported functions
 module.exports = {
   randPointBetweenTwoPoints,
+  coordsOnCubicBezier,
   //dev
   renderBoundingCircle,
   renderHoldPatternWPs,

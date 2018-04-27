@@ -3,7 +3,7 @@ const canvasHelpers = require('./utils/canvas-helpers.js')
 let body = document.getElementsByTagName('body')[0]
 let canvas1 = document.getElementsByTagName('canvas')[0]
 let ctx1 = canvas1.getContext('2d')
-
+let frameId
 let canvasWidth
 let canvasHeight
 
@@ -26,6 +26,69 @@ let holdingPatternParticles = []
 //array for spawning pool particles
 //array for wormhole leaving particles
 //array for particles transitioning between main arrays???
+
+//----------------------------------------------------------------------MANAGERS
+//possibly split this into a function that fires just once on dom load,
+//then another manager that runs on resizing?
+function init() {
+  setLayout()
+  initHoldingPatternWaypointsActual()
+  createRandomHoldingPatternParticle()
+  animate()
+}
+
+function initHoldingPatternWaypointsActual() {
+  holdingPatternWaypointsActual.length = 0
+  holdingPatternWaypointsActual = holdingPatternWaypoints.map(el => {
+    let x = el.x * canvasWidth
+    let y = el.y * canvasHeight
+    return {x: x, y: y}
+  })
+}
+
+//--------------------------------------------UPDATE PARTICLE POSITIONS & RENDER
+function animate() {
+  frameId = requestAnimationFrame(animate)
+  ctx1.clearRect(0, 0, canvasWidth, canvasHeight)
+
+  canvasHelpers.renderBoundingCircle(ctx1, canvasWidth, canvasHeight)
+  canvasHelpers.renderHoldPatternWPs(ctx1, holdingPatternWaypointsActual)
+  canvasHelpers.renderChosenHoldPatternParticlePath(ctx1, holdingPatternParticles[0])
+  updateHoldPattern()
+}
+
+function updateHoldPattern() {
+  holdingPatternParticles.forEach(particle => {
+    particle.distMoved = particle.distMoved + particle.speed
+
+    //wants moved / tidied. Maybe to holdingPatternParticle class??
+    if(particle.distMoved >= 1) {
+      particle.distMoved = 0
+      particle.startCoords.x = particle.endCoords.x
+      particle.startCoords.y = particle.endCoords.y
+      particle.coords.x = particle.startCoords.x
+      particle.coords.y = particle.startCoords.y
+
+      particle.fromWP = particle.fromWP + 1
+      if(particle.fromWP === holdingPatternWaypoints.length) {particle.fromWP = 0}
+      particle.toWP = particle.toWP + 1
+      if(particle.toWP === holdingPatternWaypoints.length) {particle.toWP = 0}
+      console.log(`fromWP: ${particle.fromWP} , toWP: ${particle.toWP}`)
+
+      particle.endCoords.x = holdingPatternWaypointsActual[particle.toWP].x
+      particle.endCoords.y = holdingPatternWaypointsActual[particle.toWP].y
+
+      particle.cp1Coords = canvasHelpers.randPointBetweenTwoPoints(particle.startCoords, particle.endCoords)
+      particle.cp2Coords = canvasHelpers.randPointBetweenTwoPoints(particle.startCoords, particle.endCoords)
+    }
+
+    particle.coords.x = canvasHelpers.coordsOnCubicBezier(particle.distMoved, particle.startCoords.x, particle.cp1Coords.x, particle.cp2Coords.x, particle.endCoords.x)
+    particle.coords.y = canvasHelpers.coordsOnCubicBezier(particle.distMoved, particle.startCoords.y, particle.cp1Coords.y, particle.cp2Coords.y, particle.endCoords.y)
+
+    particle.draw()
+
+  })
+}
 
 //------------------------------------------------------------------BREAK POINTS
 function setLayout() {
@@ -68,25 +131,9 @@ function setLayout() {
 
   canvas1.width = canvasWidth
   canvas1.height = canvasHeight
-
-  //move this lot somewhere more betterer
-  initHoldingPatternWaypointsActual()
-  createRandomHoldingPatternParticle()
-  canvasHelpers.renderBoundingCircle(ctx1, canvasWidth, canvasHeight)
-  canvasHelpers.renderHoldPatternWPs(ctx1, holdingPatternWaypointsActual)
-  canvasHelpers.renderChosenHoldPatternParticlePath(ctx1, holdingPatternParticles[0])
 }
 
-function initHoldingPatternWaypointsActual() {
-  holdingPatternWaypointsActual.length = 0
-  holdingPatternWaypointsActual = holdingPatternWaypoints.map(el => {
-    let x = el.x * canvasWidth
-    let y = el.y * canvasHeight
-    return {x: x, y: y}
-  })
-}
-
-//------------------------------------------------------------PARTICLE CLASSES
+//--------------------------------------------------------------PARTICLE CLASSES
 class Particle {
   constructor(coords, age, speed) {
     this.coords = coords
@@ -98,68 +145,56 @@ class Particle {
       console.log(`${key}: ${this[key]}`)
     }
   }
+  draw() {//default self render for particles, maybe change later
+    ctx1.beginPath()
+    ctx1.lineWidth = 3
+    ctx1.strokeStyle = 'white'
+    ctx1.fillStyle = 'black'
+    ctx1.arc(this.coords.x, this.coords.y, 3, 0, Math.PI * 2, false)
+    ctx1.stroke()
+    ctx1.fill()
+  }
 }
 
 class PathFollowingParticle extends Particle {
-  constructor(coords, age, speed, endCoords, distMoved) {
+  constructor(startCoords, endCoords, coords, age, speed, distMoved) {
     super(coords, age, speed)
+    this.startCoords = startCoords
     this.endCoords = endCoords
     this.distMoved = distMoved
   }
 }
 
 class HoldingPatternParticle extends PathFollowingParticle {
-  constructor(coords, age, speed, endCoords, distMoved, cp1Coords, cp2Coords) {
-    super(coords, age, speed, endCoords, distMoved)
+  constructor(startCoords, endCoords, coords, age, speed, distMoved, cp1Coords, cp2Coords, fromWP, toWP) {
+    super(startCoords, endCoords, coords, age, speed, distMoved)
     this.cp1Coords = cp1Coords
     this.cp2Coords = cp2Coords
+    this.fromWP = fromWP
+    this.toWP = toWP
   }
 }
 
-//this currently sucks
+//not final version, not sure what logic to put in the constructor and what here
 function createRandomHoldingPatternParticle() {
-  let randomWP = Math.floor(Math.random() * 6)
-
+  holdingPatternParticles.length = 0
+  let fromWP = Math.floor(Math.random() * 6)
+  let toWP = fromWP + 1
+  if(toWP === holdingPatternWaypoints.length) {toWP = 0}
   let age = 0
-  let speed = 10
+  let speed = 0.01
   let distMoved = 0//randomise 0-1??
-  let coords = holdingPatternWaypointsActual[randomWP]
-  let endCoords = randomWP === 5 ? holdingPatternWaypointsActual[0] : holdingPatternWaypointsActual[randomWP + 1]
+  let startCoords = {x: null, y: null}
+  startCoords.x = holdingPatternWaypointsActual[fromWP].x
+  startCoords.y = holdingPatternWaypointsActual[fromWP].y
+  let endCoords = {x: null, y: null}
+  endCoords.x = holdingPatternWaypointsActual[toWP].x
+  endCoords.y = holdingPatternWaypointsActual[toWP].y
+  let coords = {x: startCoords.x, y: startCoords.y}
   let cp1Coords = canvasHelpers.randPointBetweenTwoPoints(coords, endCoords)
   let cp2Coords = canvasHelpers.randPointBetweenTwoPoints(coords, endCoords)
-/*
-  function randControlPoint(p1, p2) {
-    let a = p2.x - p1.x
-    let b = p2.y - p1.y
-    let p1P2Dist = Math.sqrt(a*a + b*b)
-    let randDist = (Math.random() * p1P2Dist * 0.5) + 40
-    let p1P2Angle
-    let randAngle
-    let coords = {x: null, y: null}
 
-    if(Math.random() >= 0.5) {
-      tPoint = 'p2'
-      p1P2Angle = Math.atan2(p2.y - p1.y, p1.x - p2.x)
-    } else {
-      p1P2Angle = Math.atan2(p1.y - p2.y, p2.x - p1.x)
-      tPoint = 'p1'
-    }
-
-    randAngle = p1P2Angle - (Math.PI / 2) + (Math.random() * Math.PI)
-
-    if (tPoint === 'p1') {
-      coords.x = p1.x + Math.cos(randAngle) * randDist
-      coords.y = p1.y - Math.sin(randAngle) * randDist
-    }
-    if (tPoint === 'p2') {
-      coords.x = p2.x + Math.cos(randAngle) * randDist
-      coords.y = p2.y - Math.sin(randAngle) * randDist
-    }
-
-    return coords
-  }
-*/
-  let particle = new HoldingPatternParticle(coords, age, speed, endCoords, distMoved, cp1Coords, cp2Coords)
+  let particle = new HoldingPatternParticle(startCoords, endCoords, coords, age, speed, distMoved, cp1Coords, cp2Coords, fromWP, toWP)
   holdingPatternParticles.push(particle)
 }
 
@@ -170,5 +205,5 @@ function createRandomHoldingPatternParticle() {
 
 //function that updates each particles x & y on window resize
 
-document.addEventListener("DOMContentLoaded", setLayout)
-window.addEventListener('resize', setLayout)
+document.addEventListener("DOMContentLoaded", init)
+window.addEventListener('resize', init)
