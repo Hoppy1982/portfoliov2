@@ -1,8 +1,10 @@
 const canvasHelpers = require('./utils/canvas-helpers.js')
+const lettersLib = require('./utils/letters-lib.js')
 
 let body = document.getElementsByTagName('body')[0]
 let canvas1 = document.getElementsByTagName('canvas')[0]
 let ctx1 = canvas1.getContext('2d')
+let navGoToButton = document.getElementById('navigatorDesc')//dev
 let frameId
 let canvasWidth
 let canvasHeight
@@ -19,13 +21,13 @@ let holdPatternWaypoints = [
   {x: 0.75, y: 0.875},//4
   {x: 0.25, y: 0.875}//5
 ]
-
-//hold pattern WP coords in pixels, recalcumalated on resize
-let holdPatternWaypointsActual = []
-
-//Particles move about between these arrays, changing behaviour as they do
+let holdPatternWaypointsActual = []//hold pattern WP coords in pixels, recalcumalated on resize
 let holdPatternParticles = []
-//array for nav target lettering particles
+
+let navTargetOrigin = {x: 30, y: 30}
+let navTargetSize = {width: 300, height: 60}
+let navTargetParticles = []
+
 //array for spawning pool particles
 //array for wormhole leaving particles
 //array for particles transitioning between main arrays???
@@ -38,6 +40,7 @@ function init() {
   setLayout()
   initHoldPatternWaypointsActual()
   initHoldPatternParticles(3)
+  initNavTargetParticles()//dev
   animate()
 }
 
@@ -45,6 +48,7 @@ function reset() {
   cancelAnimationFrame(frameId)
   holdPatternWaypointsActual.length = 0
   holdPatternParticles.length = 0
+  navTargetLettersParticles = 0//dev
 }
 
 function initHoldPatternWaypointsActual() {
@@ -75,6 +79,17 @@ function initHoldPatternParticles(nParticles) {
   }
 }
 
+function initNavTargetParticles() {
+  navTargetParticles.push({ char: 'A', posInChar: 0, placeInStr: 0, distMoved: 0, coords: {x: 0, y: 0, x0: 0, y0: 0, x1: null, y1: null}, pointsAt: 2 })
+  navTargetParticles.push({ char: 'A', posInChar: 1, placeInStr: 0, distMoved: 0, coords: {x: 0, y: 0, x0: 0, y0: 0, x1: null, y1: null}, pointsAt: 4 })
+  navTargetParticles.push({ char: 'A', posInChar: 2, placeInStr: 0, distMoved: 0, coords: {x: 0, y: 0, x0: 0, y0: 0, x1: null, y1: null}, pointsAt: 3 })
+  navTargetParticles.push({ char: 'A', posInChar: 3, placeInStr: 0, distMoved: 0, coords: {x: 0, y: 0, x0: 0, y0: 0, x1: null, y1: null}, pointsAt: 5 })
+  navTargetParticles.push({ char: 'A', posInChar: 4, placeInStr: 0, distMoved: 0, coords: {x: 0, y: 0, x0: 0, y0: 0, x1: null, y1: null}, pointsAt: null })
+  navTargetParticles.push({ char: 'A', posInChar: 5, placeInStr: 0, distMoved: 0, coords: {x: 0, y: 0, x0: 0, y0: 0, x1: null, y1: null}, pointsAt: null })
+
+  //calc x1 & y1 from navTargetOrigin, navTargetSize, letters in navTarget, char number, particle number
+}
+
 //--------------------------------------------UPDATE PARTICLE POSITIONS & RENDER
 function animate() {
   frameId = requestAnimationFrame(animate)
@@ -83,6 +98,7 @@ function animate() {
   canvasHelpers.renderHoldPatternWPs(ctx1, holdPatternWaypointsActual)//dev
   canvasHelpers.renderHoldPatternParticlePaths(ctx1, holdPatternParticles)//dev
   updateHoldPatternParticles()
+  updateNavTargetLettersParticles()
 }
 
 function updateHoldPatternParticles() {
@@ -104,6 +120,14 @@ function updateHoldPatternParticles() {
     particle.coords.y = canvasHelpers.coordsOnCubicBezier(particle.distMoved, particle.startCoords.y, particle.cp1Coords.y, particle.cp2Coords.y, particle.endCoords.y)
 
     particle.draw()
+  })
+}
+
+function updateNavTargetLettersParticles() {
+  navTargetParticles.forEach((particle, index) => {
+    //if distMoved < 1.0 then update pos
+    //if distMoved > threshold then render vector
+    //render self
   })
 }
 
@@ -148,6 +172,14 @@ function setLayout() {
 
   canvas1.width = canvasWidth
   canvas1.height = canvasHeight
+}
+
+//---------------------------------------------------------------EVENT LISTENERS
+navGoToButton.addEventListener('click', particleLettersTest, false)
+
+function particleLettersTest() {
+  console.log(lettersLib.letterACoords)
+  console.log(lettersLib.letterAVectors)
 }
 
 //--------------------------------------------------------------PARTICLE CLASSES
