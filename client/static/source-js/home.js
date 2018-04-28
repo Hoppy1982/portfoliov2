@@ -33,7 +33,9 @@ let holdingPatternParticles = []
 function init() {
   setLayout()
   initHoldingPatternWaypointsActual()
-  createRandomHoldingPatternParticle()
+  for(let i = 400; i > 0; i--) {
+    createRandomHoldingPatternParticle()
+  }
   animate()
 }
 
@@ -48,13 +50,16 @@ function initHoldingPatternWaypointsActual() {
 
 //--------------------------------------------UPDATE PARTICLE POSITIONS & RENDER
 function animate() {
+  let t0 = performance.now()
   frameId = requestAnimationFrame(animate)
   ctx1.clearRect(0, 0, canvasWidth, canvasHeight)
 
   canvasHelpers.renderBoundingCircle(ctx1, canvasWidth, canvasHeight)
-  canvasHelpers.renderHoldPatternWPs(ctx1, holdingPatternWaypointsActual)
-  canvasHelpers.renderChosenHoldPatternParticlePath(ctx1, holdingPatternParticles[0])
+  //canvasHelpers.renderHoldPatternWPs(ctx1, holdingPatternWaypointsActual)
+  //canvasHelpers.renderHoldPatternParticlePaths(ctx1, holdingPatternParticles)
   updateHoldPattern()
+  let t1 = performance.now()
+  console.log('Performance: ' + (t1 - t0))
 }
 
 function updateHoldPattern() {
@@ -140,11 +145,7 @@ class Particle {
     this.age = age
     this.speed = speed
   }
-  listProps() {//temp method for testing
-    for (let key in this) {
-      console.log(`${key}: ${this[key]}`)
-    }
-  }
+
   draw() {//default self render for particles, maybe change later
     ctx1.beginPath()
     ctx1.lineWidth = 3
@@ -177,13 +178,13 @@ class HoldingPatternParticle extends PathFollowingParticle {
 
 //not final version, not sure what logic to put in the constructor and what here
 function createRandomHoldingPatternParticle() {
-  holdingPatternParticles.length = 0
   let fromWP = Math.floor(Math.random() * 6)
   let toWP = fromWP + 1
   if(toWP === holdingPatternWaypoints.length) {toWP = 0}
   let age = 0
   let speed = 0.01
-  let distMoved = 0//randomise 0-1??
+  //let distMoved = Number( (Math.random() ).toFixed(1) )
+  let distMoved = Math.round( Math.random() * 10 ) / 10
   let startCoords = {x: null, y: null}
   startCoords.x = holdingPatternWaypointsActual[fromWP].x
   startCoords.y = holdingPatternWaypointsActual[fromWP].y

@@ -1,3 +1,5 @@
+//------------------------------------------------------------------MATH HELPERS
+
 //--------------------------------------------------------------GEOMETRY HELPERS
 function randPointBetweenTwoPoints(p1, p2) {
   const MIN_DIST = 40
@@ -53,51 +55,53 @@ function renderBoundingCircle(ctx, canvasWidth, canvasHeight) {
   ctx.stroke()
 }
 
-function renderHoldPatternWPs(ctx, arr) {
+function renderHoldPatternWPs(ctx, waypoints) {
   ctx.beginPath()
   ctx.fillStyle = 'blue'
-  arr.forEach(wp => {
+  waypoints.forEach(wp => {
     ctx.fillRect(wp.x - 6, wp.y - 6, 12, 12)
   })
   ctx.stroke()
 }
 
-function renderChosenHoldPatternParticlePath(ctx, particle) {
-  let cp1X = particle.cp1Coords.x
-  let cp1Y = particle.cp1Coords.y
-  let cp2X = particle.cp2Coords.x
-  let cp2Y = particle.cp2Coords.y
-  let startX = particle.startCoords.x
-  let startY = particle.startCoords.y
-  let endX = particle.endCoords.x
-  let endY = particle.endCoords.y
-  ctx.lineWidth = 1
-  //render start point
-  ctx.beginPath()
-  ctx.strokeStyle = 'green'
-  ctx.rect(startX - 4, startY - 4, 8, 8 )
-  ctx.stroke()
-  //render end point
-  ctx.strokeStyle = 'red'
-  ctx.beginPath()
-  ctx.rect(endX - 4, endY - 4, 8, 8 )
-  ctx.stroke()
-  //render control point 1
-  ctx.beginPath()
-  ctx.strokeStyle = 'yellow'
-  ctx.rect(cp1X - 4, cp1Y - 4, 8, 8)
-  ctx.stroke()
-  //render control point 2
-  ctx.beginPath()
-  ctx.strokeStyle = 'orange'
-  ctx.rect(cp2X - 4, cp2Y - 4, 8, 8)
-  ctx.stroke()
-  //render path
-  ctx.beginPath()
-  ctx.strokeStyle = 'white'
-  ctx.moveTo(startX, startY)
-  ctx.bezierCurveTo(cp1X, cp1Y, cp2X, cp2Y, endX, endY)
-  ctx.stroke()
+function renderHoldPatternParticlePaths(ctx, particles) {
+  particles.forEach(particle => {
+    let cp1X = particle.cp1Coords.x
+    let cp1Y = particle.cp1Coords.y
+    let cp2X = particle.cp2Coords.x
+    let cp2Y = particle.cp2Coords.y
+    let startX = particle.startCoords.x
+    let startY = particle.startCoords.y
+    let endX = particle.endCoords.x
+    let endY = particle.endCoords.y
+    ctx.lineWidth = 1
+    //render start point
+    ctx.beginPath()
+    ctx.strokeStyle = 'green'
+    ctx.rect(startX - 4, startY - 4, 8, 8 )
+    ctx.stroke()
+    //render end point
+    ctx.strokeStyle = 'red'
+    ctx.beginPath()
+    ctx.rect(endX - 4, endY - 4, 8, 8 )
+    ctx.stroke()
+    //render control point 1
+    ctx.beginPath()
+    ctx.strokeStyle = 'yellow'
+    ctx.rect(cp1X - 4, cp1Y - 4, 8, 8)
+    ctx.stroke()
+    //render control point 2
+    ctx.beginPath()
+    ctx.strokeStyle = 'orange'
+    ctx.rect(cp2X - 4, cp2Y - 4, 8, 8)
+    ctx.stroke()
+    //render path
+    ctx.beginPath()
+    ctx.strokeStyle = 'grey'
+    ctx.moveTo(startX, startY)
+    ctx.bezierCurveTo(cp1X, cp1Y, cp2X, cp2Y, endX, endY)
+    ctx.stroke()
+  })
 }
 
 //------------------------------------------------------------exported functions
@@ -107,5 +111,5 @@ module.exports = {
   //dev
   renderBoundingCircle,
   renderHoldPatternWPs,
-  renderChosenHoldPatternParticlePath
+  renderHoldPatternParticlePaths
 }
