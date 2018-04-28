@@ -39,7 +39,7 @@ function init() {
   reset()
   setLayout()
   initHoldPatternWaypointsActual()
-  initHoldPatternParticles(3)
+  initHoldPatternParticles(22)
   initNavTargetParticles()//dev
   animate()
 }
@@ -58,22 +58,30 @@ function initHoldPatternWaypointsActual() {
     return {x: x, y: y}
   })
 }
-
+//coords, age, speed, distMoved, nextWP
 function initHoldPatternParticles(nParticles) {
   for(let i = 0; i < nParticles; i++) {
     let fromWP = Math.floor(Math.random() * 6)
-    let toWP = fromWP + 1
-    if(toWP === holdPatternWaypoints.length) {toWP = 0}
+    let nextWP = fromWP + 1
+    if(nextWP === holdPatternWaypoints.length) {nextWP = 0}
     let age = 0
     let speed = 0.005
     //let distMoved = Number( (Math.random() ).toFixed(1) )
     let distMoved = Math.round( Math.random() * 10 ) / 10
     let startCoords = canvasHelpers.randPointNearPoint(holdPatternWaypointsActual[fromWP])
-    let endCoords = canvasHelpers.randPointNearPoint(holdPatternWaypointsActual[toWP])
-    let coords = {x: startCoords.x, y: startCoords.y}
-    let cp1Coords = canvasHelpers.randPointBetweenTwoPoints(coords, endCoords)
-    let cp2Coords = canvasHelpers.randPointBetweenTwoPoints(coords, endCoords)
-    let particle = new holdPatternParticle(startCoords, endCoords, coords, age, speed, distMoved, cp1Coords, cp2Coords, fromWP, toWP)
+    let endCoords = canvasHelpers.randPointNearPoint(holdPatternWaypointsActual[nextWP])
+    let cp1Coords = canvasHelpers.randPointBetweenTwoPoints(startCoords, endCoords)
+    let cp2Coords = canvasHelpers.randPointBetweenTwoPoints(startCoords, endCoords)
+
+    let coords = {
+      x: startCoords.x, y: startCoords.y,
+      x0: startCoords.x, y0: startCoords.y,
+      x1: endCoords.x, y1: endCoords.y,
+      cp1x: cp1Coords.x, cp1y: cp1Coords.y,
+      cp2x: cp2Coords.x, cp2y: cp2Coords.y
+    }
+
+    let particle = new holdPatternParticle(coords, age, speed, distMoved, nextWP)
 
     holdPatternParticles.push(particle)
   }
@@ -102,22 +110,26 @@ function animate() {
 }
 
 function updateHoldPatternParticles() {
-  holdPatternParticles.forEach(particle => {
+  holdPatternParticles.forEach(particle => {//think this should be moved to a method on holdParticle class??
     particle.distMoved = particle.distMoved + particle.speed
 
     if(particle.distMoved >= 1) {
       particle.distMoved = 0
-      Object.assign(particle.startCoords, particle.endCoords)
-      Object.assign(particle.coords, particle.startCoords)
-      particle.fromWP = particle.fromWP === holdPatternWaypoints.length - 1 ? 0 : particle.fromWP + 1
-      particle.toWP = particle.toWP === holdPatternWaypoints.length - 1 ? 0 : particle.toWP + 1
-      particle.endCoords = canvasHelpers.randPointNearPoint(holdPatternWaypointsActual[particle.toWP])
-      particle.cp1Coords = canvasHelpers.randPointBetweenTwoPoints(particle.startCoords, particle.endCoords)
-      particle.cp2Coords = canvasHelpers.randPointBetweenTwoPoints(particle.startCoords, particle.endCoords)
+      particle.nextWP = particle.nextWP === holdPatternWaypoints.length - 1 ? 0 : particle.nextWP + 1
+
+      particle.coords.x0 = particle.coords.x1
+      particle.coords.y0 = particle.coords.y1
+      particle.coords.x1 = canvasHelpers.randPointNearPoint(holdPatternWaypointsActual[particle.nextWP]).x
+      particle.coords.y1 = canvasHelpers.randPointNearPoint(holdPatternWaypointsActual[particle.nextWP]).y
+
+      particle.coords.cp1x = canvasHelpers.randPointBetweenTwoPoints({x: particle.coords.x0, y: particle.coords.y0}, {x: particle.coords.x1, y: particle.coords.y1}).x
+      particle.coords.cp1y = canvasHelpers.randPointBetweenTwoPoints({x: particle.coords.x0, y: particle.coords.y0}, {x: particle.coords.x1, y: particle.coords.y1}).y
+      particle.coords.cp2x = canvasHelpers.randPointBetweenTwoPoints({x: particle.coords.x0, y: particle.coords.y0}, {x: particle.coords.x1, y: particle.coords.y1}).x
+      particle.coords.cp2y = canvasHelpers.randPointBetweenTwoPoints({x: particle.coords.x0, y: particle.coords.y0}, {x: particle.coords.x1, y: particle.coords.y1}).y
     }
 
-    particle.coords.x = canvasHelpers.coordsOnCubicBezier(particle.distMoved, particle.startCoords.x, particle.cp1Coords.x, particle.cp2Coords.x, particle.endCoords.x)
-    particle.coords.y = canvasHelpers.coordsOnCubicBezier(particle.distMoved, particle.startCoords.y, particle.cp1Coords.y, particle.cp2Coords.y, particle.endCoords.y)
+    particle.coords.x = canvasHelpers.coordsOnCubicBezier(particle.distMoved, particle.coords.x0, particle.coords.cp1x, particle.coords.cp2x, particle.coords.x1)
+    particle.coords.y = canvasHelpers.coordsOnCubicBezier(particle.distMoved, particle.coords.y0, particle.coords.cp1y, particle.coords.cp2y, particle.coords.y1)
 
     particle.draw()
   })
@@ -183,11 +195,21 @@ function particleLettersTest() {
 }
 
 //--------------------------------------------------------------PARTICLE CLASSES
+//coords {x: number, y: number, x0: number, y0: number, x1: number, y1: number, cp1x: number, cp1y: number, cp2x: number, cp2y: number}
+//age number
+//speed number
+//distMoved number (% along path as decimal)
+//nextWP number(index)
+
+//think idea might be to stick nearly all the props on th Particle parent, scrap the intermediate class and concentrate on the methods in individual
+//particle classes.
+
 class Particle {
-  constructor(coords, age, speed) {
+  constructor(coords, age, speed, distMoved) {
     this.coords = coords
     this.age = age
     this.speed = speed
+    this.distMoved = distMoved
   }
 
   draw() {//default self render for particles, maybe change later
@@ -201,23 +223,19 @@ class Particle {
   }
 }
 
-class PathParticle extends Particle {
-  constructor(startCoords, endCoords, coords, age, speed, distMoved) {
-    super(coords, age, speed)
-    this.startCoords = startCoords
-    this.endCoords = endCoords
-    this.distMoved = distMoved
+class holdPatternParticle extends Particle {
+  constructor(coords, age, speed, distMoved, nextWP) {
+    super(coords, age, speed, distMoved)
+    this.nextWP = nextWP
   }
 }
-
-class holdPatternParticle extends PathParticle {
-  constructor(startCoords, endCoords, coords, age, speed, distMoved, cp1Coords, cp2Coords, fromWP, toWP) {
-    super(startCoords, endCoords, coords, age, speed, distMoved)
+/*
+class holdPatternParticle extends Particle {
+  constructor(startCoords, endCoords, coords, age, speed, distMoved, cp1Coords, cp2Coords, nextWP) {
+    super(coords, age, speed, distMoved, startCoords, endCoords)
     this.cp1Coords = cp1Coords
     this.cp2Coords = cp2Coords
-    this.fromWP = fromWP
-    this.toWP = toWP
+    this.nextWP = nextWP
   }
 }
-
-//to do: function that updates each particles x & y on window resize
+*/

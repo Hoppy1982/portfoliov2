@@ -72,14 +72,14 @@ function renderHoldPatternWPs(ctx, waypoints) {
 
 function renderHoldPatternParticlePaths(ctx, particles) {
   particles.forEach(particle => {
-    let cp1X = particle.cp1Coords.x
-    let cp1Y = particle.cp1Coords.y
-    let cp2X = particle.cp2Coords.x
-    let cp2Y = particle.cp2Coords.y
-    let startX = particle.startCoords.x
-    let startY = particle.startCoords.y
-    let endX = particle.endCoords.x
-    let endY = particle.endCoords.y
+    let cp1X = particle.coords.cp1x
+    let cp1Y = particle.coords.cp1y
+    let cp2X = particle.coords.cp2x
+    let cp2Y = particle.coords.cp2y
+    let startX = particle.coords.x0
+    let startY = particle.coords.y0
+    let endX = particle.coords.x1
+    let endY = particle.coords.y1
     ctx.lineWidth = 1
     //render start point
     ctx.beginPath()
