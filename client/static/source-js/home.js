@@ -7,8 +7,11 @@ let frameId
 let canvasWidth
 let canvasHeight
 
-//Holding pattern WP coords as ratio of canvas size
-let holdingPatternWaypoints = [
+document.addEventListener("DOMContentLoaded", init)
+window.addEventListener('resize', init)
+
+//hold pattern WP coords as ratio of canvas size
+let holdPatternWaypoints = [
   {x: 0.125, y: 0.5},//0
   {x: 0.25, y: 0.125},//1
   {x: 0.75, y: 0.125},//2
@@ -17,11 +20,11 @@ let holdingPatternWaypoints = [
   {x: 0.25, y: 0.875}//5
 ]
 
-//Holding pattern WP coords in pixels, recalcumalated on resize
-let holdingPatternWaypointsActual = []
+//hold pattern WP coords in pixels, recalcumalated on resize
+let holdPatternWaypointsActual = []
 
 //Particles move about between these arrays, changing behaviour as they do
-let holdingPatternParticles = []
+let holdPatternParticles = []
 //array for nav target lettering particles
 //array for spawning pool particles
 //array for wormhole leaving particles
@@ -31,58 +34,68 @@ let holdingPatternParticles = []
 //possibly split this into a function that fires just once on dom load,
 //then another manager that runs on resizing?
 function init() {
+  reset()
   setLayout()
-  initHoldingPatternWaypointsActual()
-  for(let i = 400; i > 0; i--) {
-    createRandomHoldingPatternParticle()
-  }
+  initHoldPatternWaypointsActual()
+  initHoldPatternParticles(3)
   animate()
 }
 
-function initHoldingPatternWaypointsActual() {
-  holdingPatternWaypointsActual.length = 0
-  holdingPatternWaypointsActual = holdingPatternWaypoints.map(el => {
+function reset() {
+  cancelAnimationFrame(frameId)
+  holdPatternWaypointsActual.length = 0
+  holdPatternParticles.length = 0
+}
+
+function initHoldPatternWaypointsActual() {
+  holdPatternWaypointsActual = holdPatternWaypoints.map(el => {
     let x = el.x * canvasWidth
     let y = el.y * canvasHeight
     return {x: x, y: y}
   })
 }
 
-//--------------------------------------------UPDATE PARTICLE POSITIONS & RENDER
-function animate() {
-  let t0 = performance.now()
-  frameId = requestAnimationFrame(animate)
-  ctx1.clearRect(0, 0, canvasWidth, canvasHeight)
+function initHoldPatternParticles(nParticles) {
+  for(let i = 0; i < nParticles; i++) {
+    let fromWP = Math.floor(Math.random() * 6)
+    let toWP = fromWP + 1
+    if(toWP === holdPatternWaypoints.length) {toWP = 0}
+    let age = 0
+    let speed = 0.005
+    //let distMoved = Number( (Math.random() ).toFixed(1) )
+    let distMoved = Math.round( Math.random() * 10 ) / 10
+    let startCoords = canvasHelpers.randPointNearPoint(holdPatternWaypointsActual[fromWP])
+    let endCoords = canvasHelpers.randPointNearPoint(holdPatternWaypointsActual[toWP])
+    let coords = {x: startCoords.x, y: startCoords.y}
+    let cp1Coords = canvasHelpers.randPointBetweenTwoPoints(coords, endCoords)
+    let cp2Coords = canvasHelpers.randPointBetweenTwoPoints(coords, endCoords)
+    let particle = new holdPatternParticle(startCoords, endCoords, coords, age, speed, distMoved, cp1Coords, cp2Coords, fromWP, toWP)
 
-  canvasHelpers.renderBoundingCircle(ctx1, canvasWidth, canvasHeight)
-  //canvasHelpers.renderHoldPatternWPs(ctx1, holdingPatternWaypointsActual)
-  //canvasHelpers.renderHoldPatternParticlePaths(ctx1, holdingPatternParticles)
-  updateHoldPattern()
-  let t1 = performance.now()
-  console.log('Performance: ' + (t1 - t0))
+    holdPatternParticles.push(particle)
+  }
 }
 
-function updateHoldPattern() {
-  holdingPatternParticles.forEach(particle => {
+//--------------------------------------------UPDATE PARTICLE POSITIONS & RENDER
+function animate() {
+  frameId = requestAnimationFrame(animate)
+  ctx1.clearRect(0, 0, canvasWidth, canvasHeight)
+  canvasHelpers.renderBoundingCircle(ctx1, canvasWidth, canvasHeight)//dev
+  canvasHelpers.renderHoldPatternWPs(ctx1, holdPatternWaypointsActual)//dev
+  canvasHelpers.renderHoldPatternParticlePaths(ctx1, holdPatternParticles)//dev
+  updateHoldPatternParticles()
+}
+
+function updateHoldPatternParticles() {
+  holdPatternParticles.forEach(particle => {
     particle.distMoved = particle.distMoved + particle.speed
 
-    //wants moved / tidied. Maybe to holdingPatternParticle class??
     if(particle.distMoved >= 1) {
       particle.distMoved = 0
-      particle.startCoords.x = particle.endCoords.x
-      particle.startCoords.y = particle.endCoords.y
-      particle.coords.x = particle.startCoords.x
-      particle.coords.y = particle.startCoords.y
-
-      particle.fromWP = particle.fromWP + 1
-      if(particle.fromWP === holdingPatternWaypoints.length) {particle.fromWP = 0}
-      particle.toWP = particle.toWP + 1
-      if(particle.toWP === holdingPatternWaypoints.length) {particle.toWP = 0}
-      console.log(`fromWP: ${particle.fromWP} , toWP: ${particle.toWP}`)
-
-      particle.endCoords.x = holdingPatternWaypointsActual[particle.toWP].x
-      particle.endCoords.y = holdingPatternWaypointsActual[particle.toWP].y
-
+      Object.assign(particle.startCoords, particle.endCoords)
+      Object.assign(particle.coords, particle.startCoords)
+      particle.fromWP = particle.fromWP === holdPatternWaypoints.length - 1 ? 0 : particle.fromWP + 1
+      particle.toWP = particle.toWP === holdPatternWaypoints.length - 1 ? 0 : particle.toWP + 1
+      particle.endCoords = canvasHelpers.randPointNearPoint(holdPatternWaypointsActual[particle.toWP])
       particle.cp1Coords = canvasHelpers.randPointBetweenTwoPoints(particle.startCoords, particle.endCoords)
       particle.cp2Coords = canvasHelpers.randPointBetweenTwoPoints(particle.startCoords, particle.endCoords)
     }
@@ -91,7 +104,6 @@ function updateHoldPattern() {
     particle.coords.y = canvasHelpers.coordsOnCubicBezier(particle.distMoved, particle.startCoords.y, particle.cp1Coords.y, particle.cp2Coords.y, particle.endCoords.y)
 
     particle.draw()
-
   })
 }
 
@@ -157,7 +169,7 @@ class Particle {
   }
 }
 
-class PathFollowingParticle extends Particle {
+class PathParticle extends Particle {
   constructor(startCoords, endCoords, coords, age, speed, distMoved) {
     super(coords, age, speed)
     this.startCoords = startCoords
@@ -166,7 +178,7 @@ class PathFollowingParticle extends Particle {
   }
 }
 
-class HoldingPatternParticle extends PathFollowingParticle {
+class holdPatternParticle extends PathParticle {
   constructor(startCoords, endCoords, coords, age, speed, distMoved, cp1Coords, cp2Coords, fromWP, toWP) {
     super(startCoords, endCoords, coords, age, speed, distMoved)
     this.cp1Coords = cp1Coords
@@ -176,35 +188,4 @@ class HoldingPatternParticle extends PathFollowingParticle {
   }
 }
 
-//not final version, not sure what logic to put in the constructor and what here
-function createRandomHoldingPatternParticle() {
-  let fromWP = Math.floor(Math.random() * 6)
-  let toWP = fromWP + 1
-  if(toWP === holdingPatternWaypoints.length) {toWP = 0}
-  let age = 0
-  let speed = 0.01
-  //let distMoved = Number( (Math.random() ).toFixed(1) )
-  let distMoved = Math.round( Math.random() * 10 ) / 10
-  let startCoords = {x: null, y: null}
-  startCoords.x = holdingPatternWaypointsActual[fromWP].x
-  startCoords.y = holdingPatternWaypointsActual[fromWP].y
-  let endCoords = {x: null, y: null}
-  endCoords.x = holdingPatternWaypointsActual[toWP].x
-  endCoords.y = holdingPatternWaypointsActual[toWP].y
-  let coords = {x: startCoords.x, y: startCoords.y}
-  let cp1Coords = canvasHelpers.randPointBetweenTwoPoints(coords, endCoords)
-  let cp2Coords = canvasHelpers.randPointBetweenTwoPoints(coords, endCoords)
-
-  let particle = new HoldingPatternParticle(startCoords, endCoords, coords, age, speed, distMoved, cp1Coords, cp2Coords, fromWP, toWP)
-  holdingPatternParticles.push(particle)
-}
-
-//function to goes over every holdingPatternParticle in
-//holdingPatternArray and implements some behaviour
-
-//function that populates holdingPatternWaypoints
-
-//function that updates each particles x & y on window resize
-
-document.addEventListener("DOMContentLoaded", init)
-window.addEventListener('resize', init)
+//to do: function that updates each particles x & y on window resize

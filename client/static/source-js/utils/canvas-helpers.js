@@ -26,11 +26,17 @@ function randPointBetweenTwoPoints(p1, p2) {
   return coords
 }
 
-function randPointNearPoint(p) {
+function randPointNearPoint(pt) {
+  const MAX_FROM = 40
+  let randDist = Math.floor(Math.random() * MAX_FROM)
+  let randAngle = Math.random() * Math.PI * 2
+  let x = pt.x + (Math.cos(randAngle) * randDist)
+  let y = pt.y + (Math.sin(randAngle) * randDist)
 
+  return {x: x, y: y}
 }
 
-//stolen from stackoverflow, I understand shit all but it works
+//stolen from stackoverflow
 function coordsOnCubicBezier(percent, startPt, cp1, cp2, endPt) {
   let t2 = percent * percent
   let t3 = t2 * percent
@@ -59,7 +65,7 @@ function renderHoldPatternWPs(ctx, waypoints) {
   ctx.beginPath()
   ctx.fillStyle = 'blue'
   waypoints.forEach(wp => {
-    ctx.fillRect(wp.x - 6, wp.y - 6, 12, 12)
+    ctx.fillRect(wp.x - 4, wp.y - 4, 8, 8)
   })
   ctx.stroke()
 }
@@ -78,22 +84,22 @@ function renderHoldPatternParticlePaths(ctx, particles) {
     //render start point
     ctx.beginPath()
     ctx.strokeStyle = 'green'
-    ctx.rect(startX - 4, startY - 4, 8, 8 )
+    ctx.rect(startX - 2, startY - 2, 4, 4)
     ctx.stroke()
     //render end point
     ctx.strokeStyle = 'red'
     ctx.beginPath()
-    ctx.rect(endX - 4, endY - 4, 8, 8 )
+    ctx.rect(endX - 2, endY - 2, 4, 4)
     ctx.stroke()
     //render control point 1
     ctx.beginPath()
     ctx.strokeStyle = 'yellow'
-    ctx.rect(cp1X - 4, cp1Y - 4, 8, 8)
+    ctx.rect(cp1X - 2, cp1Y - 2, 4, 4)
     ctx.stroke()
     //render control point 2
     ctx.beginPath()
     ctx.strokeStyle = 'orange'
-    ctx.rect(cp2X - 4, cp2Y - 4, 8, 8)
+    ctx.rect(cp2X - 2, cp2Y - 2, 4, 4)
     ctx.stroke()
     //render path
     ctx.beginPath()
@@ -107,6 +113,7 @@ function renderHoldPatternParticlePaths(ctx, particles) {
 //------------------------------------------------------------exported functions
 module.exports = {
   randPointBetweenTwoPoints,
+  randPointNearPoint,
   coordsOnCubicBezier,
   //dev
   renderBoundingCircle,
