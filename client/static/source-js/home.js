@@ -9,9 +9,6 @@ let frameId
 let canvasWidth
 let canvasHeight
 
-document.addEventListener("DOMContentLoaded", init)
-window.addEventListener('resize', init)
-
 //hold pattern WP coords as ratio of canvas size
 let holdPatternWaypoints = [
   {x: 0.125, y: 0.5},//0
@@ -28,6 +25,8 @@ let navTargetOrigin = {x: 30, y: 30}
 let navTargetSize = {width: 300, height: 60}
 let navTargetParticles = []
 
+let navTargetWord = 'AAAAA'//dev temp
+
 //array for spawning pool particles
 //array for wormhole leaving particles
 //array for particles transitioning between main arrays???
@@ -39,7 +38,7 @@ function init() {
   reset()
   setLayout()
   initHoldPatternWaypointsActual()
-  initHoldPatternParticles(100)
+  initHoldPatternParticles(30)
   initNavTargetParticles()//dev
   animate()
 }
@@ -166,11 +165,30 @@ function setLayout() {
 }
 
 //---------------------------------------------------------------EVENT LISTENERS
-navGoToButton.addEventListener('click', particleLettersTest, false)
+document.addEventListener("DOMContentLoaded", init)
+window.addEventListener('resize', init)
+navGoToButton.addEventListener('click', initNavTarget, false)
 
-function particleLettersTest() {
-  console.log(lettersLib.letterACoords)
-  console.log(lettersLib.letterAVectors)
+//move some of this to letter-lib
+function initNavTarget() {
+  let requiredParticles = 0
+  for(i in navTargetWord) {
+    switch(navTargetWord.charAt(i)) {
+      case 'A':
+        requiredParticles += 6
+      break
+    }
+  }
+
+  let enoughParticles = holdPatternParticles.length > requiredParticles ? true : false
+
+  console.log(`particles in hold: ${holdPatternParticles.length}, required particles for letters: ${requiredParticles}, transferring?: ${enoughParticles}`)
+
+  if (enoughParticles) {
+    let transferringParticle = holdPatternParticles.pop()
+    //mangle it into shape
+    //push onto navTargetParticles
+  }
 }
 
 //--------------------------------------------------------------PARTICLE CLASSES

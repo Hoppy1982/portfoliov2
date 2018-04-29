@@ -18,3 +18,6 @@ module.exports = {
   letterACoords,
   letterAVectors
 }
+
+//have an init function that precalcs nParticles per letter & stores in obj {a: 6, b:5...}
+//have a function that takes in a string and returns total nParticles using above obj
