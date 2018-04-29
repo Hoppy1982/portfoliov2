@@ -39,7 +39,7 @@ function init() {
   reset()
   setLayout()
   initHoldPatternWaypointsActual()
-  initHoldPatternParticles(22)
+  initHoldPatternParticles(100)
   initNavTargetParticles()//dev
   animate()
 }
@@ -81,19 +81,15 @@ function initHoldPatternParticles(nParticles) {
       cp2x: cp2Coords.x, cp2y: cp2Coords.y
     }
 
-    let particle = new holdPatternParticle(coords, age, speed, distMoved, nextWP)
+    let particle = new HoldPatternParticle(coords, age, speed, distMoved, nextWP)
 
     holdPatternParticles.push(particle)
   }
 }
 
+//(coords, age, speed, distMoved, char, posInChar, posInStr, pointsAt)
 function initNavTargetParticles() {
-  navTargetParticles.push({ char: 'A', posInChar: 0, placeInStr: 0, distMoved: 0, coords: {x: 0, y: 0, x0: 0, y0: 0, x1: null, y1: null}, pointsAt: 2 })
-  navTargetParticles.push({ char: 'A', posInChar: 1, placeInStr: 0, distMoved: 0, coords: {x: 0, y: 0, x0: 0, y0: 0, x1: null, y1: null}, pointsAt: 4 })
-  navTargetParticles.push({ char: 'A', posInChar: 2, placeInStr: 0, distMoved: 0, coords: {x: 0, y: 0, x0: 0, y0: 0, x1: null, y1: null}, pointsAt: 3 })
-  navTargetParticles.push({ char: 'A', posInChar: 3, placeInStr: 0, distMoved: 0, coords: {x: 0, y: 0, x0: 0, y0: 0, x1: null, y1: null}, pointsAt: 5 })
-  navTargetParticles.push({ char: 'A', posInChar: 4, placeInStr: 0, distMoved: 0, coords: {x: 0, y: 0, x0: 0, y0: 0, x1: null, y1: null}, pointsAt: null })
-  navTargetParticles.push({ char: 'A', posInChar: 5, placeInStr: 0, distMoved: 0, coords: {x: 0, y: 0, x0: 0, y0: 0, x1: null, y1: null}, pointsAt: null })
+  navTargetParticles.push(new CharPatternParticle({x: 0, y: 0, x0: 0, y0: 0, x1: null, y1: null}, 0, 0.1, 0, 'A', 0, 0, 1))
 
   //calc x1 & y1 from navTargetOrigin, navTargetSize, letters in navTarget, char number, particle number
 }
@@ -102,8 +98,8 @@ function initNavTargetParticles() {
 function animate() {
   frameId = requestAnimationFrame(animate)
   ctx1.clearRect(0, 0, canvasWidth, canvasHeight)
-  canvasHelpers.renderBoundingCircle(ctx1, canvasWidth, canvasHeight)//dev
-  canvasHelpers.renderHoldPatternWPs(ctx1, holdPatternWaypointsActual)//dev
+  //canvasHelpers.renderBoundingCircle(ctx1, canvasWidth, canvasHeight)//dev
+  //canvasHelpers.renderHoldPatternWPs(ctx1, holdPatternWaypointsActual)//dev
   canvasHelpers.renderHoldPatternParticlePaths(ctx1, holdPatternParticles)//dev
   updateHoldPatternParticles()
   updateNavTargetLettersParticles()
@@ -111,26 +107,7 @@ function animate() {
 
 function updateHoldPatternParticles() {
   holdPatternParticles.forEach(particle => {//think this should be moved to a method on holdParticle class??
-    particle.distMoved = particle.distMoved + particle.speed
-
-    if(particle.distMoved >= 1) {
-      particle.distMoved = 0
-      particle.nextWP = particle.nextWP === holdPatternWaypoints.length - 1 ? 0 : particle.nextWP + 1
-
-      particle.coords.x0 = particle.coords.x1
-      particle.coords.y0 = particle.coords.y1
-      particle.coords.x1 = canvasHelpers.randPointNearPoint(holdPatternWaypointsActual[particle.nextWP]).x
-      particle.coords.y1 = canvasHelpers.randPointNearPoint(holdPatternWaypointsActual[particle.nextWP]).y
-
-      particle.coords.cp1x = canvasHelpers.randPointBetweenTwoPoints({x: particle.coords.x0, y: particle.coords.y0}, {x: particle.coords.x1, y: particle.coords.y1}).x
-      particle.coords.cp1y = canvasHelpers.randPointBetweenTwoPoints({x: particle.coords.x0, y: particle.coords.y0}, {x: particle.coords.x1, y: particle.coords.y1}).y
-      particle.coords.cp2x = canvasHelpers.randPointBetweenTwoPoints({x: particle.coords.x0, y: particle.coords.y0}, {x: particle.coords.x1, y: particle.coords.y1}).x
-      particle.coords.cp2y = canvasHelpers.randPointBetweenTwoPoints({x: particle.coords.x0, y: particle.coords.y0}, {x: particle.coords.x1, y: particle.coords.y1}).y
-    }
-
-    particle.coords.x = canvasHelpers.coordsOnCubicBezier(particle.distMoved, particle.coords.x0, particle.coords.cp1x, particle.coords.cp2x, particle.coords.x1)
-    particle.coords.y = canvasHelpers.coordsOnCubicBezier(particle.distMoved, particle.coords.y0, particle.coords.cp1y, particle.coords.cp2y, particle.coords.y1)
-
+    particle.updatePos()
     particle.draw()
   })
 }
@@ -140,6 +117,8 @@ function updateNavTargetLettersParticles() {
     //if distMoved < 1.0 then update pos
     //if distMoved > threshold then render vector
     //render self
+    particle.updatePos()
+    particle.draw()
   })
 }
 
@@ -221,21 +200,44 @@ class Particle {
     ctx1.stroke()
     ctx1.fill()
   }
+
+  updatePos() {
+    this.coords.x += this.speed
+    this.coords.y += this.speed
+  }
 }
 
-class holdPatternParticle extends Particle {
+class HoldPatternParticle extends Particle {
   constructor(coords, age, speed, distMoved, nextWP) {
     super(coords, age, speed, distMoved)
     this.nextWP = nextWP
   }
-}
-/*
-class holdPatternParticle extends Particle {
-  constructor(startCoords, endCoords, coords, age, speed, distMoved, cp1Coords, cp2Coords, nextWP) {
-    super(coords, age, speed, distMoved, startCoords, endCoords)
-    this.cp1Coords = cp1Coords
-    this.cp2Coords = cp2Coords
-    this.nextWP = nextWP
+
+  updatePos() {
+    this.distMoved += this.speed
+    if(this.distMoved >= 1) {
+      this.distMoved = 0
+      this.nextWP = this.nextWP === holdPatternWaypoints.length - 1 ? 0 : this.nextWP + 1
+      this.coords.x0 = this.coords.x1
+      this.coords.y0 = this.coords.y1
+      this.coords.x1 = canvasHelpers.randPointNearPoint(holdPatternWaypointsActual[this.nextWP]).x
+      this.coords.y1 = canvasHelpers.randPointNearPoint(holdPatternWaypointsActual[this.nextWP]).y
+      this.coords.cp1x = canvasHelpers.randPointBetweenTwoPoints({x: this.coords.x0, y: this.coords.y0}, {x: this.coords.x1, y: this.coords.y1}).x
+      this.coords.cp1y = canvasHelpers.randPointBetweenTwoPoints({x: this.coords.x0, y: this.coords.y0}, {x: this.coords.x1, y: this.coords.y1}).y
+      this.coords.cp2x = canvasHelpers.randPointBetweenTwoPoints({x: this.coords.x0, y: this.coords.y0}, {x: this.coords.x1, y: this.coords.y1}).x
+      this.coords.cp2y = canvasHelpers.randPointBetweenTwoPoints({x: this.coords.x0, y: this.coords.y0}, {x: this.coords.x1, y: this.coords.y1}).y
+    }
+    this.coords.x = canvasHelpers.coordsOnCubicBezier(this.distMoved, this.coords.x0, this.coords.cp1x, this.coords.cp2x, this.coords.x1)
+    this.coords.y = canvasHelpers.coordsOnCubicBezier(this.distMoved, this.coords.y0, this.coords.cp1y, this.coords.cp2y, this.coords.y1)
   }
 }
-*/
+
+class CharPatternParticle extends Particle {
+  constructor(coords, age, speed, distMoved, char, posInChar, posInStr, pointsAt) {
+    super(coords, age, speed, distMoved)
+    this.char = char
+    this.posInChar = posInChar
+    this.posInStr = posInStr
+    this.pointsAt = pointsAt
+  }
+}
