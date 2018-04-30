@@ -19,13 +19,13 @@ let holdPatternWaypoints = [
   {x: 0.25, y: 0.875}//5
 ]
 let holdPatternWaypointsActual = []//hold pattern WP coords in pixels, recalcumalated on resize
-let holdPatternParticles = []
+let navTargetOrigin = {x: 50, y: 50}
+let navTargetCharSize = {width: 80, height: 80}
 
-let navTargetOrigin = {x: 30, y: 30}
-let navTargetSize = {width: 300, height: 60}
+let holdPatternParticles = []
 let navTargetParticles = []
 
-let navTargetWord = 'AAAAA'//dev temp
+let navTargetWord = 'BBA'//dev temp
 
 //array for spawning pool particles
 //array for wormhole leaving particles
@@ -38,8 +38,7 @@ function init() {
   reset()
   setLayout()
   initHoldPatternWaypointsActual()
-  initHoldPatternParticles(30)
-  initNavTargetParticles()//dev
+  initHoldPatternParticles(20)
   animate()
 }
 
@@ -64,7 +63,7 @@ function initHoldPatternParticles(nParticles) {
     let nextWP = fromWP + 1
     if(nextWP === holdPatternWaypoints.length) {nextWP = 0}
     let age = 0
-    let speed = 0.005
+    let speed = 0.0025
     //let distMoved = Number( (Math.random() ).toFixed(1) )
     let distMoved = Math.round( Math.random() * 10 ) / 10
     let startCoords = canvasHelpers.randPointNearPoint(holdPatternWaypointsActual[fromWP])
@@ -86,20 +85,13 @@ function initHoldPatternParticles(nParticles) {
   }
 }
 
-//(coords, age, speed, distMoved, char, posInChar, posInStr, pointsAt)
-function initNavTargetParticles() {
-  navTargetParticles.push(new CharPatternParticle({x: 0, y: 0, x0: 0, y0: 0, x1: null, y1: null}, 0, 0.1, 0, 'A', 0, 0, 1))
-
-  //calc x1 & y1 from navTargetOrigin, navTargetSize, letters in navTarget, char number, particle number
-}
-
 //--------------------------------------------UPDATE PARTICLE POSITIONS & RENDER
 function animate() {
   frameId = requestAnimationFrame(animate)
   ctx1.clearRect(0, 0, canvasWidth, canvasHeight)
   //canvasHelpers.renderBoundingCircle(ctx1, canvasWidth, canvasHeight)//dev
   //canvasHelpers.renderHoldPatternWPs(ctx1, holdPatternWaypointsActual)//dev
-  canvasHelpers.renderHoldPatternParticlePaths(ctx1, holdPatternParticles)//dev
+  //canvasHelpers.renderHoldPatternParticlePaths(ctx1, holdPatternParticles)//dev
   updateHoldPatternParticles()
   updateNavTargetLettersParticles()
 }
@@ -107,7 +99,7 @@ function animate() {
 function updateHoldPatternParticles() {
   holdPatternParticles.forEach(particle => {//think this should be moved to a method on holdParticle class??
     particle.updatePos()
-    particle.draw()
+    particle.draw('white')
   })
 }
 
@@ -117,7 +109,7 @@ function updateNavTargetLettersParticles() {
     //if distMoved > threshold then render vector
     //render self
     particle.updatePos()
-    particle.draw()
+    particle.draw('red')
   })
 }
 
@@ -171,25 +163,33 @@ navGoToButton.addEventListener('click', initNavTarget, false)
 
 //move some of this to letter-lib
 function initNavTarget() {
-  let requiredParticles = 0
-  for(i in navTargetWord) {
-    switch(navTargetWord.charAt(i)) {
-      case 'A':
-        requiredParticles += 6
-      break
+  let requiredParticles = lettersLib.totalRequiredParticles(navTargetWord)
+  let destinationsAndTargets = lettersLib.getDestinationsAndTargets(navTargetWord, navTargetOrigin, navTargetCharSize)
+
+  if (holdPatternParticles.length > requiredParticles) {
+    for(let i = 0; i < requiredParticles; i++) {
+      let transferringParticle = holdPatternParticles.pop()
+      let coords = {
+        x: transferringParticle.coords.x,
+        y: transferringParticle.coords.y,
+        x0: transferringParticle.coords.x,
+        y0: transferringParticle.coords.y,
+        x1: destinationsAndTargets[i].x1,
+        y1: destinationsAndTargets[i].y1
+      }
+      let age = transferringParticle.age
+      let speed = transferringParticle.speed
+      let distMoved = 0
+      let pointsAt = destinationsAndTargets[i].pointsAt
+      navTargetParticles.push(new CharPatternParticle(coords, age, speed, distMoved, pointsAt))
     }
+
   }
-
-  let enoughParticles = holdPatternParticles.length > requiredParticles ? true : false
-
-  console.log(`particles in hold: ${holdPatternParticles.length}, required particles for letters: ${requiredParticles}, transferring?: ${enoughParticles}`)
-
-  if (enoughParticles) {
-    let transferringParticle = holdPatternParticles.pop()
-    //mangle it into shape
-    //push onto navTargetParticles
-  }
+  console.log(destinationsAndTargets)
 }
+//holdPatternPrticles | HoldPatternParticle: coords, age, speed, distMoved, nextWP
+//navTargetParticles: | CharPatternParticle: coords, age, speed, distMoved, char, posInChar, posInStr, pointsAt
+
 
 //--------------------------------------------------------------PARTICLE CLASSES
 //coords {x: number, y: number, x0: number, y0: number, x1: number, y1: number, cp1x: number, cp1y: number, cp2x: number, cp2y: number}
@@ -209,10 +209,10 @@ class Particle {
     this.distMoved = distMoved
   }
 
-  draw() {//default self render for particles, maybe change later
+  draw(color) {//default self render for particles, maybe change later
     ctx1.beginPath()
     ctx1.lineWidth = 3
-    ctx1.strokeStyle = 'white'
+    ctx1.strokeStyle = color
     ctx1.fillStyle = 'black'
     ctx1.arc(this.coords.x, this.coords.y, 3, 0, Math.PI * 2, false)
     ctx1.stroke()
@@ -251,11 +251,18 @@ class HoldPatternParticle extends Particle {
 }
 
 class CharPatternParticle extends Particle {
-  constructor(coords, age, speed, distMoved, char, posInChar, posInStr, pointsAt) {
+  constructor(coords, age, speed, distMoved, pointsAt) {
     super(coords, age, speed, distMoved)
-    this.char = char
-    this.posInChar = posInChar
-    this.posInStr = posInStr
     this.pointsAt = pointsAt
+  }
+
+  updatePos() {
+    this.distMoved += this.speed
+
+    if(this.distMoved < 1) {
+      let newPos = canvasHelpers.coordsOnStraightLine(this.distMoved, {x: this.coords.x0, y: this.coords.y0}, {x: this.coords.x1, y: this.coords.y1})
+      this.coords.x = newPos.x
+      this.coords.y = newPos.y
+    }
   }
 }

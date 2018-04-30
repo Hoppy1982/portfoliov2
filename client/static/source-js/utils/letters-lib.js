@@ -1,23 +1,81 @@
-//array for nav target lettering particles
-let letterACoords = [
-  {x: 0.125, y: 0.875},//0
-  {x: 0.25, y: 0.5},   //1
-  {x: 0.375, y: 0.125},//2
-  {x: 0.625, y: 0.125},//3
-  {x: 0.75, y: 0.5},   //4
-  {x: 0.875, y: 0.875} //5
-]
-let letterAVectors = [
-  {from: 0, to: 2},
-  {from: 1, to: 4},
-  {from: 2, to: 3},
-  {from: 3, to: 5}
-]
-
-module.exports = {
-  letterACoords,
-  letterAVectors
+//------------------------------------------COORDS AS RATIO AND VECTOR POINT ATS
+let lettersCoords = {
+  A: [
+    {x: 0.125, y: 0.875},//0
+    {x: 0.25, y: 0.5},   //1
+    {x: 0.375, y: 0.125},//2
+    {x: 0.625, y: 0.125},//3
+    {x: 0.75, y: 0.5},   //4
+    {x: 0.875, y: 0.875} //5
+  ],
+  B : [
+    {x: 0.25, y: 0.875},//0
+    {x: 0.25, y: 0.5},  //1
+    {x: 0.25, y: 0.125},//2
+    {x: 0.75, y: 0.25}, //3
+    {x: 0.75, y: 0.75}  //4
+  ]
 }
 
-//have an init function that precalcs nParticles per letter & stores in obj {a: 6, b:5...}
-//have a function that takes in a string and returns total nParticles using above obj
+let lettersVectors = {
+  A: [
+    {from: 0, to: 2},
+    {from: 1, to: 4},
+    {from: 2, to: 3},
+    {from: 3, to: 5}
+  ]
+}
+//--------------------------------------------------------------HELPER FUNCTIONS
+function totalRequiredParticles(str) {
+  let requiredParticles = 0
+
+  for(i in str) {
+    //todo think about way of swapping the switch statement for something more general
+    switch(str.charAt(i)) {
+      case 'A':
+        requiredParticles += lettersCoords.A.length
+        break
+      case 'B':
+        requiredParticles += lettersCoords.B.length
+        break
+    }
+  }
+
+  return requiredParticles
+}
+
+
+//let navTargetOrigin = {x: 30, y: 30}
+//let navTargetSize = {width: 300, height: 60}
+function getDestinationsAndTargets(str, origin, charSize) {
+  let destinationsAndTargets = []
+
+  //target == origin plus (char pos in str * width of char) plus particle pos in char
+  for(let posInStr in str) {
+    let x1 = null
+    let y1 = null
+    let pointsAt = null
+    let charHere = str.charAt(posInStr)
+    let nParticlesForThisChar =lettersCoords[charHere].length
+
+    for(let posInChar = 0; posInChar < nParticlesForThisChar; posInChar++) {
+      x1 = origin.x + (posInStr * charSize.width) + (charSize.width * lettersCoords[charHere][posInChar].x)
+      y1 = origin.y + (charSize.height * lettersCoords[charHere][posInChar].y)
+      destinationsAndTargets.push( {x1: x1, y1: y1, pointsAt: pointsAt} )
+    }
+
+  }
+
+  return destinationsAndTargets
+
+}
+
+
+module.exports = {
+  lettersCoords,
+  lettersVectors,
+  totalRequiredParticles,
+  getDestinationsAndTargets
+}
+
+//have a function that takes in a string and returns total nParticles using lengths of each letter array

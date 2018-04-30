@@ -36,6 +36,15 @@ function randPointNearPoint(pt) {
   return {x: x, y: y}
 }
 
+function coordsOnStraightLine(percent, startPt, endPt) {
+  let xTotal = endPt.x - startPt.x
+  let yTotal = endPt.y - startPt.y
+  let xDist = percent * xTotal
+  let yDist = percent * yTotal
+
+  return {x: startPt.x + xDist, y: startPt.y + yDist}
+}
+
 //stolen from stackoverflow
 function coordsOnCubicBezier(percent, startPt, cp1, cp2, endPt) {
   let t2 = percent * percent
@@ -114,6 +123,7 @@ function renderHoldPatternParticlePaths(ctx, particles) {
 module.exports = {
   randPointBetweenTwoPoints,
   randPointNearPoint,
+  coordsOnStraightLine,
   coordsOnCubicBezier,
   //dev
   renderBoundingCircle,
