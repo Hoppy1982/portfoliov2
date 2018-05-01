@@ -14,16 +14,29 @@ let lettersCoords = {
     {x: 0.25, y: 0.125},//2
     {x: 0.75, y: 0.25}, //3
     {x: 0.75, y: 0.75}  //4
-  ]
+  ],
+  " " :[]
 }
 
 let lettersVectors = {
   A: [
+    {hasVector: true, indexOffset: 2},
+    {hasVector: true, indexOffset: 3},
+    {hasVector: true, indexOffset: 1},
+    {hasVector: true, indexOffset: 2},
+    {hasVector: false},
+    {hasVector: false}
+  ]
+  /*
+  A: [
     {from: 0, to: 2},
     {from: 1, to: 4},
     {from: 2, to: 3},
-    {from: 3, to: 5}
+    {from: 3, to: 5},
+    {from: 4, to: null},
+    {from: 5, to: null}
   ]
+  */
 }
 //--------------------------------------------------------------HELPER FUNCTIONS
 function totalRequiredParticles(str) {
@@ -61,6 +74,13 @@ function getDestinationsAndTargets(str, origin, charSize) {
     for(let posInChar = 0; posInChar < nParticlesForThisChar; posInChar++) {
       x1 = origin.x + (posInStr * charSize.width) + (charSize.width * lettersCoords[charHere][posInChar].x)
       y1 = origin.y + (charSize.height * lettersCoords[charHere][posInChar].y)
+
+      if(lettersVectors[charHere][posInChar].hasVector === true) {//something about this is laying turds
+        pointsAt = lettersVectors[charHere][posInChar].indexOffset
+      } else {
+        pointsAt = false
+      }
+
       destinationsAndTargets.push( {x1: x1, y1: y1, pointsAt: pointsAt} )
     }
 

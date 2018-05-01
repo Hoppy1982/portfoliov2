@@ -25,7 +25,7 @@ let navTargetCharSize = {width: 80, height: 80}
 let holdPatternParticles = []
 let navTargetParticles = []
 
-let navTargetWord = 'BABABABABABABABAB'//dev temp
+let navTargetWord = 'A'//dev temp
 
 //array for spawning pool particles
 //array for wormhole leaving particles
@@ -114,11 +114,9 @@ function updateHoldPatternParticles() {
 
 function updateNavTargetLettersParticles() {
   navTargetParticles.forEach((particle, index) => {
-    //if distMoved < 1.0 then update pos
-    //if distMoved > threshold then render vector
-    //render self
     particle.updatePos()
     particle.draw('white', 'red')
+    particle.drawToPointsAt(index, 'white', 'red')
   })
 }
 
@@ -277,10 +275,23 @@ class CharPatternParticle extends Particle {
   draw(colorFrom, colorTo) {
     ctx1.beginPath()
     ctx1.lineWidth = 3
-    ctx1.strokeStyle = this.distMoved < 1 ? colorFrom : colorTo
+    ctx1.strokeStyle = this.distMoved < 1 ? colorFrom : colorTo//write function to transition between 2 colours that takes % as an arg
     ctx1.fillStyle = 'black'
     ctx1.arc(this.coords.x, this.coords.y, 3, 0, Math.PI * 2, false)
     ctx1.stroke()
     ctx1.fill()
+  }
+
+  drawToPointsAt(index, colorFrom, colorTo) {
+    if(this.pointsAt !== false) {
+      let pointsAtX = navTargetParticles[index + this.pointsAt].coords.x//these two lines are fucking things somehow deleting the last particle in the char I think
+      let pointsAtY = navTargetParticles[index + this.pointsAt].coords.y
+      ctx1.beginPath()
+      ctx1.lineWidth = 1
+      ctx1.strokeStyle = this.distMoved < 1 ? colorFrom : colorTo
+      ctx1.moveTo(this.coords.x, this.coords.y)
+      ctx1.lineTo(pointsAtX, pointsAtY)
+      ctx1.stroke()
+    }
   }
 }
