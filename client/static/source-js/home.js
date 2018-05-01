@@ -25,7 +25,7 @@ let navTargetCharSize = {width: 80, height: 80}
 let holdPatternParticles = []
 let navTargetParticles = []
 
-let navTargetWord = 'BBA'//dev temp
+let navTargetWord = 'BABABABABABABABAB'//dev temp
 
 //array for spawning pool particles
 //array for wormhole leaving particles
@@ -37,8 +37,9 @@ let navTargetWord = 'BBA'//dev temp
 function init() {
   reset()
   setLayout()
+  initNavTargetPos()
   initHoldPatternWaypointsActual()
-  initHoldPatternParticles(20)
+  initHoldPatternParticles(400)
   animate()
 }
 
@@ -46,7 +47,7 @@ function reset() {
   cancelAnimationFrame(frameId)
   holdPatternWaypointsActual.length = 0
   holdPatternParticles.length = 0
-  navTargetLettersParticles = 0//dev
+  navTargetParticles.length = 0
 }
 
 function initHoldPatternWaypointsActual() {
@@ -56,7 +57,7 @@ function initHoldPatternWaypointsActual() {
     return {x: x, y: y}
   })
 }
-//coords, age, speed, distMoved, nextWP
+
 function initHoldPatternParticles(nParticles) {
   for(let i = 0; i < nParticles; i++) {
     let fromWP = Math.floor(Math.random() * 6)
@@ -85,6 +86,14 @@ function initHoldPatternParticles(nParticles) {
   }
 }
 
+function initNavTargetPos() {
+  console.log(`origin x: ${navTargetOrigin.x}`)
+  navTargetCharSize.height = canvasHeight / 8
+  navTargetCharSize.width = navTargetCharSize.height * 0.8
+  navTargetOrigin.x = (canvasWidth / 2) - (navTargetWord.length * navTargetCharSize.width / 2)
+  navTargetOrigin.y = (canvasHeight / 2) - (navTargetCharSize.height / 2)
+}
+
 //--------------------------------------------UPDATE PARTICLE POSITIONS & RENDER
 function animate() {
   frameId = requestAnimationFrame(animate)
@@ -109,7 +118,7 @@ function updateNavTargetLettersParticles() {
     //if distMoved > threshold then render vector
     //render self
     particle.updatePos()
-    particle.draw('red')
+    particle.draw('white', 'red')
   })
 }
 
@@ -258,11 +267,20 @@ class CharPatternParticle extends Particle {
 
   updatePos() {
     this.distMoved += this.speed
-
     if(this.distMoved < 1) {
       let newPos = canvasHelpers.coordsOnStraightLine(this.distMoved, {x: this.coords.x0, y: this.coords.y0}, {x: this.coords.x1, y: this.coords.y1})
       this.coords.x = newPos.x
       this.coords.y = newPos.y
     }
+  }
+
+  draw(colorFrom, colorTo) {
+    ctx1.beginPath()
+    ctx1.lineWidth = 3
+    ctx1.strokeStyle = this.distMoved < 1 ? colorFrom : colorTo
+    ctx1.fillStyle = 'black'
+    ctx1.arc(this.coords.x, this.coords.y, 3, 0, Math.PI * 2, false)
+    ctx1.stroke()
+    ctx1.fill()
   }
 }
