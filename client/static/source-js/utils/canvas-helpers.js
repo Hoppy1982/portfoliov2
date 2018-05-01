@@ -121,7 +121,6 @@ function renderHoldPatternParticlePaths(ctx, particles) {
 
 //-----------------------------------------------------------------COLOR HELPERS
 function colorBetweenTwoColors(percent, colorOne, colorTwo) {
-  //'#ff0000'
   let hex = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f']
 
   //colorOne
@@ -138,9 +137,29 @@ function colorBetweenTwoColors(percent, colorOne, colorTwo) {
   let c1BlueBaseTen = (c1BlueIndex0 * 16) + (c1BlueIndex1)
 
   //colorTwo
+  let c2RedIndex0 = hex.indexOf( colorTwo.charAt(1) )
+  let c2RedIndex1 = hex.indexOf( colorTwo.charAt(2) )
+  let c2RedBaseTen = (c2RedIndex0 * 16) + (c2RedIndex1)
 
+  let c2GreenIndex0 = hex.indexOf( colorTwo.charAt(3) )
+  let c2GreenIndex1 = hex.indexOf( colorTwo.charAt(4) )
+  let c2GreendBaseTen = (c2GreenIndex0 * 16) + (c2GreenIndex1)
 
-  console.log(`c1RedBaseTen: ${c1RedBaseTen}, c1GreendBaseTen: ${c1GreendBaseTen}, c1BlueBaseTen: ${c1BlueBaseTen}`)
+  let c2BlueIndex0 = hex.indexOf( colorTwo.charAt(5) )
+  let c2BlueIndex1 = hex.indexOf( colorTwo.charAt(6) )
+  let c2BlueBaseTen = (c2BlueIndex0 * 16) + (c2BlueIndex1)
+
+  let redDelta = c2RedBaseTen - c1RedBaseTen
+  let greenDelta = c2GreendBaseTen - c1GreendBaseTen
+  let blueDelta = c2BlueBaseTen - c1BlueBaseTen
+
+  let redNow = Math.round( c1RedBaseTen + (redDelta * percent) )
+  let greenNow = Math.round( c1GreendBaseTen + (greenDelta * percent) )
+  let blueNow = Math.round( c1BlueBaseTen + (blueDelta * percent) )
+
+  console.log(`redNow: ${redNow}, greenNow: ${greenNow}, blueNow: ${blueNow}`)
+
+  return {r: redNow, g: greenNow, b: blueNow}//temp
 }
 
 //-----------------------------------------------------------------------EXPORTS
