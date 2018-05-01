@@ -25,7 +25,7 @@ let navTargetCharSize = {width: 80, height: 80}
 let holdPatternParticles = []
 let navTargetParticles = []
 
-let navTargetWord = 'A'//dev temp
+let navTargetWord = 'A B'//dev temp
 
 //array for spawning pool particles
 //array for wormhole leaving particles
@@ -116,7 +116,7 @@ function updateNavTargetLettersParticles() {
   navTargetParticles.forEach((particle, index) => {
     particle.updatePos()
     particle.draw('white', 'red')
-    particle.drawToPointsAt(index, 'white', 'red')
+    particle.drawToPointsAt(index, '#ffffff', '#ff0000')
   })
 }
 
@@ -295,3 +295,5 @@ class CharPatternParticle extends Particle {
     }
   }
 }
+
+canvasHelpers.colorBetweenTwoColors(0.5, '#ffc4dd', '#0000ff')//dev

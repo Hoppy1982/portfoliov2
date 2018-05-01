@@ -119,12 +119,37 @@ function renderHoldPatternParticlePaths(ctx, particles) {
   })
 }
 
-//------------------------------------------------------------exported functions
+//-----------------------------------------------------------------COLOR HELPERS
+function colorBetweenTwoColors(percent, colorOne, colorTwo) {
+  //'#ff0000'
+  let hex = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f']
+
+  //colorOne
+  let c1RedIndex0 = hex.indexOf( colorOne.charAt(1) )
+  let c1RedIndex1 = hex.indexOf( colorOne.charAt(2) )
+  let c1RedBaseTen = (c1RedIndex0 * 16) + (c1RedIndex1)
+
+  let c1GreenIndex0 = hex.indexOf( colorOne.charAt(3) )
+  let c1GreenIndex1 = hex.indexOf( colorOne.charAt(4) )
+  let c1GreendBaseTen = (c1GreenIndex0 * 16) + (c1GreenIndex1)
+
+  let c1BlueIndex0 = hex.indexOf( colorOne.charAt(5) )
+  let c1BlueIndex1 = hex.indexOf( colorOne.charAt(6) )
+  let c1BlueBaseTen = (c1BlueIndex0 * 16) + (c1BlueIndex1)
+
+  //colorTwo
+
+
+  console.log(`c1RedBaseTen: ${c1RedBaseTen}, c1GreendBaseTen: ${c1GreendBaseTen}, c1BlueBaseTen: ${c1BlueBaseTen}`)
+}
+
+//-----------------------------------------------------------------------EXPORTS
 module.exports = {
   randPointBetweenTwoPoints,
   randPointNearPoint,
   coordsOnStraightLine,
   coordsOnCubicBezier,
+  colorBetweenTwoColors,
   //dev
   renderBoundingCircle,
   renderHoldPatternWPs,

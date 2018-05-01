@@ -26,17 +26,14 @@ let lettersVectors = {
     {hasVector: true, indexOffset: 2},
     {hasVector: false},
     {hasVector: false}
+  ],
+  B: [
+    {hasVector: true, indexOffset: 2},
+    {hasVector: true, indexOffset: 3},
+    {hasVector: true, indexOffset: 1},
+    {hasVector: true, indexOffset: -2},
+    {hasVector: true, indexOffset: -4}
   ]
-  /*
-  A: [
-    {from: 0, to: 2},
-    {from: 1, to: 4},
-    {from: 2, to: 3},
-    {from: 3, to: 5},
-    {from: 4, to: null},
-    {from: 5, to: null}
-  ]
-  */
 }
 //--------------------------------------------------------------HELPER FUNCTIONS
 function totalRequiredParticles(str) {
