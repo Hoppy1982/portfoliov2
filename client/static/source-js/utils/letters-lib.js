@@ -8,17 +8,29 @@ let lettersCoords = {
     {x: 0.75, y: 0.5},   //4
     {x: 0.875, y: 0.875} //5
   ],
-  B : [
+  B: [
     {x: 0.25, y: 0.875},//0
     {x: 0.25, y: 0.5},  //1
     {x: 0.25, y: 0.125},//2
     {x: 0.75, y: 0.25}, //3
     {x: 0.75, y: 0.75}  //4
   ],
-  " " :[]
+  C: [
+    {x: 0.75, y: 0.875},//0
+    {x: 0.25, y: 0.625}, //1
+    {x: 0.25, y: 0.375}, //2
+    {x: 0.75, y: 0.125} //3
+  ],
+  D: [
+    {x: 0.25, y: 0.875},
+    {x: 0.25, y: 0.125 },
+    {x: 0.75, y: 0.375},
+    {x: 0.75, y: 0.625}
+  ],
+  " ": []//enables having spaces between letters
 }
 
-let lettersVectors = {
+let lettersVectors = {//Todo - check id this still needs to be exported
   A: [
     {hasVector: true, indexOffset: 2},
     {hasVector: true, indexOffset: 3},
@@ -33,6 +45,18 @@ let lettersVectors = {
     {hasVector: true, indexOffset: 1},
     {hasVector: true, indexOffset: -2},
     {hasVector: true, indexOffset: -4}
+  ],
+  C: [
+    {hasVector: true, indexOffset: 1},
+    {hasVector: true, indexOffset: 1},
+    {hasVector: true, indexOffset: 1},
+    {hasVector: false}
+  ],
+  D: [
+    {hasVector: true, indexOffset: 1},
+    {hasVector: true, indexOffset: 1},
+    {hasVector: true, indexOffset: 1},
+    {hasVector: true, indexOffset: -3}
   ]
 }
 //--------------------------------------------------------------HELPER FUNCTIONS
@@ -47,6 +71,12 @@ function totalRequiredParticles(str) {
         break
       case 'B':
         requiredParticles += lettersCoords.B.length
+        break
+      case 'C':
+        requiredParticles += lettersCoords.C.length
+        break
+      case 'D':
+        requiredParticles += lettersCoords.D.length
         break
     }
   }

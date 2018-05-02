@@ -25,9 +25,8 @@ let navTargetCharSize = {width: 80, height: 80}
 let holdPatternParticles = []
 let navTargetParticles = []
 
-let navTargetWord = 'A B'//dev temp
+let navTargetWord = ' DAB CAB'//dev temp
 
-//array for spawning pool particles
 //array for wormhole leaving particles
 //array for particles transitioning between main arrays???
 
@@ -39,7 +38,7 @@ function init() {
   setLayout()
   initNavTargetPos()
   initHoldPatternWaypointsActual()
-  initHoldPatternParticles(400)
+  initHoldPatternParticles(100)
   animate()
 }
 
@@ -116,7 +115,7 @@ function updateNavTargetLettersParticles() {
   navTargetParticles.forEach((particle, index) => {
     particle.updatePos()
     particle.draw('white', 'red')
-    particle.drawToPointsAt(index, '#ffffff', '#ff0000')
+    particle.drawToPointsAt(index, '#1f2633', '#ff0000')
   })
 }
 
@@ -285,13 +284,15 @@ class CharPatternParticle extends Particle {
   }
 
   drawToPointsAt(index, colorFrom, colorTo) {
-    if(this.distMoved > 0.75) {
+    if(this.distMoved > 0.1) {
       if(this.pointsAt !== false) {
         let pointsAtX = navTargetParticles[index + this.pointsAt].coords.x//these two lines are fucking things somehow deleting the last particle in the char I think
         let pointsAtY = navTargetParticles[index + this.pointsAt].coords.y
         ctx1.beginPath()
         ctx1.lineWidth = 1
-        ctx1.strokeStyle = this.distMoved < 1 ? colorFrom : colorTo
+        let rgb = canvasHelpers.colorBetweenTwoColors(this.distMoved, '#1f2633', '#ff0000')
+        ctx1.strokeStyle = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`
+        //ctx1.strokeStyle = this.distMoved < 1 ? colorFrom : colorTo
         ctx1.moveTo(this.coords.x, this.coords.y)
         ctx1.lineTo(pointsAtX, pointsAtY)
         ctx1.stroke()
