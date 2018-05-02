@@ -17,15 +17,38 @@ let lettersCoords = {
   ],
   C: [
     {x: 0.75, y: 0.875},//0
-    {x: 0.25, y: 0.625}, //1
-    {x: 0.25, y: 0.375}, //2
+    {x: 0.25, y: 0.625},//1
+    {x: 0.25, y: 0.375},//2
     {x: 0.75, y: 0.125} //3
   ],
   D: [
-    {x: 0.25, y: 0.875},
-    {x: 0.25, y: 0.125 },
-    {x: 0.75, y: 0.375},
-    {x: 0.75, y: 0.625}
+    {x: 0.25, y: 0.875}, //0
+    {x: 0.25, y: 0.125 },//1
+    {x: 0.75, y: 0.375}, //2
+    {x: 0.75, y: 0.625}  //3
+  ],
+  E: [
+    {x: 0.25, y: 0.875},//0
+    {x: 0.25, y: 0.5},  //1
+    {x: 0.25, y: 0.125},//2
+    {x: 0.75, y: 0.125},//3
+    {x: 0.75, y: 0.5},  //4
+    {x: 0.75, y: 0.875} //5
+  ],
+  F: [
+    {x: 0.25, y: 0.875},//0
+    {x: 0.25, y: 0.5},  //1
+    {x: 0.25, y: 0.125},//2
+    {x: 0.75, y: 0.125},//3
+    {x: 0.75, y: 0.5}   //4
+  ],
+  G: [
+    {x: 0.75, y: 0.875},//0
+    {x: 0.25, y: 0.625},//1
+    {x: 0.25, y: 0.375},//2
+    {x: 0.75, y: 0.125},//3
+    {x: 0.625, y: 0.5}, //4
+    {x: 0.875, y: 0.5}  //5
   ],
   " ": []//enables having spaces between letters
 }
@@ -57,12 +80,39 @@ let lettersVectors = {//Todo - check id this still needs to be exported
     {hasVector: true, indexOffset: 1},
     {hasVector: true, indexOffset: 1},
     {hasVector: true, indexOffset: -3}
+  ],
+  E: [
+    {hasVector: true, indexOffset: 2},
+    {hasVector: true, indexOffset: 3},
+    {hasVector: true, indexOffset: 1},
+    {hasVector: false},
+    {hasVector: false},
+    {hasVector: true, indexOffset: -5},
+  ],
+  F: [
+    {hasVector: true, indexOffset: 2},
+    {hasVector: true, indexOffset: 3},
+    {hasVector: true, indexOffset: 1},
+    {hasVector: false},
+    {hasVector: false}
+  ],
+  G: [
+    {hasVector: true, indexOffset: 1},
+    {hasVector: true, indexOffset: 1},
+    {hasVector: true, indexOffset: 1},
+    {hasVector: false},
+    {hasVector: true, indexOffset: 1},
+    {hasVector: true, indexOffset: -5}
   ]
 }
 //--------------------------------------------------------------HELPER FUNCTIONS
 function totalRequiredParticles(str) {
   let requiredParticles = 0
 
+  for(i in str) {
+    requiredParticles += lettersCoords[str.charAt(i)].length
+  }
+/*
   for(i in str) {
     //todo think about way of swapping the switch statement for something more general
     switch(str.charAt(i)) {
@@ -80,7 +130,7 @@ function totalRequiredParticles(str) {
         break
     }
   }
-
+*/
   return requiredParticles
 }
 

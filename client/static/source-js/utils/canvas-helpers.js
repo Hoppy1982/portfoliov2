@@ -157,7 +157,7 @@ function colorBetweenTwoColors(percent, colorOne, colorTwo) {
   let greenNow = Math.round( c1GreendBaseTen + (greenDelta * percent) )
   let blueNow = Math.round( c1BlueBaseTen + (blueDelta * percent) )
 
-  console.log(`redNow: ${redNow}, greenNow: ${greenNow}, blueNow: ${blueNow}`)
+  //console.log(`redNow: ${redNow}, greenNow: ${greenNow}, blueNow: ${blueNow}`)
 
   return {r: redNow, g: greenNow, b: blueNow}//temp
 }
