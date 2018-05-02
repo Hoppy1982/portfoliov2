@@ -25,7 +25,7 @@ let navTargetCharSize = {width: 80, height: 80}
 let holdPatternParticles = []
 let navTargetParticles = []
 
-let navTargetWord = 'BEAD CGF G'//dev temp
+let navTargetWord = 'ABCDEFGHI'//dev temp
 
 //array for wormhole leaving particles
 //array for particles transitioning between main arrays???

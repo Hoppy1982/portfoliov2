@@ -50,6 +50,22 @@ let lettersCoords = {
     {x: 0.625, y: 0.5}, //4
     {x: 0.875, y: 0.5}  //5
   ],
+  H: [
+    {x: 0.25, y: 0.875},//0
+    {x: 0.25, y: 0.5},  //1
+    {x: 0.25, y: 0.125},//2
+    {x: 0.75, y: 0.125},//3
+    {x: 0.75, y: 0.5},  //4
+    {x: 0.75, y: 0.875} //5
+  ],
+  I: [
+    {x: 0.75, y: 0.875},//0
+    {x: 0.5, y: 0.875}, //1
+    {x: 0.25, y: 0.875},//2
+    {x: 0.25, y: 0.125},//3
+    {x: 0.5, y: 0.125}, //4
+    {x: 0.75, y: 0.125} //5
+  ],
   " ": []//enables having spaces between letters
 }
 
@@ -87,7 +103,7 @@ let lettersVectors = {//Todo - check id this still needs to be exported
     {hasVector: true, indexOffset: 1},
     {hasVector: false},
     {hasVector: false},
-    {hasVector: true, indexOffset: -5},
+    {hasVector: true, indexOffset: -5}
   ],
   F: [
     {hasVector: true, indexOffset: 2},
@@ -103,6 +119,22 @@ let lettersVectors = {//Todo - check id this still needs to be exported
     {hasVector: false},
     {hasVector: true, indexOffset: 1},
     {hasVector: true, indexOffset: -5}
+  ],
+  H: [
+    {hasVector: true, indexOffset: 2},
+    {hasVector: true, indexOffset: 3},
+    {hasVector: false},
+    {hasVector: true, indexOffset: 2},
+    {hasVector: false},
+    {hasVector: false}
+  ],
+  I: [
+    {hasVector: true, indexOffset: 2},
+    {hasVector: true, indexOffset: 3},
+    {hasVector: false},
+    {hasVector: true, indexOffset: 2},
+    {hasVector: false},
+    {hasVector: false}
   ]
 }
 //--------------------------------------------------------------HELPER FUNCTIONS

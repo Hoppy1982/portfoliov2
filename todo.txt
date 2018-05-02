@@ -1,0 +1,15 @@
+Bugs
+- build.js fails silently if syntax errors in modules called from home.js
+
+
+To Do
+- Add support for multiple lines of text in the navTargetWord. Max 4 lines, words
+split evenly over lines and centered??
+- Finish chuffing letters library
+- Carousel functionality with place holders for nav links
+- Change navTargetWord to update from Carousel
+- Add function to transfer letter particles to hold particles
+- Make it so as carousel highlighted option changes particles automatically move from
+nav word into hold pattern, then new particles come in for new word.
+- Nav link description to update as carousel rotates.
+- 
