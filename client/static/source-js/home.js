@@ -25,7 +25,7 @@ let navTargetCharSize = {width: 80, height: 80}
 let holdPatternParticles = []
 let navTargetParticles = []
 
-let navTargetWord = 'ABCDEFGHI'//dev temp
+let navTargetWord = 'BAD BAD GIBED BEEBEEBAA'//dev temp
 
 //array for wormhole leaving particles
 //array for particles transitioning between main arrays???
@@ -38,7 +38,7 @@ function init() {
   setLayout()
   initNavTargetPos()
   initHoldPatternWaypointsActual()
-  initHoldPatternParticles(100)
+  initHoldPatternParticles(120)
   animate()
 }
 
@@ -86,7 +86,6 @@ function initHoldPatternParticles(nParticles) {
 }
 
 function initNavTargetPos() {
-  console.log(`origin x: ${navTargetOrigin.x}`)
   navTargetCharSize.height = canvasHeight / 8
   navTargetCharSize.width = navTargetCharSize.height * 0.8
   navTargetOrigin.x = (canvasWidth / 2) - (navTargetWord.length * navTargetCharSize.width / 2)
@@ -170,7 +169,9 @@ navGoToButton.addEventListener('click', initNavTarget, false)
 //move some of this to letter-lib
 function initNavTarget() {
   let requiredParticles = lettersLib.totalRequiredParticles(navTargetWord)
-  let destinationsAndTargets = lettersLib.getDestinationsAndTargets(navTargetWord, navTargetOrigin, navTargetCharSize)
+  //let destinationsAndTargets = lettersLib.getDestinationsAndTargets(navTargetWord, navTargetOrigin, navTargetCharSize)
+  let wordsInRows = lettersLib.placeWordsInRows(navTargetWord, 12)
+  let destinationsAndTargets = lettersLib.calcLetterParticlesDestAndTargets(wordsInRows, canvasWidth, canvasHeight)
 
   if (holdPatternParticles.length > requiredParticles) {
     for(let i = 0; i < requiredParticles; i++) {
@@ -191,7 +192,6 @@ function initNavTarget() {
     }
 
   }
-  console.log(destinationsAndTargets)
 }
 //holdPatternPrticles | HoldPatternParticle: coords, age, speed, distMoved, nextWP
 //navTargetParticles: | CharPatternParticle: coords, age, speed, distMoved, char, posInChar, posInStr, pointsAt

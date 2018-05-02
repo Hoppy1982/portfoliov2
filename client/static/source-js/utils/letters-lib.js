@@ -69,6 +69,7 @@ let lettersCoords = {
   " ": []//enables having spaces between letters
 }
 
+
 let lettersVectors = {//Todo - check id this still needs to be exported
   A: [
     {hasVector: true, indexOffset: 2},
@@ -144,31 +145,61 @@ function totalRequiredParticles(str) {
   for(i in str) {
     requiredParticles += lettersCoords[str.charAt(i)].length
   }
-/*
-  for(i in str) {
-    //todo think about way of swapping the switch statement for something more general
-    switch(str.charAt(i)) {
-      case 'A':
-        requiredParticles += lettersCoords.A.length
-        break
-      case 'B':
-        requiredParticles += lettersCoords.B.length
-        break
-      case 'C':
-        requiredParticles += lettersCoords.C.length
-        break
-      case 'D':
-        requiredParticles += lettersCoords.D.length
-        break
-    }
-  }
-*/
+  console.log("total requiredParticles: " + requiredParticles)
   return requiredParticles
 }
 
 
-//let navTargetOrigin = {x: 30, y: 30}
-//let navTargetSize = {width: 300, height: 60}
+function placeWordsInRows(str, maxCharsInRow) {
+  let words = str.split(" ")
+  let rows = [""]
+  let rowsIndex = 0
+
+  words.forEach((word, index) => {
+    if(rows[rowsIndex].length + word.length + 1 <= maxCharsInRow) {
+      rows[rowsIndex] = index === 0 ? rows[rowsIndex] + word : rows[rowsIndex] + " " + word
+    } else {
+      rows.push(word)
+      rowsIndex++
+    }
+  })
+
+  return rows
+}
+
+
+function calcLetterParticlesDestAndTargets(wordsInRows, canvasWidth, canvasHeight) {
+  let charWidth = Math.round(canvasWidth / 14)
+  let charHeight = Math.round(charWidth * 1.2)
+  let totalRowsHeight = charHeight * (wordsInRows.length + 1)
+  let finalCoordsAndPointsAts = []
+
+  for(let row in wordsInRows) {
+    let rowStartX = (canvasWidth / 2) - (wordsInRows[row].length * charWidth / 2)
+    let rowStartY = (canvasHeight / 2) - (totalRowsHeight / 2) + (row * charHeight)
+
+    for(let letterPos = 0; letterPos < wordsInRows[row].length; letterPos++) {
+      let charHere = wordsInRows[row].charAt(letterPos)
+      let nCharParticles = lettersCoords[charHere].length
+
+      for(let posInChar = 0; posInChar < nCharParticles; posInChar++) {
+        let x1 = rowStartX + (letterPos * charWidth) + (charWidth * lettersCoords[charHere][posInChar].x)
+        let y1 = rowStartY + (charHeight * lettersCoords[charHere][posInChar].y)
+        let pointsAt = false
+
+        if(lettersVectors[charHere][posInChar].hasVector === true) {
+          pointsAt = lettersVectors[charHere][posInChar].indexOffset
+        }
+
+        finalCoordsAndPointsAts.push({x1: x1, y1: y1, pointsAt: pointsAt})
+      }
+    }
+  }
+
+  return finalCoordsAndPointsAts
+}
+
+
 function getDestinationsAndTargets(str, origin, charSize) {
   let destinationsAndTargets = []
 
@@ -178,7 +209,7 @@ function getDestinationsAndTargets(str, origin, charSize) {
     let y1 = null
     let pointsAt = null
     let charHere = str.charAt(posInStr)
-    let nParticlesForThisChar =lettersCoords[charHere].length
+    let nParticlesForThisChar = lettersCoords[charHere].length
 
     for(let posInChar = 0; posInChar < nParticlesForThisChar; posInChar++) {
       x1 = origin.x + (posInStr * charSize.width) + (charSize.width * lettersCoords[charHere][posInChar].x)
@@ -203,7 +234,9 @@ function getDestinationsAndTargets(str, origin, charSize) {
 module.exports = {
   lettersCoords,
   lettersVectors,
+  placeWordsInRows,
   totalRequiredParticles,
+  calcLetterParticlesDestAndTargets,
   getDestinationsAndTargets
 }
 

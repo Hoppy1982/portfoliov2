@@ -12,4 +12,6 @@ split evenly over lines and centered??
 - Make it so as carousel highlighted option changes particles automatically move from
 nav word into hold pattern, then new particles come in for new word.
 - Nav link description to update as carousel rotates.
-- 
+- Pretty up home.css when all functionality added
+- Possibly add lozenge letters from circles idea to roll on on page load for
+"Mark Hopcraft"
