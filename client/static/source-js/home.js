@@ -193,20 +193,9 @@ function initNavTarget() {
 
   }
 }
-//holdPatternPrticles | HoldPatternParticle: coords, age, speed, distMoved, nextWP
-//navTargetParticles: | CharPatternParticle: coords, age, speed, distMoved, char, posInChar, posInStr, pointsAt
 
 
 //--------------------------------------------------------------PARTICLE CLASSES
-//coords {x: number, y: number, x0: number, y0: number, x1: number, y1: number, cp1x: number, cp1y: number, cp2x: number, cp2y: number}
-//age number
-//speed number
-//distMoved number (% along path as decimal)
-//nextWP number(index)
-
-//think idea might be to stick nearly all the props on th Particle parent, scrap the intermediate class and concentrate on the methods in individual
-//particle classes.
-
 class Particle {
   constructor(coords, age, speed, distMoved) {
     this.coords = coords
