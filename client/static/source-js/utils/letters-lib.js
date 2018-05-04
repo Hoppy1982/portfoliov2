@@ -200,44 +200,13 @@ function calcLetterParticlesDestAndTargets(wordsInRows, canvasWidth, canvasHeigh
 }
 
 
-function getDestinationsAndTargets(str, origin, charSize) {
-  let destinationsAndTargets = []
-
-  //target == origin plus (char pos in str * width of char) plus particle pos in char
-  for(let posInStr in str) {
-    let x1 = null
-    let y1 = null
-    let pointsAt = null
-    let charHere = str.charAt(posInStr)
-    let nParticlesForThisChar = lettersCoords[charHere].length
-
-    for(let posInChar = 0; posInChar < nParticlesForThisChar; posInChar++) {
-      x1 = origin.x + (posInStr * charSize.width) + (charSize.width * lettersCoords[charHere][posInChar].x)
-      y1 = origin.y + (charSize.height * lettersCoords[charHere][posInChar].y)
-
-      if(lettersVectors[charHere][posInChar].hasVector === true) {//something about this is laying turds
-        pointsAt = lettersVectors[charHere][posInChar].indexOffset
-      } else {
-        pointsAt = false
-      }
-
-      destinationsAndTargets.push( {x1: x1, y1: y1, pointsAt: pointsAt} )
-    }
-
-  }
-
-  return destinationsAndTargets
-
-}
-
 
 module.exports = {
   lettersCoords,
   lettersVectors,
   placeWordsInRows,
   totalRequiredParticles,
-  calcLetterParticlesDestAndTargets,
-  getDestinationsAndTargets
+  calcLetterParticlesDestAndTargets
 }
 
 //have a function that takes in a string and returns total nParticles using lengths of each letter array

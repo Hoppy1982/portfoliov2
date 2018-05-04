@@ -9,7 +9,7 @@ let frameId
 let canvasWidth
 let canvasHeight
 
-//hold pattern WP coords as ratio of canvas size
+//as percent of canvas size
 let holdPatternWaypoints = [
   {x: 0.125, y: 0.5},//0
   {x: 0.25, y: 0.125},//1
@@ -19,8 +19,8 @@ let holdPatternWaypoints = [
   {x: 0.25, y: 0.875}//5
 ]
 let holdPatternWaypointsActual = []//hold pattern WP coords in pixels, recalcumalated on resize
-let navTargetOrigin = {x: 50, y: 50}
-let navTargetCharSize = {width: 80, height: 80}
+let navTargetOrigin = {x: null, y: null}
+let navTargetCharSize = {width: null, height: null}
 
 let holdPatternParticles = []
 let navTargetParticles = []
@@ -169,7 +169,6 @@ navGoToButton.addEventListener('click', initNavTarget, false)
 //move some of this to letter-lib
 function initNavTarget() {
   let requiredParticles = lettersLib.totalRequiredParticles(navTargetWord)
-  //let destinationsAndTargets = lettersLib.getDestinationsAndTargets(navTargetWord, navTargetOrigin, navTargetCharSize)
   let wordsInRows = lettersLib.placeWordsInRows(navTargetWord, 12)
   let destinationsAndTargets = lettersLib.calcLetterParticlesDestAndTargets(wordsInRows, canvasWidth, canvasHeight)
 

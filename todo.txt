@@ -1,10 +1,11 @@
 Bugs
+
+
+Cautiously fixed bugs..
 - build.js fails silently if syntax errors in modules called from home.js
 
 
 To Do
-- Add support for multiple lines of text in the navTargetWord. Max 4 lines, words
-split evenly over lines and centered??
 - Finish chuffing letters library
 - Carousel functionality with place holders for nav links
 - Change navTargetWord to update from Carousel
@@ -15,3 +16,8 @@ nav word into hold pattern, then new particles come in for new word.
 - Pretty up home.css when all functionality added
 - Possibly add lozenge letters from circles idea to roll on on page load for
 "Mark Hopcraft"
+- Make particles & connecting lines scale with canvas size.
+
+
+Cautiously done..
+- Add support for multiple lines of text in the navTargetWord. Max 12 chars per line.

@@ -26,9 +26,14 @@ fs.readdir(SOURCEJSDIR, (err, files) => {
     let browserifyObj = browserify({entries: SOURCEJSDIR + filteredFile, debug: true})
 
     browserifyObj.bundle((err, buff) => {
-      if (err) throw err
-      
-      fs.writeFile(BUNDLEDJSDIR + 'bundled-' + filteredFile, buff, () => {console.log('file bundled..')})
+
+      fs.writeFile(BUNDLEDJSDIR + 'bundled-' + filteredFile, buff, () => {
+        console.log('file bundled..')
+      })
+
+    }).on('error',function(err) {
+      console.log("!BUILD ERROR!")
+      console.log(err)
     })
   }
 })
