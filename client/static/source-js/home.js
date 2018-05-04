@@ -1,8 +1,9 @@
 const canvasHelpers = require('./utils/canvas-helpers.js')
 const lettersLib = require('./utils/letters-lib.js')
 
-
-const TOTAL_PARTICLES = 300
+const CHAR_PATTERN_WORDS = 'AAA BB CCCCC ABCDEFGH ABCDEFGHI'//for now defined staticly here, later will come from caurosel
+const MAX_CHARS_PER_ROW = 12
+const TOTAL_PARTICLES = 600
 const HOLD_PATTERN_WAYPOINTS = [//coords as percent of canvas size
   {x: 0.125, y: 0.5},//0
   {x: 0.25, y: 0.125},//1
@@ -20,12 +21,8 @@ let frameId
 let canvasWidth
 let canvasHeight
 let holdPatternWaypointsActual = []//coords in pixels, recalculated on resize
-let navTargetOrigin = {x: null, y: null}
-let navTargetCharSize = {width: null, height: null}
 let holdPatternParticles = []
 let charPatternParticles = []
-
-let navTargetWord = 'BAD ABCDEFGH ABCDEFGHI'//dev
 
 
 //------------------------------------------------------------------------EVENTS
@@ -34,7 +31,7 @@ window.addEventListener('resize', init)
 navGoToButton.addEventListener('click', initNavTarget, false)
 
 
-//---------------------------------------------------FLOW CONTROL & INITIALISERS
+//---------------------------------------------------FLOW CONTROL & INITIALIZERS
 function init() {
   reset()
   setLayout()
@@ -159,8 +156,8 @@ function setLayout() {
 
 //move some of this to letter-lib
 function initNavTarget() {
-  let requiredParticles = lettersLib.totalRequiredParticles(navTargetWord)
-  let wordsInRows = lettersLib.placeWordsInRows(navTargetWord, 12)
+  let requiredParticles = lettersLib.totalRequiredParticles(CHAR_PATTERN_WORDS)
+  let wordsInRows = lettersLib.placeWordsInRows(CHAR_PATTERN_WORDS, MAX_CHARS_PER_ROW)
   let destinationsAndTargets = lettersLib.calcLetterParticlesDestAndTargets(wordsInRows, canvasWidth, canvasHeight)
 
   if (holdPatternParticles.length > requiredParticles) {

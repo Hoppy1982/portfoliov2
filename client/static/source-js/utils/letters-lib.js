@@ -70,7 +70,7 @@ let lettersCoords = {
 }
 
 
-let lettersVectors = {//Todo - check id this still needs to be exported
+let lettersVectors = {
   A: [
     {hasVector: true, indexOffset: 2},
     {hasVector: true, indexOffset: 3},
@@ -138,7 +138,9 @@ let lettersVectors = {//Todo - check id this still needs to be exported
     {hasVector: false}
   ]
 }
-//--------------------------------------------------------------HELPER FUNCTIONS
+
+
+//------------------------------------------------------------EXPORTED FUNCTIONS
 function totalRequiredParticles(str) {
   let requiredParticles = 0
 
@@ -169,7 +171,7 @@ function placeWordsInRows(str, maxCharsInRow) {
 
 
 function calcLetterParticlesDestAndTargets(wordsInRows, canvasWidth, canvasHeight) {
-  let charWidth = Math.round(canvasWidth / 14)
+  let charWidth = Math.round( canvasWidth / (longestElementLength(wordsInRows) + 2) )
   let charHeight = Math.round(charWidth * 1.2)
   let totalRowsHeight = charHeight * (wordsInRows.length + 1)
   let finalCoordsAndPointsAts = []
@@ -199,14 +201,19 @@ function calcLetterParticlesDestAndTargets(wordsInRows, canvasWidth, canvasHeigh
   return finalCoordsAndPointsAts
 }
 
+//------------------------------------------------------------INTERNAL FUNCTIONS
+function longestElementLength(arr) {
+  let length = 0
+  arr.forEach(el => {
+    length = el.length >= length ? el.length : length
+  })
+  return length
+}
 
 
+//-----------------------------------------------------------------------EXPORTS
 module.exports = {
-  lettersCoords,
-  lettersVectors,
   placeWordsInRows,
   totalRequiredParticles,
   calcLetterParticlesDestAndTargets
 }
-
-//have a function that takes in a string and returns total nParticles using lengths of each letter array
