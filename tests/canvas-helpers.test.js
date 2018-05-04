@@ -72,6 +72,9 @@ test('coordsOnStraightLine: correct at 50% from 0,0 to 10,-10', () => {
 
 
 //---------------------------------------------------coordsOnCubicBezier() tests
-
+test('coordsOnCubicBezier: correct with known start, end & control points #1', () => {
+  expect(canvasHelpers.coordsOnCubicBezier(0.5, 0, 5, 8, 10)).toBe(6.125)
+})
 
 //-------------------------------------------------colorBetweenTwoColors() tests
+//might change this functions input format
