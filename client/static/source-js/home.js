@@ -2,7 +2,7 @@ const canvasHelpers = require('./utils/canvas-helpers.js')
 const lettersLib = require('./utils/letters-lib.js')
 
 
-const TOTAL_PARTICLES = 120
+const TOTAL_PARTICLES = 300
 const HOLD_PATTERN_WAYPOINTS = [//coords as percent of canvas size
   {x: 0.125, y: 0.5},//0
   {x: 0.25, y: 0.125},//1
@@ -16,27 +16,29 @@ let body = document.getElementsByTagName('body')[0]
 let canvas1 = document.getElementsByTagName('canvas')[0]
 let ctx1 = canvas1.getContext('2d')
 let navGoToButton = document.getElementById('navigatorDesc')//dev
-
 let frameId
 let canvasWidth
 let canvasHeight
-
 let holdPatternWaypointsActual = []//coords in pixels, recalculated on resize
 let navTargetOrigin = {x: null, y: null}
 let navTargetCharSize = {width: null, height: null}
-
 let holdPatternParticles = []
-let navTargetParticles = []
+let charPatternParticles = []
 
-let navTargetWord = 'BAD BAD GIBED BEEBEEBAA'//dev
+let navTargetWord = 'BAD ABCDEFGH ABCDEFGHI'//dev
 
 
-//----------------------------------------------------------------------MANAGERS
+//------------------------------------------------------------------------EVENTS
+document.addEventListener("DOMContentLoaded", init)
+window.addEventListener('resize', init)
+navGoToButton.addEventListener('click', initNavTarget, false)
+
+
+//---------------------------------------------------FLOW CONTROL & INITIALISERS
 function init() {
   reset()
   setLayout()
-  initNavTargetPos()
-  initHoldPatternWaypointsActual()
+  calcHoldPatternWaypointCoords()
   initHoldPatternParticles(TOTAL_PARTICLES)
   animate()
 }
@@ -46,11 +48,11 @@ function reset() {
   cancelAnimationFrame(frameId)
   holdPatternWaypointsActual.length = 0
   holdPatternParticles.length = 0
-  navTargetParticles.length = 0
+  charPatternParticles.length = 0
 }
 
 
-function initHoldPatternWaypointsActual() {
+function calcHoldPatternWaypointCoords() {
   holdPatternWaypointsActual = HOLD_PATTERN_WAYPOINTS.map(el => {
     return {x: el.x * canvasWidth, y: el.y * canvasHeight}
   })
@@ -61,14 +63,12 @@ function initHoldPatternParticles(nParticles) {
   for(let i = 0; i < nParticles; i++) {
     const SPEED = 0.0025
     let fromWP = Math.floor(Math.random() * 6)
-    let nextWP = fromWP + 1
-    if(nextWP === HOLD_PATTERN_WAYPOINTS.length) {nextWP = 0}
+    let nextWP = fromWP + 1 === HOLD_PATTERN_WAYPOINTS.length ? 0 : fromWP + 1
     let distMoved = Math.round( Math.random() * 10 ) / 10
     let startCoords = canvasHelpers.randPointNearPoint(holdPatternWaypointsActual[fromWP])
     let endCoords = canvasHelpers.randPointNearPoint(holdPatternWaypointsActual[nextWP])
     let cp1Coords = canvasHelpers.randPointBetweenTwoPoints(startCoords, endCoords)
     let cp2Coords = canvasHelpers.randPointBetweenTwoPoints(startCoords, endCoords)
-
     let coords = {
       x: startCoords.x, y: startCoords.y,
       x0: startCoords.x, y0: startCoords.y,
@@ -77,18 +77,10 @@ function initHoldPatternParticles(nParticles) {
       cp2x: cp2Coords.x, cp2y: cp2Coords.y
     }
 
-    let particle = new HoldPatternParticle(coords, SPEED, distMoved, nextWP)
-
-    holdPatternParticles.push(particle)
+    holdPatternParticles.push(new HoldPatternParticle(coords, SPEED, distMoved, nextWP))
   }
 }
 
-function initNavTargetPos() {
-  navTargetCharSize.height = canvasHeight / 8
-  navTargetCharSize.width = navTargetCharSize.height * 0.8
-  navTargetOrigin.x = (canvasWidth / 2) - (navTargetWord.length * navTargetCharSize.width / 2)
-  navTargetOrigin.y = (canvasHeight / 2) - (navTargetCharSize.height / 2)
-}
 
 //--------------------------------------------UPDATE PARTICLE POSITIONS & RENDER
 function animate() {
@@ -98,8 +90,9 @@ function animate() {
   //canvasHelpers.renderHoldPatternWPs(ctx1, holdPatternWaypointsActual)//dev
   //canvasHelpers.renderHoldPatternParticlePaths(ctx1, holdPatternParticles)//dev
   updateHoldPatternParticles()
-  updateNavTargetLettersParticles()
+  updateCharPatternParticles()
 }
+
 
 function updateHoldPatternParticles() {
   holdPatternParticles.forEach(particle => {//think this should be moved to a method on holdParticle class??
@@ -108,15 +101,17 @@ function updateHoldPatternParticles() {
   })
 }
 
-function updateNavTargetLettersParticles() {
-  navTargetParticles.forEach((particle, index) => {
+
+function updateCharPatternParticles() {
+  charPatternParticles.forEach((particle, index) => {
     particle.updatePos()
     particle.draw('white', 'red')
     particle.drawToPointsAt(index, '#1f2633', '#ff0000')
   })
 }
 
-//------------------------------------------------------------------BREAK POINTS
+
+//-----------------------------------------------------------LAYOUT BREAK POINTS
 function setLayout() {
   //small width in portrait
   if (body.clientHeight > body.clientWidth && body.clientWidth <= 480) {
@@ -159,10 +154,8 @@ function setLayout() {
   canvas1.height = canvasHeight
 }
 
-//---------------------------------------------------------------EVENT LISTENERS
-document.addEventListener("DOMContentLoaded", init)
-window.addEventListener('resize', init)
-navGoToButton.addEventListener('click', initNavTarget, false)
+
+
 
 //move some of this to letter-lib
 function initNavTarget() {
@@ -185,7 +178,7 @@ function initNavTarget() {
       let speed = transferringParticle.speed
       let distMoved = 0
       let pointsAt = destinationsAndTargets[i].pointsAt
-      navTargetParticles.push(new CharPatternParticle(coords, speed, distMoved, pointsAt))
+      charPatternParticles.push(new CharPatternParticle(coords, speed, distMoved, pointsAt))
     }
 
   }
@@ -271,8 +264,8 @@ class CharPatternParticle extends Particle {
   drawToPointsAt(index, colorFrom, colorTo) {
     if(this.distMoved > 0.1) {
       if(this.pointsAt !== false) {
-        let pointsAtX = navTargetParticles[index + this.pointsAt].coords.x//these two lines are fucking things somehow deleting the last particle in the char I think
-        let pointsAtY = navTargetParticles[index + this.pointsAt].coords.y
+        let pointsAtX = charPatternParticles[index + this.pointsAt].coords.x//these two lines are fucking things somehow deleting the last particle in the char I think
+        let pointsAtY = charPatternParticles[index + this.pointsAt].coords.y
         ctx1.beginPath()
         ctx1.lineWidth = 1
         let rgb = canvasHelpers.colorBetweenTwoColors(this.distMoved, '#1f2633', '#ff0000')
