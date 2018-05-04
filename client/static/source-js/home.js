@@ -4,7 +4,7 @@ const lettersLib = require('./utils/letters-lib.js')
 const CHAR_PATTERN_WORDS = 'A BB CCC DDDD EEEEE FFFFFF'//for now defined staticly here, later will come from caurosel
 const MAX_CHARS_PER_ROW = 12
 const TOTAL_PARTICLES = 580
-const HOLD_PATTERN_WAYPOINTS = [//coords as percent of canvas size
+const HOLD_PATTERN_WAYPOINTS = [//coords as % of canvas size
   {x: 0.125, y: 0.5},
   {x: 0.25, y: 0.125},
   {x: 0.75, y: 0.125},

@@ -31,10 +31,10 @@ function randPointBetweenTwoPoints(p1, p2) {
 
 function randPointNearPoint(pt) {
   const MAX_FROM = 40
-  let randDist = Math.floor(Math.random() * MAX_FROM)
+  let randDist = Math.random() * MAX_FROM
   let randAngle = Math.random() * Math.PI * 2
-  let x = pt.x + (Math.cos(randAngle) * randDist)
-  let y = pt.y + (Math.sin(randAngle) * randDist)
+  let x = pt.x + Math.round(Math.cos(randAngle) * randDist)
+  let y = pt.y + Math.round(Math.sin(randAngle) * randDist)
 
   return {x: x, y: y}
 }
