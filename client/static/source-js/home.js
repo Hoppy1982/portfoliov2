@@ -152,8 +152,6 @@ function setLayout() {
 }
 
 
-
-
 //move some of this to letter-lib
 function initNavTarget() {
   let requiredParticles = lettersLib.totalRequiredParticles(CHAR_PATTERN_WORDS)
