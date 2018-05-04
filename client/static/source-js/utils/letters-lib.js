@@ -147,6 +147,7 @@ function totalRequiredParticles(str) {
   for(i in str) {
     requiredParticles += lettersCoords[str.charAt(i)].length
   }
+  
   console.log("total requiredParticles: " + requiredParticles)
   return requiredParticles
 }
@@ -200,6 +201,7 @@ function calcLetterParticlesDestAndTargets(wordsInRows, canvasWidth, canvasHeigh
 
   return finalCoordsAndPointsAts
 }
+
 
 //------------------------------------------------------------INTERNAL FUNCTIONS
 function longestElementLength(arr) {

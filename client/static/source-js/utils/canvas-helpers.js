@@ -28,6 +28,7 @@ function randPointBetweenTwoPoints(p1, p2) {
   return coords
 }
 
+
 function randPointNearPoint(pt) {
   const MAX_FROM = 40
   let randDist = Math.floor(Math.random() * MAX_FROM)
@@ -38,6 +39,7 @@ function randPointNearPoint(pt) {
   return {x: x, y: y}
 }
 
+
 function coordsOnStraightLine(percent, startPt, endPt) {
   let xTotal = endPt.x - startPt.x
   let yTotal = endPt.y - startPt.y
@@ -47,8 +49,8 @@ function coordsOnStraightLine(percent, startPt, endPt) {
   return {x: startPt.x + xDist, y: startPt.y + yDist}
 }
 
-//stolen from stackoverflow
-function coordsOnCubicBezier(percent, startPt, cp1, cp2, endPt) {
+
+function coordsOnCubicBezier(percent, startPt, cp1, cp2, endPt) {//stolen from stackoverflow
   let t2 = percent * percent
   let t3 = t2 * percent
 
@@ -58,7 +60,9 @@ function coordsOnCubicBezier(percent, startPt, cp1, cp2, endPt) {
   + endPt * t3
 }
 
-//-----------------------------DEV FUNCTIONS WOT FOR VISUALISING WHAT'S OCCURING
+
+//--FUNCTIONS TO RENDER WAYPOINTS, CONTROL POINTS, ETC USED IN PARTICLE CREATION
+//NOT NECESSARILY USED BUT USEFUL FOR DEBUGGING
 function renderBoundingCircle(ctx, canvasWidth, canvasHeight) {
   let centerX = canvasWidth / 2
   let centerY = canvasHeight / 2
@@ -72,6 +76,7 @@ function renderBoundingCircle(ctx, canvasWidth, canvasHeight) {
   ctx.stroke()
 }
 
+
 function renderHoldPatternWPs(ctx, waypoints) {
   ctx.beginPath()
   ctx.fillStyle = 'blue'
@@ -80,6 +85,7 @@ function renderHoldPatternWPs(ctx, waypoints) {
   })
   ctx.stroke()
 }
+
 
 function renderHoldPatternParticlePaths(ctx, particles) {
   particles.forEach(particle => {
@@ -121,7 +127,11 @@ function renderHoldPatternParticlePaths(ctx, particles) {
   })
 }
 
+
 //-----------------------------------------------------------------COLOR HELPERS
+//would be more efficient to take args as {r: 0-255, g: 0-255, b:0-255}
+//so no need the hex array stuff but ok for now as drawing
+//a few hundred particles without lag
 function colorBetweenTwoColors(percent, colorOne, colorTwo) {
   let hex = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f']
 
@@ -159,10 +169,9 @@ function colorBetweenTwoColors(percent, colorOne, colorTwo) {
   let greenNow = Math.round( c1GreendBaseTen + (greenDelta * percent) )
   let blueNow = Math.round( c1BlueBaseTen + (blueDelta * percent) )
 
-  //console.log(`redNow: ${redNow}, greenNow: ${greenNow}, blueNow: ${blueNow}`)
-
   return {r: redNow, g: greenNow, b: blueNow}//temp
 }
+
 
 //-----------------------------------------------------------------------EXPORTS
 module.exports = {

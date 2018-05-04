@@ -1,16 +1,16 @@
 const canvasHelpers = require('./utils/canvas-helpers.js')
 const lettersLib = require('./utils/letters-lib.js')
 
-const CHAR_PATTERN_WORDS = 'AAA BB CCCCC ABCDEFGH ABCDEFGHI'//for now defined staticly here, later will come from caurosel
+const CHAR_PATTERN_WORDS = 'A BB CCC DDDD EEEEE FFFFFF'//for now defined staticly here, later will come from caurosel
 const MAX_CHARS_PER_ROW = 12
-const TOTAL_PARTICLES = 600
+const TOTAL_PARTICLES = 580
 const HOLD_PATTERN_WAYPOINTS = [//coords as percent of canvas size
-  {x: 0.125, y: 0.5},//0
-  {x: 0.25, y: 0.125},//1
-  {x: 0.75, y: 0.125},//2
-  {x: 0.875, y: 0.5},//3
-  {x: 0.75, y: 0.875},//4
-  {x: 0.25, y: 0.875}//5
+  {x: 0.125, y: 0.5},
+  {x: 0.25, y: 0.125},
+  {x: 0.75, y: 0.125},
+  {x: 0.875, y: 0.5},
+  {x: 0.75, y: 0.875},
+  {x: 0.25, y: 0.875}
 ]
 
 let body = document.getElementsByTagName('body')[0]
@@ -28,7 +28,7 @@ let charPatternParticles = []
 //------------------------------------------------------------------------EVENTS
 document.addEventListener("DOMContentLoaded", init)
 window.addEventListener('resize', init)
-navGoToButton.addEventListener('click', initNavTarget, false)
+navGoToButton.addEventListener('click', holdToCharTransition, false)
 
 
 //---------------------------------------------------FLOW CONTROL & INITIALIZERS
@@ -75,6 +75,34 @@ function initHoldPatternParticles(nParticles) {
     }
 
     holdPatternParticles.push(new HoldPatternParticle(coords, SPEED, distMoved, nextWP))
+  }
+}
+
+
+//----------------------------------TRANSITION PARTICLES BETWEEN BEHAVIOUR TYPES
+function holdToCharTransition() {
+  let requiredParticles = lettersLib.totalRequiredParticles(CHAR_PATTERN_WORDS)
+  let wordsInRows = lettersLib.placeWordsInRows(CHAR_PATTERN_WORDS, MAX_CHARS_PER_ROW)
+  let destinationsAndTargets = lettersLib.calcLetterParticlesDestAndTargets(wordsInRows, canvasWidth, canvasHeight)
+
+  if (holdPatternParticles.length > requiredParticles) {
+    for(let i = 0; i < requiredParticles; i++) {
+      let transferringParticle = holdPatternParticles.pop()
+      let coords = {
+        x: transferringParticle.coords.x,
+        y: transferringParticle.coords.y,
+        x0: transferringParticle.coords.x,
+        y0: transferringParticle.coords.y,
+        x1: destinationsAndTargets[i].x1,
+        y1: destinationsAndTargets[i].y1
+      }
+
+      let speed = transferringParticle.speed
+      let distMoved = 0
+      let pointsAt = destinationsAndTargets[i].pointsAt
+      charPatternParticles.push(new CharPatternParticle(coords, speed, distMoved, pointsAt))
+    }
+
   }
 }
 
@@ -149,34 +177,6 @@ function setLayout() {
 
   canvas1.width = canvasWidth
   canvas1.height = canvasHeight
-}
-
-
-//move some of this to letter-lib
-function initNavTarget() {
-  let requiredParticles = lettersLib.totalRequiredParticles(CHAR_PATTERN_WORDS)
-  let wordsInRows = lettersLib.placeWordsInRows(CHAR_PATTERN_WORDS, MAX_CHARS_PER_ROW)
-  let destinationsAndTargets = lettersLib.calcLetterParticlesDestAndTargets(wordsInRows, canvasWidth, canvasHeight)
-
-  if (holdPatternParticles.length > requiredParticles) {
-    for(let i = 0; i < requiredParticles; i++) {
-      let transferringParticle = holdPatternParticles.pop()
-      let coords = {
-        x: transferringParticle.coords.x,
-        y: transferringParticle.coords.y,
-        x0: transferringParticle.coords.x,
-        y0: transferringParticle.coords.y,
-        x1: destinationsAndTargets[i].x1,
-        y1: destinationsAndTargets[i].y1
-      }
-
-      let speed = transferringParticle.speed
-      let distMoved = 0
-      let pointsAt = destinationsAndTargets[i].pointsAt
-      charPatternParticles.push(new CharPatternParticle(coords, speed, distMoved, pointsAt))
-    }
-
-  }
 }
 
 
