@@ -1,16 +1,9 @@
 const canvasHelpers = require('./utils/canvas-helpers.js')
 const lettersLib = require('./utils/letters-lib.js')
 
-let body = document.getElementsByTagName('body')[0]
-let canvas1 = document.getElementsByTagName('canvas')[0]
-let ctx1 = canvas1.getContext('2d')
-let navGoToButton = document.getElementById('navigatorDesc')//dev
-let frameId
-let canvasWidth
-let canvasHeight
 
-//as percent of canvas size
-let holdPatternWaypoints = [
+const TOTAL_PARTICLES = 120
+const HOLD_PATTERN_WAYPOINTS = [//coords as percent of canvas size
   {x: 0.125, y: 0.5},//0
   {x: 0.25, y: 0.125},//1
   {x: 0.75, y: 0.125},//2
@@ -18,29 +11,36 @@ let holdPatternWaypoints = [
   {x: 0.75, y: 0.875},//4
   {x: 0.25, y: 0.875}//5
 ]
-let holdPatternWaypointsActual = []//hold pattern WP coords in pixels, recalcumalated on resize
+
+let body = document.getElementsByTagName('body')[0]
+let canvas1 = document.getElementsByTagName('canvas')[0]
+let ctx1 = canvas1.getContext('2d')
+let navGoToButton = document.getElementById('navigatorDesc')//dev
+
+let frameId
+let canvasWidth
+let canvasHeight
+
+let holdPatternWaypointsActual = []//coords in pixels, recalculated on resize
 let navTargetOrigin = {x: null, y: null}
 let navTargetCharSize = {width: null, height: null}
 
 let holdPatternParticles = []
 let navTargetParticles = []
 
-let navTargetWord = 'BAD BAD GIBED BEEBEEBAA'//dev temp
+let navTargetWord = 'BAD BAD GIBED BEEBEEBAA'//dev
 
-//array for wormhole leaving particles
-//array for particles transitioning between main arrays???
 
 //----------------------------------------------------------------------MANAGERS
-//possibly split this into a function that fires just once on dom load,
-//then another manager that runs on resizing?
 function init() {
   reset()
   setLayout()
   initNavTargetPos()
   initHoldPatternWaypointsActual()
-  initHoldPatternParticles(120)
+  initHoldPatternParticles(TOTAL_PARTICLES)
   animate()
 }
+
 
 function reset() {
   cancelAnimationFrame(frameId)
@@ -49,22 +49,20 @@ function reset() {
   navTargetParticles.length = 0
 }
 
+
 function initHoldPatternWaypointsActual() {
-  holdPatternWaypointsActual = holdPatternWaypoints.map(el => {
-    let x = el.x * canvasWidth
-    let y = el.y * canvasHeight
-    return {x: x, y: y}
+  holdPatternWaypointsActual = HOLD_PATTERN_WAYPOINTS.map(el => {
+    return {x: el.x * canvasWidth, y: el.y * canvasHeight}
   })
 }
 
+
 function initHoldPatternParticles(nParticles) {
   for(let i = 0; i < nParticles; i++) {
+    const SPEED = 0.0025
     let fromWP = Math.floor(Math.random() * 6)
     let nextWP = fromWP + 1
-    if(nextWP === holdPatternWaypoints.length) {nextWP = 0}
-    let age = 0
-    let speed = 0.0025
-    //let distMoved = Number( (Math.random() ).toFixed(1) )
+    if(nextWP === HOLD_PATTERN_WAYPOINTS.length) {nextWP = 0}
     let distMoved = Math.round( Math.random() * 10 ) / 10
     let startCoords = canvasHelpers.randPointNearPoint(holdPatternWaypointsActual[fromWP])
     let endCoords = canvasHelpers.randPointNearPoint(holdPatternWaypointsActual[nextWP])
@@ -79,7 +77,7 @@ function initHoldPatternParticles(nParticles) {
       cp2x: cp2Coords.x, cp2y: cp2Coords.y
     }
 
-    let particle = new HoldPatternParticle(coords, age, speed, distMoved, nextWP)
+    let particle = new HoldPatternParticle(coords, SPEED, distMoved, nextWP)
 
     holdPatternParticles.push(particle)
   }
@@ -183,11 +181,11 @@ function initNavTarget() {
         x1: destinationsAndTargets[i].x1,
         y1: destinationsAndTargets[i].y1
       }
-      let age = transferringParticle.age
+
       let speed = transferringParticle.speed
       let distMoved = 0
       let pointsAt = destinationsAndTargets[i].pointsAt
-      navTargetParticles.push(new CharPatternParticle(coords, age, speed, distMoved, pointsAt))
+      navTargetParticles.push(new CharPatternParticle(coords, speed, distMoved, pointsAt))
     }
 
   }
@@ -196,9 +194,8 @@ function initNavTarget() {
 
 //--------------------------------------------------------------PARTICLE CLASSES
 class Particle {
-  constructor(coords, age, speed, distMoved) {
+  constructor(coords, speed, distMoved) {
     this.coords = coords
-    this.age = age
     this.speed = speed
     this.distMoved = distMoved
   }
@@ -220,8 +217,8 @@ class Particle {
 }
 
 class HoldPatternParticle extends Particle {
-  constructor(coords, age, speed, distMoved, nextWP) {
-    super(coords, age, speed, distMoved)
+  constructor(coords, speed, distMoved, nextWP) {
+    super(coords, speed, distMoved)
     this.nextWP = nextWP
   }
 
@@ -229,7 +226,7 @@ class HoldPatternParticle extends Particle {
     this.distMoved += this.speed
     if(this.distMoved >= 1) {
       this.distMoved = 0
-      this.nextWP = this.nextWP === holdPatternWaypoints.length - 1 ? 0 : this.nextWP + 1
+      this.nextWP = this.nextWP === HOLD_PATTERN_WAYPOINTS.length - 1 ? 0 : this.nextWP + 1
       this.coords.x0 = this.coords.x1
       this.coords.y0 = this.coords.y1
       this.coords.x1 = canvasHelpers.randPointNearPoint(holdPatternWaypointsActual[this.nextWP]).x
@@ -245,8 +242,8 @@ class HoldPatternParticle extends Particle {
 }
 
 class CharPatternParticle extends Particle {
-  constructor(coords, age, speed, distMoved, pointsAt) {
-    super(coords, age, speed, distMoved)
+  constructor(coords, speed, distMoved, pointsAt) {
+    super(coords, speed, distMoved)
     this.pointsAt = pointsAt
   }
 
