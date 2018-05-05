@@ -1,9 +1,9 @@
 const canvasHelpers = require('./utils/canvas-helpers.js')
 const lettersLib = require('./utils/letters-lib.js')
 
-const CHAR_PATTERN_WORDS = 'A BB CCC DDDD EEEEE FFFFFF'//for now defined staticly here, later will come from caurosel
+const CHAR_PATTERN_WORDS = 'A BB J JA'//for now defined staticly here, later will come from caurosel
 const MAX_CHARS_PER_ROW = 12
-const TOTAL_PARTICLES = 580
+const TOTAL_PARTICLES = 200
 const HOLD_PATTERN_WAYPOINTS = [//coords as % of canvas size
   {x: 0.125, y: 0.5},
   {x: 0.25, y: 0.125},

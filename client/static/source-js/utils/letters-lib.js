@@ -66,6 +66,14 @@ let lettersCoords = {
     {x: 0.5, y: 0.125}, //4
     {x: 0.75, y: 0.125} //5
   ],
+  J: [
+    {x: 0.25, y: 0.75},
+    {x: 0.375, y: 0.875},
+    {x: 0.5, y: 0.75},
+    {x: 0.5, y: 0.125},
+    {x: 0.25, y: 0.125},
+    {x: 0.75, y: 0.125}
+  ],
   " ": []//enables having spaces between letters
 }
 
@@ -136,6 +144,14 @@ let lettersVectors = {
     {hasVector: true, indexOffset: 2},
     {hasVector: false},
     {hasVector: false}
+  ],
+  J: [
+    {hasVector: true, indexOffset: 1},
+    {hasVector: true, indexOffset: 1},
+    {hasVector: true, indexOffset: 1},
+    {hasVector: false},
+    {hasVector: true, indexOffset: 1},
+    {hasVector: false}
   ]
 }
 
@@ -147,7 +163,7 @@ function totalRequiredParticles(str) {
   for(i in str) {
     requiredParticles += lettersCoords[str.charAt(i)].length
   }
-  
+
   console.log("total requiredParticles: " + requiredParticles)
   return requiredParticles
 }
