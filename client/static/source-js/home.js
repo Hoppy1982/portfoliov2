@@ -1,7 +1,7 @@
 const canvasHelpers = require('./utils/canvas-helpers.js')
 const lettersLib = require('./utils/letters-lib.js')
 
-const CHAR_PATTERN_WORDS = 'A BB CCC DDDD K AAK KLM L M'//for now defined staticly here, later will come from caurosel
+const CHAR_PATTERN_WORDS = 'AAAAAAAAAAAAA KLMNO L M N O'//for now defined staticly here, later will come from caurosel
 const MAX_CHARS_PER_ROW = 12
 const TOTAL_PARTICLES = 200
 const HOLD_PATTERN_WAYPOINTS = [//coords as % of canvas size
@@ -262,7 +262,7 @@ class CharPatternParticle extends Particle {
         let pointsAtX = charPatternParticles[index + this.pointsAt].coords.x//these two lines are fucking things somehow deleting the last particle in the char I think
         let pointsAtY = charPatternParticles[index + this.pointsAt].coords.y
         ctx1.beginPath()
-        ctx1.lineWidth = 1
+        ctx1.lineWidth = 2
         let rgb = canvasHelpers.colorBetweenTwoColors(this.distMoved, '#1f2633', '#ff0000')
         ctx1.strokeStyle = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`
         //ctx1.strokeStyle = this.distMoved < 1 ? colorFrom : colorTo
