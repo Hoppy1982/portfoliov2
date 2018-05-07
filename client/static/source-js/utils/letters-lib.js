@@ -109,6 +109,27 @@ let lettersCoords = {
     {x: 0.875, y: 0.625},
     {x: 0.625, y: 0.875}
   ],
+  P: [
+    {x: 0.25, y: 0.875},
+    {x: 0.25, y: 0.5},
+    {x: 0.25, y: 0.125},
+    {x: 0.625, y: 0.125},
+    {x: 0.75, y: 0.25},
+    {x: 0.75, y: 0.375},
+    {x: 0.625, y: 0.5}
+  ],
+  Q: [
+    {x: 0.375, y: 0.875},
+    {x: 0.125, y: 0.625},
+    {x: 0.125, y: 0.375},
+    {x: 0.375, y: 0.125},
+    {x: 0.625, y: 0.125},
+    {x: 0.875, y: 0.375},
+    {x: 0.875, y: 0.625},
+    {x: 0.625, y: 0.875},
+    {x: 0.625, y: 0.625},
+    {x: 0.875, y: 0.875}
+  ],
   " ": []//enables having spaces between letters
 }
 
@@ -221,7 +242,28 @@ let lettersVectors = {
     {hasVector: true, indexOffset: 1},
     {hasVector: true, indexOffset: 1},
     {hasVector: true, indexOffset: 1},
-    {hasVector: true, indexOffset: 1}
+    {hasVector: true, indexOffset: -7}
+  ],
+  P: [
+    {hasVector: true, indexOffset: 2},
+    {hasVector: false},
+    {hasVector: true, indexOffset: 1},
+    {hasVector: true, indexOffset: 1},
+    {hasVector: true, indexOffset: 1},
+    {hasVector: true, indexOffset: 1},
+    {hasVector: true, indexOffset: -5}
+  ],
+  Q: [
+    {hasVector: true, indexOffset: 1},
+    {hasVector: true, indexOffset: 1},
+    {hasVector: true, indexOffset: 1},
+    {hasVector: true, indexOffset: 1},
+    {hasVector: true, indexOffset: 1},
+    {hasVector: true, indexOffset: 1},
+    {hasVector: true, indexOffset: 1},
+    {hasVector: true, indexOffset: -7},
+    {hasVector: true, indexOffset: 1},
+    {hasVector: false}
   ]
 }
 
