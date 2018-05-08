@@ -21,4 +21,4 @@ nav word into hold pattern, then new particles come in for new word.
 
 Cautiously done..
 - Add support for multiple lines of text in the navTargetWord. Max 12 chars per line.
-- - Finish letters library.
+- Finish letters library.
