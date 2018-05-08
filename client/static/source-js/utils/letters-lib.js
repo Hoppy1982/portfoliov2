@@ -130,6 +130,44 @@ let lettersCoords = {
     {x: 0.625, y: 0.625},
     {x: 0.875, y: 0.875}
   ],
+  R: [
+    {x: 0.25, y: 0.875},
+    {x: 0.25, y: 0.5},
+    {x: 0.25, y: 0.125},
+    {x: 0.625, y: 0.125},
+    {x: 0.75, y: 0.25},
+    {x: 0.75, y: 0.375},
+    {x: 0.625, y: 0.5},
+    {x: 0.75, y: 0.875}
+  ],
+  S: [
+    {x: 0.25, y: 0.75},  //0
+    {x: 0.375, y: 0.875},//1
+    {x: 0.625, y: 0.875},//2
+    {x: 0.75, y: 0.75},  //3
+    {x: 0.75, y: 0.625}, //4
+    {x: 0.625, y: 0.5},  //5
+    {x: 0.375, y: 0.5},  //6
+    {x: 0.25, y: 0.375}, //7
+    {x: 0.25, y: 0.25},  //8
+    {x: 0.375, y: 0.125},//9
+    {x: 0.625, y: 0.125},//10
+    {x: 0.75, y: 0.25}   //11
+  ],
+  T: [
+    {x: 0.5, y: 0.875},
+    {x: 0.5, y: 0.125},
+    {x: 0.25, y: 0.125},
+    {x: 0.75, y: 0.125}
+  ],
+  U: [
+    {x: 0.25, y: 0.125},
+    {x: 0.25, y: 0.75},
+    {x: 0.375, y: 0.875},
+    {x: 0.625, y: 0.875},
+    {x: 0.75, y: 0.75},
+    {x: 0.75, y: 0.1225}
+  ],
   " ": []//enables having spaces between letters
 }
 
@@ -262,6 +300,44 @@ let lettersVectors = {
     {hasVector: true, indexOffset: 1},
     {hasVector: true, indexOffset: 1},
     {hasVector: true, indexOffset: -7},
+    {hasVector: true, indexOffset: 1},
+    {hasVector: false}
+  ],
+  R: [
+    {hasVector: true, indexOffset: 2},
+    {hasVector: false},
+    {hasVector: true, indexOffset: 1},
+    {hasVector: true, indexOffset: 1},
+    {hasVector: true, indexOffset: 1},
+    {hasVector: true, indexOffset: 1},
+    {hasVector: true, indexOffset: -5},
+    {hasVector: true, indexOffset: -1}
+  ],
+  S: [
+    {hasVector: true, indexOffset: 1},
+    {hasVector: true, indexOffset: 1},
+    {hasVector: true, indexOffset: 1},
+    {hasVector: true, indexOffset: 1},
+    {hasVector: true, indexOffset: 1},
+    {hasVector: true, indexOffset: 1},
+    {hasVector: true, indexOffset: 1},
+    {hasVector: true, indexOffset: 1},
+    {hasVector: true, indexOffset: 1},
+    {hasVector: true, indexOffset: 1},
+    {hasVector: true, indexOffset: 1},
+    {hasVector: false}
+  ],
+  T: [
+    {hasVector: true, indexOffset: 1},
+    {hasVector: false},
+    {hasVector: true, indexOffset: 1},
+    {hasVector: false}
+  ],
+  U: [
+    {hasVector: true, indexOffset: 1},
+    {hasVector: true, indexOffset: 1},
+    {hasVector: true, indexOffset: 1},
+    {hasVector: true, indexOffset: 1},
     {hasVector: true, indexOffset: 1},
     {hasVector: false}
   ]
