@@ -1,7 +1,7 @@
 const canvasHelpers = require('./utils/canvas-helpers.js')
 const lettersLib = require('./utils/letters-lib.js')
 
-const CHAR_PATTERN_WORDS = 'ABCDEFGHIJKL'//for now defined staticly here, later will come from caurosel
+const CHAR_PATTERN_WORDS = 'YAY ANOTHER NEW BUG'//for now defined staticly here, later will come from caurosel
 const MAX_CHARS_PER_ROW = 12
 const TOTAL_PARTICLES = 200
 const HOLD_PATTERN_WAYPOINTS = [//coords as % of canvas size
@@ -12,6 +12,7 @@ const HOLD_PATTERN_WAYPOINTS = [//coords as % of canvas size
   {x: 0.75, y: 0.875},
   {x: 0.25, y: 0.875}
 ]
+const HOLD_SPEED = 0.0025
 
 let body = document.getElementsByTagName('body')[0]
 let canvas1 = document.getElementsByTagName('canvas')[0]
@@ -28,7 +29,7 @@ let charPatternParticles = []
 //------------------------------------------------------------------------EVENTS
 document.addEventListener("DOMContentLoaded", init)
 window.addEventListener('resize', init)
-navGoToButton.addEventListener('click', holdToCharTransition, false)
+navGoToButton.addEventListener('click', formNewParticleWord, false)
 
 
 //---------------------------------------------------FLOW CONTROL & INITIALIZERS
@@ -58,7 +59,6 @@ function calcHoldPatternWaypointCoords() {
 
 function initHoldPatternParticles(nParticles) {
   for(let i = 0; i < nParticles; i++) {
-    const SPEED = 0.0025
     let fromWP = Math.floor(Math.random() * 6)
     let nextWP = fromWP + 1 === HOLD_PATTERN_WAYPOINTS.length ? 0 : fromWP + 1
     let distMoved = Math.round( Math.random() * 10 ) / 10
@@ -74,8 +74,16 @@ function initHoldPatternParticles(nParticles) {
       cp2x: cp2Coords.x, cp2y: cp2Coords.y
     }
 
-    holdPatternParticles.push(new HoldPatternParticle(coords, SPEED, distMoved, nextWP))
+    holdPatternParticles.push(new HoldPatternParticle(coords, HOLD_SPEED, distMoved, nextWP))
   }
+}
+
+
+function formNewParticleWord() {
+  cancelAnimationFrame(frameId)//not sure if needed
+  charToHoldTransition()
+  holdToCharTransition()
+  animate()//not sure if needed
 }
 
 
@@ -97,12 +105,42 @@ function holdToCharTransition() {
         y1: destinationsAndTargets[i].y1
       }
 
-      let speed = transferringParticle.speed * 2
+      let speed = HOLD_SPEED * 4
       let distMoved = 0
       let pointsAt = destinationsAndTargets[i].pointsAt
       charPatternParticles.push(new CharPatternParticle(coords, speed, distMoved, pointsAt))
     }
 
+  }
+}
+
+
+function charToHoldTransition() {
+  while(charPatternParticles.length > 0) {
+    let transferringParticle = charPatternParticles.pop()
+    let distMoved = 0
+    let speed =  Math.round( (Math.random() * (HOLD_SPEED * 10 - HOLD_SPEED) + HOLD_SPEED) * 1000 ) / 1000
+    console.log(speed)
+    let fromWP = Math.floor(Math.random() * 6)
+    let nextWP = fromWP + 1 === HOLD_PATTERN_WAYPOINTS.length ? 0 : fromWP + 1
+    let startCoords = {x: transferringParticle.coords.x, y: transferringParticle.coords.y}
+    let endCoords = canvasHelpers.randPointNearPoint(holdPatternWaypointsActual[nextWP])
+    let cp1Coords = canvasHelpers.randPointBetweenTwoPoints(startCoords, endCoords)
+    let cp2Coords = canvasHelpers.randPointBetweenTwoPoints(startCoords, endCoords)
+    let coords = {
+      x: startCoords.x,
+      y: startCoords.y,
+      x0: startCoords.x,
+      y0: startCoords.y,
+      x1: endCoords.x,
+      y1: endCoords.y,
+      cp1x: cp1Coords.x,
+      cp1y: cp1Coords.y,
+      cp2x: cp2Coords.x,
+      cp2y: cp2Coords.y
+    }
+
+    holdPatternParticles.unshift(new HoldPatternParticle(coords, speed, distMoved, nextWP))
   }
 }
 
@@ -214,6 +252,7 @@ class HoldPatternParticle extends Particle {
     this.distMoved += this.speed
     if(this.distMoved >= 1) {
       this.distMoved = 0
+      this.speed = HOLD_SPEED
       this.nextWP = this.nextWP === HOLD_PATTERN_WAYPOINTS.length - 1 ? 0 : this.nextWP + 1
       this.coords.x0 = this.coords.x1
       this.coords.y0 = this.coords.y1

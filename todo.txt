@@ -1,12 +1,12 @@
 Bugs
-- Changing the char particle speed seems to mess up the final positions
+- charToHold clumps up hold particles at WP's. Worse the more the button is spammed
 
 Cautiously fixed bugs..
-- build.js fails silently if syntax errors in modules called from home.js
+- build.js fails silently if syntax errors in modules called from home.js //was using try catch error instead of browserifys built in way.
+- Changing the char particle speed seems to mess up the final positions //particles were overshooting at higher speeds, limited distMoved to 1.0
 
 
 To Do
-- Finish chuffing letters library
 - Carousel functionality with place holders for nav links
 - Change navTargetWord to update from Carousel
 - Add function to transfer letter particles to hold particles
@@ -21,3 +21,4 @@ nav word into hold pattern, then new particles come in for new word.
 
 Cautiously done..
 - Add support for multiple lines of text in the navTargetWord. Max 12 chars per line.
+- - Finish letters library.
