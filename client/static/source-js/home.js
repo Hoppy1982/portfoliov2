@@ -1,7 +1,7 @@
 const canvasHelpers = require('./utils/canvas-helpers.js')
 const lettersLib = require('./utils/letters-lib.js')
 
-const CHAR_PATTERN_WORDS = 'YAY ANOTHER NEW BUG'//for now defined staticly here, later will come from caurosel
+const CHAR_PATTERN_WORDS = 'YAY ANOTHER NEW BUG'//for now defined  here, later will come from caurosel
 const MAX_CHARS_PER_ROW = 12
 const TOTAL_PARTICLES = 200
 const HOLD_PATTERN_WAYPOINTS = [//coords as % of canvas size
@@ -13,6 +13,25 @@ const HOLD_PATTERN_WAYPOINTS = [//coords as % of canvas size
   {x: 0.25, y: 0.875}
 ]
 const HOLD_SPEED = 0.0025
+
+const NAV_LINKS = [//not implemented yet
+  {
+    links_group: 'Links group #0',
+    links_items: [
+      {linkRef: 'url', particleText: 'GROUP ZERO LINK ZERO'},
+      {linkRef: 'url', particleText: 'GROUP ZERO LINK ONE'},
+      {linkRef: 'url', particleText: 'GROUP ZERO LINK TWO'}
+    ]
+  },
+  {
+    links_group: 'Links group #1',
+    links_items: [
+      {linkRef: 'url', particleText: 'GROUP ONE LINK ZERO'},
+      {linkRef: 'url', particleText: 'GROUP ONE LINK ONE'},
+      {linkRef: 'url', particleText: 'GROUP ONE LINK TWO'}
+    ]
+  }
+]
 
 let body = document.getElementsByTagName('body')[0]
 let canvas1 = document.getElementsByTagName('canvas')[0]
@@ -120,7 +139,6 @@ function charToHoldTransition() {
     let transferringParticle = charPatternParticles.pop()
     let distMoved = 0
     let speed =  Math.round( (Math.random() * (HOLD_SPEED * 10 - HOLD_SPEED) + HOLD_SPEED) * 1000 ) / 1000
-    console.log(speed)
     let fromWP = Math.floor(Math.random() * 6)
     let nextWP = fromWP + 1 === HOLD_PATTERN_WAYPOINTS.length ? 0 : fromWP + 1
     let startCoords = {x: transferringParticle.coords.x, y: transferringParticle.coords.y}
@@ -158,7 +176,7 @@ function animate() {
 
 
 function updateHoldPatternParticles() {
-  holdPatternParticles.forEach(particle => {//think this should be moved to a method on holdParticle class??
+  holdPatternParticles.forEach(particle => {//should be moved to a static method on holdParticle class?
     particle.updatePos()
     particle.draw('white')
   })
