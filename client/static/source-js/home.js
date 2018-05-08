@@ -1,7 +1,7 @@
 const canvasHelpers = require('./utils/canvas-helpers.js')
 const lettersLib = require('./utils/letters-lib.js')
 
-const CHAR_PATTERN_WORDS = 'POMPIDE JOKEDQRSTU Q R S T U'//for now defined staticly here, later will come from caurosel
+const CHAR_PATTERN_WORDS = 'ABCDEFGHIJKL'//for now defined staticly here, later will come from caurosel
 const MAX_CHARS_PER_ROW = 12
 const TOTAL_PARTICLES = 200
 const HOLD_PATTERN_WAYPOINTS = [//coords as % of canvas size
@@ -97,7 +97,7 @@ function holdToCharTransition() {
         y1: destinationsAndTargets[i].y1
       }
 
-      let speed = transferringParticle.speed
+      let speed = transferringParticle.speed * 2
       let distMoved = 0
       let pointsAt = destinationsAndTargets[i].pointsAt
       charPatternParticles.push(new CharPatternParticle(coords, speed, distMoved, pointsAt))
@@ -237,11 +237,11 @@ class CharPatternParticle extends Particle {
 
   updatePos() {
     this.distMoved += this.speed
-    if(this.distMoved < 1) {
-      let newPos = canvasHelpers.coordsOnStraightLine(this.distMoved, {x: this.coords.x0, y: this.coords.y0}, {x: this.coords.x1, y: this.coords.y1})
-      this.coords.x = newPos.x
-      this.coords.y = newPos.y
-    }
+    if (this.distMoved > 1) {this.distMoved = 1}//prevent overshoot
+
+    let newPos = canvasHelpers.coordsOnStraightLine(this.distMoved, {x: this.coords.x0, y: this.coords.y0}, {x: this.coords.x1, y: this.coords.y1})
+    this.coords.x = newPos.x
+    this.coords.y = newPos.y
   }
 
   draw(colorFrom, colorTo) {

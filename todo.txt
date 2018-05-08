@@ -1,5 +1,5 @@
 Bugs
-
+- Changing the char particle speed seems to mess up the final positions
 
 Cautiously fixed bugs..
 - build.js fails silently if syntax errors in modules called from home.js
