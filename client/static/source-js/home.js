@@ -1,7 +1,10 @@
+
 const canvasHelpers = require('./utils/canvas-helpers.js')
 const lettersLib = require('./utils/letters-lib.js')
+const HoldPatternParticle = require('./classes/HoldPatternParticle')
+const CharPatternParticle = require('./classes/CharPatternParticle')
 
-const CHAR_PATTERN_WORDS = 'YAY ANOTHER NEW BUG'//for now defined  here, later will come from caurosel
+let CHAR_PATTERN_WORDS = 'YAY ANOTHER NEW BUG'//for now defined  here, later will come from caurosel
 const MAX_CHARS_PER_ROW = 12
 const TOTAL_PARTICLES = 200
 const HOLD_PATTERN_WAYPOINTS = [//coords as % of canvas size
@@ -93,8 +96,9 @@ function initHoldPatternParticles(nParticles) {
       cp2x: cp2Coords.x, cp2y: cp2Coords.y
     }
 
-    holdPatternParticles.push(new HoldPatternParticle(coords, HOLD_SPEED, distMoved, nextWP))
+    holdPatternParticles.push( new HoldPatternParticle(coords, HOLD_SPEED, distMoved, nextWP) )
   }
+  console.log(holdPatternParticles[0])
 }
 
 
@@ -176,9 +180,9 @@ function animate() {
 
 
 function updateHoldPatternParticles() {
-  holdPatternParticles.forEach(particle => {//should be moved to a static method on holdParticle class?
-    particle.updatePos()
-    particle.draw('white')
+  holdPatternParticles.forEach(particle => {
+    particle.updatePos(HOLD_PATTERN_WAYPOINTS, holdPatternWaypointsActual, HOLD_SPEED)
+    particle.draw(ctx1, 'white')
   })
 }
 
@@ -186,8 +190,8 @@ function updateHoldPatternParticles() {
 function updateCharPatternParticles() {
   charPatternParticles.forEach((particle, index) => {
     particle.updatePos()
-    particle.draw('white', 'red')
-    particle.drawToPointsAt(index, '#1f2633', '#ff0000')
+    particle.draw(ctx1, 'white', 'red')
+    particle.drawToPointsAt(ctx1, charPatternParticles, index, '#1f2633', '#ff0000')
   })
 }
 
@@ -237,96 +241,3 @@ function setLayout() {
 
 
 //--------------------------------------------------------------PARTICLE CLASSES
-class Particle {
-  constructor(coords, speed, distMoved) {
-    this.coords = coords
-    this.speed = speed
-    this.distMoved = distMoved
-  }
-
-  draw(color) {//default self render for particles, maybe change later
-    ctx1.beginPath()
-    ctx1.lineWidth = 3
-    ctx1.strokeStyle = color
-    ctx1.fillStyle = 'black'
-    ctx1.arc(this.coords.x, this.coords.y, 3, 0, Math.PI * 2, false)
-    ctx1.stroke()
-    ctx1.fill()
-  }
-
-  updatePos() {
-    this.coords.x += this.speed
-    this.coords.y += this.speed
-  }
-}
-
-class HoldPatternParticle extends Particle {
-  constructor(coords, speed, distMoved, nextWP) {
-    super(coords, speed, distMoved)
-    this.nextWP = nextWP
-  }
-
-  updatePos() {
-    this.distMoved += this.speed
-    if(this.distMoved >= 1) {
-      this.distMoved = 0
-      this.speed = HOLD_SPEED
-      this.nextWP = this.nextWP === HOLD_PATTERN_WAYPOINTS.length - 1 ? 0 : this.nextWP + 1
-      this.coords.x0 = this.coords.x1
-      this.coords.y0 = this.coords.y1
-      this.coords.x1 = canvasHelpers.randPointNearPoint(holdPatternWaypointsActual[this.nextWP]).x
-      this.coords.y1 = canvasHelpers.randPointNearPoint(holdPatternWaypointsActual[this.nextWP]).y
-      this.coords.cp1x = canvasHelpers.randPointBetweenTwoPoints({x: this.coords.x0, y: this.coords.y0}, {x: this.coords.x1, y: this.coords.y1}).x
-      this.coords.cp1y = canvasHelpers.randPointBetweenTwoPoints({x: this.coords.x0, y: this.coords.y0}, {x: this.coords.x1, y: this.coords.y1}).y
-      this.coords.cp2x = canvasHelpers.randPointBetweenTwoPoints({x: this.coords.x0, y: this.coords.y0}, {x: this.coords.x1, y: this.coords.y1}).x
-      this.coords.cp2y = canvasHelpers.randPointBetweenTwoPoints({x: this.coords.x0, y: this.coords.y0}, {x: this.coords.x1, y: this.coords.y1}).y
-    }
-    this.coords.x = canvasHelpers.coordsOnCubicBezier(this.distMoved, this.coords.x0, this.coords.cp1x, this.coords.cp2x, this.coords.x1)
-    this.coords.y = canvasHelpers.coordsOnCubicBezier(this.distMoved, this.coords.y0, this.coords.cp1y, this.coords.cp2y, this.coords.y1)
-  }
-}
-
-class CharPatternParticle extends Particle {
-  constructor(coords, speed, distMoved, pointsAt) {
-    super(coords, speed, distMoved)
-    this.pointsAt = pointsAt
-  }
-
-  updatePos() {
-    this.distMoved += this.speed
-    if (this.distMoved > 1) {this.distMoved = 1}//prevent overshoot
-
-    let newPos = canvasHelpers.coordsOnStraightLine(this.distMoved, {x: this.coords.x0, y: this.coords.y0}, {x: this.coords.x1, y: this.coords.y1})
-    this.coords.x = newPos.x
-    this.coords.y = newPos.y
-  }
-
-  draw(colorFrom, colorTo) {
-    ctx1.beginPath()
-    ctx1.lineWidth = 3
-    let rgb = canvasHelpers.colorBetweenTwoColors(this.distMoved, '#ffffff', '#ff0000')//dev
-    ctx1.strokeStyle = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`
-    //ctx1.strokeStyle = this.distMoved < 1 ? colorFrom : colorTo//write function to transition between 2 colours that takes % as an arg
-    ctx1.fillStyle = 'black'
-    ctx1.arc(this.coords.x, this.coords.y, 3, 0, Math.PI * 2, false)
-    ctx1.stroke()
-    ctx1.fill()
-  }
-
-  drawToPointsAt(index, colorFrom, colorTo) {
-    if(this.distMoved > 0.1) {
-      if(this.pointsAt !== false) {
-        let pointsAtX = charPatternParticles[index + this.pointsAt].coords.x//these two lines are fucking things somehow deleting the last particle in the char I think
-        let pointsAtY = charPatternParticles[index + this.pointsAt].coords.y
-        ctx1.beginPath()
-        ctx1.lineWidth = 2
-        let rgb = canvasHelpers.colorBetweenTwoColors(this.distMoved, '#1f2633', '#ff0000')
-        ctx1.strokeStyle = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`
-        //ctx1.strokeStyle = this.distMoved < 1 ? colorFrom : colorTo
-        ctx1.moveTo(this.coords.x, this.coords.y)
-        ctx1.lineTo(pointsAtX, pointsAtY)
-        ctx1.stroke()
-      }
-    }
-  }
-}
