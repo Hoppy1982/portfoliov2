@@ -3,6 +3,7 @@ const canvasHelpers = require('./utils/canvas-helpers.js')
 const lettersLib = require('./utils/letters-lib.js')
 const HoldPatternParticle = require('./classes/HoldPatternParticle')
 const CharPatternParticle = require('./classes/CharPatternParticle')
+const carousel2d = require('./utils/carousel-2d')
 
 let CHAR_PATTERN_WORDS = 'YAY ANOTHER NEW BUG'//for now defined  here, later will come from caurosel
 const MAX_CHARS_PER_ROW = 12
@@ -51,8 +52,11 @@ let charPatternParticles = []
 //------------------------------------------------------------------------EVENTS
 document.addEventListener("DOMContentLoaded", init)
 window.addEventListener('resize', init)
-navGoToButton.addEventListener('click', formNewParticleWord, false)
-
+navGoToButton.addEventListener('click', formNewParticleWord, false)//dev
+document.getElementById('navigatorUp').addEventListener('click', carouselUp)
+document.getElementById('navigatorDown').addEventListener('click', carouselDown)
+document.getElementById('navigatorLeft').addEventListener('click', carouselLeft)
+document.getElementById('navigatorRight').addEventListener('click', carouselRight)
 
 //---------------------------------------------------FLOW CONTROL & INITIALIZERS
 function init() {
@@ -109,6 +113,34 @@ function formNewParticleWord() {
   animate()//not sure if needed
 }
 
+
+//-------------------------------------------------------------CAROUSEL CONTROLS
+function carouselUp() {
+  carousel2d.up()
+  CHAR_PATTERN_WORDS = carousel2d.getNavItemText()
+  formNewParticleWord()
+}
+
+
+function carouselDown() {
+  carousel2d.down()
+  CHAR_PATTERN_WORDS = carousel2d.getNavItemText()
+  formNewParticleWord()
+}
+
+
+function carouselLeft() {
+  carousel2d.left()
+  CHAR_PATTERN_WORDS = carousel2d.getNavItemText()
+  formNewParticleWord()
+}
+
+
+function carouselRight() {
+  carousel2d.right()
+  CHAR_PATTERN_WORDS = carousel2d.getNavItemText()
+  formNewParticleWord()
+}
 
 //----------------------------------TRANSITION PARTICLES BETWEEN BEHAVIOUR TYPES
 function holdToCharTransition() {
