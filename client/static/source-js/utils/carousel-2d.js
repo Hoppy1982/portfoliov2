@@ -1,46 +1,46 @@
 const CAROUSEL_DATA = [
-  {text: 'ZERO', bgColor: 'red', navItems: [
-    {text: 'zero a', bgColor: 'red'},
-    {text: 'zero b', bgColor: 'green'},
-    {text: 'zero c', bgColor: 'blue'},
-    {text: 'zero d', bgColor: 'orange'},
-    {text: 'zero e', bgColor: 'purple'}
+  {text: ' TPOIC ZERO', bgColor: 'red', navItems: [
+    {text: 'nav link zero a', bgColor: 'red'},
+    {text: 'nav link zero b', bgColor: 'green'},
+    {text: 'nav link zero c', bgColor: 'blue'},
+    {text: 'nav link zero d', bgColor: 'orange'},
+    {text: 'nav link zero e', bgColor: 'purple'}
   ]},
-  {text: 'ONE', bgColor: 'green', navItems: [
-    {text: 'one a', bgColor: 'red'},
-    {text: 'one b', bgColor: 'green'},
-    {text: 'one c', bgColor: 'blue'},
-    {text: 'one d', bgColor: 'orange'},
-    {text: 'one e', bgColor: 'purple'}
+  {text: 'TOPIC ONE', bgColor: 'green', navItems: [
+    {text: 'nav link one a', bgColor: 'red'},
+    {text: 'nav link one b', bgColor: 'green'},
+    {text: 'nav link one c', bgColor: 'blue'},
+    {text: 'nav link one d', bgColor: 'orange'},
+    {text: 'nav link one e', bgColor: 'purple'}
   ]},
-  {text: 'TWO', bgColor: 'blue', navItems: [
-    {text: 'two a', bgColor: 'red'},
-    {text: 'two b', bgColor: 'green'},
-    {text: 'two c', bgColor: 'blue'},
-    {text: 'two d', bgColor: 'orange'},
-    {text: 'two e', bgColor: 'purple'}
+  {text: 'TOPIC TWO', bgColor: 'blue', navItems: [
+    {text: 'nav link two a', bgColor: 'red'},
+    {text: 'nav link two b', bgColor: 'green'},
+    {text: 'nav link two c', bgColor: 'blue'},
+    {text: 'nav link two d', bgColor: 'orange'},
+    {text: 'nav link two e', bgColor: 'purple'}
   ]},
-  {text: 'THREE', bgColor: 'orange', navItems: [
-    {text: 'three a', bgColor: 'red'},
-    {text: 'three b', bgColor: 'green'},
-    {text: 'three c', bgColor: 'blue'},
-    {text: 'three d', bgColor: 'orange'},
-    {text: 'three e', bgColor: 'purple'}
+  {text: 'TOPIC THREE', bgColor: 'orange', navItems: [
+    {text: 'nav link three a', bgColor: 'red'},
+    {text: 'nav link three b', bgColor: 'green'},
+    {text: 'nav link three c', bgColor: 'blue'},
+    {text: 'nav link three d', bgColor: 'orange'},
+    {text: 'nav link three e', bgColor: 'purple'}
   ]},
-  {text: 'FOUR', bgColor: 'purple', navItems: [
-    {text: 'four a', bgColor: 'red'},
-    {text: 'four b', bgColor: 'green'},
-    {text: 'four c', bgColor: 'blue'},
-    {text: 'four d', bgColor: 'orange'},
-    {text: 'four e', bgColor: 'purple'}
+  {text: 'TOPIC FOUR', bgColor: 'purple', navItems: [
+    {text: 'nav link four a', bgColor: 'red'},
+    {text: 'nav link four b', bgColor: 'green'},
+    {text: 'nav link four c', bgColor: 'blue'},
+    {text: 'nav link four d', bgColor: 'orange'},
+    {text: 'nav link four e', bgColor: 'purple'}
   ]},
-  {text: 'FIVE', bgColor: 'white', navItems: [
-    {text: 'five a', bgColor: 'black'},
-    {text: 'five b', bgColor: 'white'},
-    {text: 'five c', bgColor: 'black'},
-    {text: 'five d', bgColor: 'white'},
-    {text: 'five e', bgColor: 'black'},
-    {text: 'five f', bgColor: 'red'}
+  {text: 'TOPIC FIVE', bgColor: 'white', navItems: [
+    {text: 'nav link five a', bgColor: 'black'},
+    {text: 'nav link five b', bgColor: 'white'},
+    {text: 'nav link five c', bgColor: 'black'},
+    {text: 'nav link five d', bgColor: 'white'},
+    {text: 'nav link five e', bgColor: 'black'},
+    {text: 'nav link five f', bgColor: 'red'}
   ]}
 ]
 const CAROUSEL_COLS = 5

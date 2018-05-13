@@ -13,6 +13,7 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: 'Lato', sans-serif;
 }
 
 /*canvas*/
@@ -55,9 +56,12 @@ canvas {
   align-items: center;
   justify-content: space-around;
   text-align: center;
+  background-color: white;
 }
 #navigatorCarousel {
+  background-color: var(--main-bg-color);
   border: solid white 2px;
+  border-radius: 20px;
   color: white;
 }
 #navigatorleftRight {
@@ -141,14 +145,16 @@ canvas {
   position: static;
   top: 0px;
   transition: all 0.5s ease-in-out;
-  border: solid white 1px;
+  border: solid black 1px;
 }
 /*.navItem:last-child {
   border: none;
 }*/
 
 #navigatorDesc {
-  border: solid white 2px;
+  background-color: var(--main-bg-color);
+  border: solid var(--main-bg-color) 2px;
+  border-radius: 20px;
   padding: 10px;
   color: white;
 }
@@ -188,7 +194,7 @@ canvas {
     #navigatorContainer {
       order: 1;
       flex-direction: row;
-      border-bottom: solid white 2px;/*temporary for dev*/
+      border-bottom: solid var(--main-bg-color) 2px;/*temporary for dev*/
     }
     #navigatorCarousel {
       width: 40%;
@@ -207,7 +213,7 @@ canvas {
     #navigatorContainer {
       order: 2;
       flex-direction: column;
-      border-left: solid white 2px;/*temporary for dev*/
+      border-left: solid var(--main-bg-color) 2px;/*temporary for dev*/
     }
   }
 /*small screen portrait*/

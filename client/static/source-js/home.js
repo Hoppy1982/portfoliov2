@@ -53,7 +53,7 @@ let charPatternParticles = []
 //------------------------------------------------------------------------EVENTS
 document.addEventListener("DOMContentLoaded", init)
 window.addEventListener('resize', init)
-navGoToButton.addEventListener('click', formNewParticleWord, false)//dev
+//navGoToButton.addEventListener('click', formNewParticleWord, false)//dev
 document.getElementById('navigatorUp').addEventListener('click', carouselUp)
 document.getElementById('navigatorDown').addEventListener('click', carouselDown)
 document.getElementById('navigatorLeft').addEventListener('click', carouselLeft)
@@ -63,6 +63,7 @@ document.getElementById('navigatorRight').addEventListener('click', carouselRigh
 function init() {
   reset()
   setLayout()
+  NAV_TOPIC_ELEMENT.innerHTML = carousel2d.getNavTopicText()
   calcHoldPatternWaypointCoords()
   initHoldPatternParticles(TOTAL_PARTICLES)
   animate()
