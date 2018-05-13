@@ -1,46 +1,46 @@
 const CAROUSEL_DATA = [
-  {text: ' TPOIC ZERO', bgColor: 'red', navItems: [
-    {text: 'nav link zero a', bgColor: 'red'},
-    {text: 'nav link zero b', bgColor: 'green'},
-    {text: 'nav link zero c', bgColor: 'blue'},
-    {text: 'nav link zero d', bgColor: 'orange'},
-    {text: 'nav link zero e', bgColor: 'purple'}
+  {text: ' TOPIC ZERO', navItems: [
+    {text: 'nav link zero a', desc: 'Description of the thing nav link zero a points at'},
+    {text: 'nav link zero b', desc: 'Description of the thing nav link zero b points at'},
+    {text: 'nav link zero c', desc: 'Description of the thing nav link zero c points at'},
+    {text: 'nav link zero d', desc: 'Description of the thing nav link zero d points at'},
+    {text: 'nav link zero e', desc: 'Description of the thing nav link zero e points at'}
   ]},
-  {text: 'TOPIC ONE', bgColor: 'green', navItems: [
-    {text: 'nav link one a', bgColor: 'red'},
-    {text: 'nav link one b', bgColor: 'green'},
-    {text: 'nav link one c', bgColor: 'blue'},
-    {text: 'nav link one d', bgColor: 'orange'},
-    {text: 'nav link one e', bgColor: 'purple'}
+  {text: 'TOPIC ONE', navItems: [
+    {text: 'nav link one a', desc: 'Description of the thing nav link one a points at'},
+    {text: 'nav link one b', desc: 'Description of the thing nav link one b points at'},
+    {text: 'nav link one c', desc: 'Description of the thing nav link one c points at'},
+    {text: 'nav link one d', desc: 'Description of the thing nav link one d points at'},
+    {text: 'nav link one e', desc: 'Description of the thing nav link one e points at'}
   ]},
-  {text: 'TOPIC TWO', bgColor: 'blue', navItems: [
-    {text: 'nav link two a', bgColor: 'red'},
-    {text: 'nav link two b', bgColor: 'green'},
-    {text: 'nav link two c', bgColor: 'blue'},
-    {text: 'nav link two d', bgColor: 'orange'},
-    {text: 'nav link two e', bgColor: 'purple'}
+  {text: 'TOPIC TWO', navItems: [
+    {text: 'nav link two a', desc: 'Description of the thing nav link two a points at'},
+    {text: 'nav link two b', desc: 'Description of the thing nav link two b points at'},
+    {text: 'nav link two c', desc: 'Description of the thing nav link two c points at'},
+    {text: 'nav link two d', desc: 'Description of the thing nav link two d points at'},
+    {text: 'nav link two e', desc: 'Description of the thing nav link two e points at'}
   ]},
-  {text: 'TOPIC THREE', bgColor: 'orange', navItems: [
-    {text: 'nav link three a', bgColor: 'red'},
-    {text: 'nav link three b', bgColor: 'green'},
-    {text: 'nav link three c', bgColor: 'blue'},
-    {text: 'nav link three d', bgColor: 'orange'},
-    {text: 'nav link three e', bgColor: 'purple'}
+  {text: 'TOPIC THREE', navItems: [
+    {text: 'nav link three a', desc: 'Description of the thing nav link three a points at'},
+    {text: 'nav link three b', desc: 'Description of the thing nav link three b points at'},
+    {text: 'nav link three c', desc: 'Description of the thing nav link three c points at'},
+    {text: 'nav link three d', desc: 'Description of the thing nav link three d points at'},
+    {text: 'nav link three e', desc: 'Description of the thing nav link three e points at'}
   ]},
-  {text: 'TOPIC FOUR', bgColor: 'purple', navItems: [
-    {text: 'nav link four a', bgColor: 'red'},
-    {text: 'nav link four b', bgColor: 'green'},
-    {text: 'nav link four c', bgColor: 'blue'},
-    {text: 'nav link four d', bgColor: 'orange'},
-    {text: 'nav link four e', bgColor: 'purple'}
+  {text: 'TOPIC FOUR', navItems: [
+    {text: 'nav link four a', desc: 'Description of the thing nav link four a points at'},
+    {text: 'nav link four b', desc: 'Description of the thing nav link four b points at'},
+    {text: 'nav link four c', desc: 'Description of the thing nav link four c points at'},
+    {text: 'nav link four d', desc: 'Description of the thing nav link four d points at'},
+    {text: 'nav link four e', desc: 'Description of the thing nav link four e points at'}
   ]},
-  {text: 'TOPIC FIVE', bgColor: 'white', navItems: [
-    {text: 'nav link five a', bgColor: 'black'},
-    {text: 'nav link five b', bgColor: 'white'},
-    {text: 'nav link five c', bgColor: 'black'},
-    {text: 'nav link five d', bgColor: 'white'},
-    {text: 'nav link five e', bgColor: 'black'},
-    {text: 'nav link five f', bgColor: 'red'}
+  {text: 'TOPIC FIVE', navItems: [
+    {text: 'nav link five a', desc: 'Description of the thing nav link five a points at'},
+    {text: 'nav link five b', desc: 'Description of the thing nav link five b points at'},
+    {text: 'nav link five c', desc: 'Description of the thing nav link five c points at'},
+    {text: 'nav link five d', desc: 'Description of the thing nav link five d points at'},
+    {text: 'nav link five e', desc: 'Description of the thing nav link five e points at'},
+    {text: 'nav link five f', desc: 'Description of the thing nav link five f points at'}
   ]}
 ]
 const CAROUSEL_COLS = 5
@@ -158,6 +158,7 @@ function makeCarouselCells() {
     for(let j = 0; j < CAROUSEL_ROWS; j++) {
       let newElement = document.createElement('div')
       newElement.classList.add('navItem')
+      newElement.classList.add('centered')
       newElement.addEventListener('transitionend', render)
       carouselVisibleItems[j].appendChild(newElement)
     }
@@ -196,7 +197,7 @@ function decVert() {
 }
 
 
-function populateCarouselColumns() {
+function populateCarouselColumns() {//doesn't do anything at present but leave in for later
   for(let i = 0; i < CAROUSEL_COLS; i++) {
     let x = selectedCol + i + CAROUSEL_DATA.length - 2
     while(x >= CAROUSEL_DATA.length) {x = x - CAROUSEL_DATA.length}
@@ -214,7 +215,6 @@ function populateCarouselCells() {
       let y = selectedRowInCols[x] + j
       while(y >= CAROUSEL_DATA[x].navItems.length) {y = y - CAROUSEL_DATA[x].navItems.length}
 
-      //carouselElements[CAROUSEL_COLS - 1 - i][j].style.backgroundColor = CAROUSEL_DATA[x].navItems[y].bgColor
       carouselElements[CAROUSEL_COLS - 1 - i][j].innerHTML = CAROUSEL_DATA[x].navItems[y].text
     }
   }
@@ -233,6 +233,13 @@ function getNavItemText() {
   return CAROUSEL_DATA[selectedCol].navItems[y].text.toUpperCase()
 }
 
+
+function getNavItemDesc() {
+  let y = [selectedRowInCols[selectedCol] + CENTER_ROW]
+  while(y >= CAROUSEL_DATA[selectedCol].navItems.length) {y = y - CAROUSEL_DATA[selectedCol].navItems.length}
+
+  return CAROUSEL_DATA[selectedCol].navItems[y].desc
+}
 //-----------------------------------------------------------------------EXPORTS
 module.exports = {
   up,
@@ -240,5 +247,6 @@ module.exports = {
   left,
   right,
   getNavTopicText,
-  getNavItemText
+  getNavItemText,
+  getNavItemDesc
 }

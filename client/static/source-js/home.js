@@ -18,29 +18,11 @@ const HOLD_PATTERN_WAYPOINTS = [//coords as % of canvas size
 ]
 const HOLD_SPEED = 0.0025
 
-const NAV_LINKS = [//not implemented yet
-  {
-    links_group: 'Links group #0',
-    links_items: [
-      {linkRef: 'url', particleText: 'GROUP ZERO LINK ZERO'},
-      {linkRef: 'url', particleText: 'GROUP ZERO LINK ONE'},
-      {linkRef: 'url', particleText: 'GROUP ZERO LINK TWO'}
-    ]
-  },
-  {
-    links_group: 'Links group #1',
-    links_items: [
-      {linkRef: 'url', particleText: 'GROUP ONE LINK ZERO'},
-      {linkRef: 'url', particleText: 'GROUP ONE LINK ONE'},
-      {linkRef: 'url', particleText: 'GROUP ONE LINK TWO'}
-    ]
-  }
-]
-
 let body = document.getElementsByTagName('body')[0]
 let canvas1 = document.getElementsByTagName('canvas')[0]
 let ctx1 = canvas1.getContext('2d')
 const NAV_TOPIC_ELEMENT = document.getElementById('navigatorNavTopics')
+let navItemDescription = document.getElementById('navigatorDesc')
 let navGoToButton = document.getElementById('navigatorDesc')//dev
 let frameId
 let canvasWidth
@@ -64,6 +46,7 @@ function init() {
   reset()
   setLayout()
   NAV_TOPIC_ELEMENT.innerHTML = carousel2d.getNavTopicText()
+  navItemDescription.innerHTML = carousel2d.getNavItemDesc()
   calcHoldPatternWaypointCoords()
   initHoldPatternParticles(TOTAL_PARTICLES)
   animate()
@@ -121,6 +104,7 @@ function carouselUp() {
   carousel2d.up()
   CHAR_PATTERN_WORDS = carousel2d.getNavItemText()
   NAV_TOPIC_ELEMENT.innerHTML = carousel2d.getNavTopicText()
+  navItemDescription.innerHTML = carousel2d.getNavItemDesc()
   formNewParticleWord()
 }
 
@@ -129,6 +113,7 @@ function carouselDown() {
   carousel2d.down()
   CHAR_PATTERN_WORDS = carousel2d.getNavItemText()
   NAV_TOPIC_ELEMENT.innerHTML = carousel2d.getNavTopicText()
+  navItemDescription.innerHTML = carousel2d.getNavItemDesc()
   formNewParticleWord()
 }
 
@@ -137,6 +122,7 @@ function carouselLeft() {
   carousel2d.left()
   CHAR_PATTERN_WORDS = carousel2d.getNavItemText()
   NAV_TOPIC_ELEMENT.innerHTML = carousel2d.getNavTopicText()
+  navItemDescription.innerHTML = carousel2d.getNavItemDesc()
   formNewParticleWord()
 }
 
@@ -145,6 +131,7 @@ function carouselRight() {
   carousel2d.right()
   CHAR_PATTERN_WORDS = carousel2d.getNavItemText()
   NAV_TOPIC_ELEMENT.innerHTML = carousel2d.getNavTopicText()
+  navItemDescription.innerHTML = carousel2d.getNavItemDesc()
   formNewParticleWord()
 }
 
@@ -276,6 +263,3 @@ function setLayout() {
   canvas1.width = canvasWidth
   canvas1.height = canvasHeight
 }
-
-
-//--------------------------------------------------------------PARTICLE CLASSES
