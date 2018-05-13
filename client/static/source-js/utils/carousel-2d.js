@@ -201,7 +201,7 @@ function populateCarouselColumns() {
     let x = selectedCol + i + CAROUSEL_DATA.length - 2
     while(x >= CAROUSEL_DATA.length) {x = x - CAROUSEL_DATA.length}
 
-    carouselVisibleItems[CAROUSEL_COLS - 1 - i].style.backgroundColor = CAROUSEL_DATA[x].bgColor
+    //carouselVisibleItems[CAROUSEL_COLS - 1 - i].style.backgroundColor = CAROUSEL_DATA[x].bgColor
   }
 }
 
@@ -214,7 +214,8 @@ function populateCarouselCells() {
       let y = selectedRowInCols[x] + j
       while(y >= CAROUSEL_DATA[x].navItems.length) {y = y - CAROUSEL_DATA[x].navItems.length}
 
-      carouselElements[CAROUSEL_COLS - 1 - i][j].style.backgroundColor = CAROUSEL_DATA[x].navItems[y].bgColor
+      //carouselElements[CAROUSEL_COLS - 1 - i][j].style.backgroundColor = CAROUSEL_DATA[x].navItems[y].bgColor
+      carouselElements[CAROUSEL_COLS - 1 - i][j].innerHTML = CAROUSEL_DATA[x].navItems[y].text
     }
   }
 }

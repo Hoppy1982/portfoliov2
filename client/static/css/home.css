@@ -57,7 +57,7 @@ canvas {
   text-align: center;
 }
 #navigatorCarousel {
-  border: solid white 1px;
+  border: solid white 2px;
   color: white;
 }
 #navigatorleftRight {
@@ -114,9 +114,7 @@ canvas {
 #navigatorNavItems {
   width: 85%;
   height: 100%;
-  border: solid red 2px;
   overflow: hidden;
-  background-color: lightgrey;
 
   display: flex;
   flex-direction: row;
@@ -127,7 +125,6 @@ canvas {
   flex: 0 0 auto;
   width: 85%;
   height: 100%;
-  border: solid blue 2px;
   position: static;
   left: 0px;
   transition: all 0.5s ease-in-out;
@@ -144,14 +141,14 @@ canvas {
   position: static;
   top: 0px;
   transition: all 0.5s ease-in-out;
-  border: solid white 2px;
+  border: solid white 1px;
 }
 /*.navItem:last-child {
   border: none;
 }*/
 
 #navigatorDesc {
-  border: solid white 1px;
+  border: solid white 2px;
   padding: 10px;
   color: white;
 }

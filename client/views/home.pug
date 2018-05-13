@@ -3,6 +3,7 @@ html
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
     title Homepage
     link(rel='stylesheet' href='/css/home.css')
+    link(rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous")
 
   body
     main
@@ -15,12 +16,16 @@ html
         div(id='navigatorCarousel')
           div(id='navigatorleftRight')
             div(id='navigatorNavTopics' class='centered') ..nav topic
-            div(id='navigatorLeft' class='centered') L
-            div(id='navigatorRight' class='centered') R
+            div(id='navigatorLeft' class='centered')
+              i(class="fas fa-arrow-left")
+            div(id='navigatorRight' class='centered')
+              i(class="fas fa-arrow-right")
           div(id='navigatorUpDown')
             div(id='navigatorUpDownControls')
-              div(id='navigatorUp' class='centered') U
-              div(id='navigatorDown' class='centered') D   
+              div(id='navigatorUp' class='centered')
+                i(class="fas fa-arrow-up")
+              div(id='navigatorDown' class='centered')
+                i(class="fas fa-arrow-down")   
             div(id='navigatorNavItems')
               div(class='carouselItem')
                 div(class='navItem')

@@ -40,6 +40,7 @@ const NAV_LINKS = [//not implemented yet
 let body = document.getElementsByTagName('body')[0]
 let canvas1 = document.getElementsByTagName('canvas')[0]
 let ctx1 = canvas1.getContext('2d')
+const NAV_TOPIC_ELEMENT = document.getElementById('navigatorNavTopics')
 let navGoToButton = document.getElementById('navigatorDesc')//dev
 let frameId
 let canvasWidth
@@ -118,6 +119,7 @@ function formNewParticleWord() {
 function carouselUp() {
   carousel2d.up()
   CHAR_PATTERN_WORDS = carousel2d.getNavItemText()
+  NAV_TOPIC_ELEMENT.innerHTML = carousel2d.getNavTopicText()
   formNewParticleWord()
 }
 
@@ -125,6 +127,7 @@ function carouselUp() {
 function carouselDown() {
   carousel2d.down()
   CHAR_PATTERN_WORDS = carousel2d.getNavItemText()
+  NAV_TOPIC_ELEMENT.innerHTML = carousel2d.getNavTopicText()
   formNewParticleWord()
 }
 
@@ -132,6 +135,7 @@ function carouselDown() {
 function carouselLeft() {
   carousel2d.left()
   CHAR_PATTERN_WORDS = carousel2d.getNavItemText()
+  NAV_TOPIC_ELEMENT.innerHTML = carousel2d.getNavTopicText()
   formNewParticleWord()
 }
 
@@ -139,6 +143,7 @@ function carouselLeft() {
 function carouselRight() {
   carousel2d.right()
   CHAR_PATTERN_WORDS = carousel2d.getNavItemText()
+  NAV_TOPIC_ELEMENT.innerHTML = carousel2d.getNavTopicText()
   formNewParticleWord()
 }
 
