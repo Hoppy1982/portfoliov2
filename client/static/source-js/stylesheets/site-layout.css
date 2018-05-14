@@ -1,0 +1,201 @@
+/*
+portfolio
+search-page.css
+
+File description: stylesheet linked to each page in site with all common elements such as nav etc
+ */
+
+ /*******************************************/
+ /***************VARIABLES*******************/
+ :root {
+   --navBarHeight: 30px;
+ }
+
+ * {
+   box-sizing: border-box;
+ }
+
+html, body {
+  height: auto;
+  margin: 0px;
+  padding: 0px;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+
+  font-family: 'Lato', sans-serif;
+}
+
+/*******************************************/
+/*************HEADER STYLING****************/
+header {
+  display: block;
+
+  flex: 0 0 auto;
+
+  background-color: #111;
+  color: #ffffff;
+  z-index: 1;
+}
+
+#upperHeader {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+
+  background-color: #222;
+  color: #fff;
+  font-size: 64px;
+}
+
+#upperHeader > div {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+}
+
+nav {
+  background-color: #111;
+  color: #fff;
+  height: var(--navBarHeight);
+  width: 100%;
+  margin, padding: 0px;
+}
+
+/*USED TO TAKE UP SPACE IN PAGE WHEN CHANGING NAV POSITION PROPERTY*/
+#antiNav {
+  height: var(--navBarHeight);
+}
+
+/**TRANSITION CLASSES FOR NAV AND ANTINAV**/
+
+.scrollTopNav {
+  position: static;
+}
+
+.scrollOffTopNav {
+  position: fixed;
+  top: 0px;
+}
+
+.antiNavGone {
+  display: none;
+}
+
+.antiNavHere {
+  display: block;
+}
+
+#navButtList {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  align-items: center;
+
+  margin: 0px;
+  padding: 0px;
+  background-color: #222;
+  color: #ffffff;
+  width: 100%;
+  display: flex;
+}
+
+.navButt:visited {color: white;}
+.navButt:link {color: white;}
+.navButt:hover {color: grey;}
+.navButt {
+  text-decoration:  none;
+  cursor: pointer;
+  width: 120px;
+  height: 100%;
+  text-align: center;
+  line-height: var(--navBarHeight);
+  vertical-align: middle;
+}
+
+/*SMALL SCREENS*/
+@media only screen and (max-width : 768px) {
+  #navButtList {
+    flex-flow: column;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  #upperHeader {font-size: 28px;}
+  .navButtBigScreen {display: none;}
+  .navButt {margin: 6px;}
+}
+
+/*BIG SCREENS*/
+@media only screen and (min-width : 769px) {
+  #navButtList {
+    flex-flow: row;
+    justify-content: space-around;
+    align-items: center;
+  }
+  #upperHeader {font-size: 64px;}
+  #navButtSmallScreen {display: none;}
+}
+
+.showNavButts {
+  display: block;
+}
+/*******************************************/
+/**************MAIN STYLING*****************/
+main {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+
+  flex: 1 1 auto;
+
+  background-color: #444;
+}
+
+/*******************************************/
+/*************FOOTER STYLING****************/
+footer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+
+  flex: 0 0 auto;
+
+  background-color: #111;
+  color: #fff;
+  height: 30px;
+  box-sizing: border-box;
+}
+
+footer p {
+  flex: 0 0 auto;
+  margin-right: 16px;
+}
+
+#footerLinks {
+  flex: 0 0 auto;
+  list-style: none;
+  padding, margin: 0px;
+  font-size: 18px;
+}
+
+#footerLinks li {
+  margin-left: 16px;
+  display: inline-block;
+}
+
+#footerLinks li a {color: #fff;}
+#footerLinks li a:visited {color: #fff;}
+#footerLinks li a:hover {color: #444;}
+
+/*******************************************/

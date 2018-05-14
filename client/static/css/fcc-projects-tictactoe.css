@@ -1,0 +1,162 @@
+/*
+portfolio
+fcc-projects-tictactoe.css
+
+File description: stylesheet specifically linked to fcc-projects-tictactoe.pug
+*/
+
+/*******************************************/
+/***************VARIABLES*******************/
+:root{
+  --main-bg-color: #0f1b30;
+  --gameOverall-bg-color: #3f4f68;
+  --gameCentral-bg-color: #a8b3c4;
+  --shape-color: #000000;
+  --button-color: #4e6182;
+  --borderOne-color: #040b16;
+  --shadow-color: #000000;
+  --shadow-inset-color: #90a9d1;
+  --shadow-insetTwo-color:#6b7d9b;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+}
+
+#tictactoe {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  flex-shrink: 1;
+  width: 100%;
+  background-color: 'transparent';
+}
+
+#pageWrapper {
+  background-color: var(--main-bg-color);
+}
+
+/*GAME BOARD STYLING*/
+#gameOverall {
+  margin-top: 24px;
+  width: 440px;
+  height: 440px;
+  background-color: var(--gameOverall-bg-color);
+  border-radius: 12px;
+  box-shadow:
+    8px 8px 6px var(--shadow-color),
+    inset 4px 6px 18px var(--shadow-inset-color),
+    inset -4px -6px 18px var(--shadow-insetTwo-color);
+  z-index: 1;
+}
+/*GAME BOARD - DEFAULT STYLING*/
+.gameCentralDefault {
+  width: 400px;
+  height: 400px;
+  margin: 20px;
+  background-color: var(--gameCentral-bg-color);
+  border: 1px solid var(--borderOne-color);
+}
+
+/*GAME BOARD - STAGE=CHOOSING PLAYERS STYLING*/
+.gameCentralOptions {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+  border: 1px solid var(--borderOne-color);
+}
+
+.optionsButton {
+  flex-grow: 0;
+  flex-shrink: 0;
+  width: 80%;
+  font-size: 30px;
+  text-align: center;
+  border-radius: 6px;
+  background-color: var(--button-color);
+  border: 1px solid var(--borderOne-color);
+  box-shadow:
+    inset 2px 2px 6px var(--shadow-inset-color),
+    inset -2px -2px 6px var(--shadow-insetTwo-color);
+}
+
+.startButton {
+  flex-grow: 0;
+  flex-shrink: 0;
+  width: 80%;
+  font-size: 36px;
+  border-radius: 6px;
+  text-align: center;
+  background-color: var(--button-color);
+  border: 1px solid var(--borderOne-color);
+  box-shadow:
+    inset 2px 2px 6px var(--shadow-inset-color),
+    inset -2px -2px 6px var(--shadow-insetTwo-color);
+}
+
+.boardSquare {
+  width: 33.3%;
+  height: 33.3%;
+  font-size: 36px;
+  color: var(--shape-color);
+  border: 1px solid var(--borderOne-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.gameCentralPlaying {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+#newGameButtSpacer {
+  flex-grow: 0;
+  flex-shrink: 0;
+  width: 440px;
+}
+
+#newGameButt {
+  float: right;
+  margin-right: 40px;
+  height: 40px;
+  width: 80px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  background-color: var(--button-color);
+  border: 2px solid var(--borderOne-color);
+  position: relative;
+  top: -22px;
+  transition: top ease 0.5s;
+  z-index: 0;
+  outline: none;
+}
+
+#newGameButt:hover {
+  top: 0px;
+}
+
+
+@media (max-width: 800px) {
+  #gameOverall {
+    width: 240px;
+    height: 240px;
+  }
+  .gameCentralDefault {
+    width: 220px;
+    height: 220px;
+    margin: 10px;
+  }
+  #newGameButtSpacer {
+    width: 220px;
+  }
+}

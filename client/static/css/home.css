@@ -164,6 +164,8 @@ canvas {
   align-items: center;
   justify-content: space-around;
 }
+
+
 /*----------------------------------------------------------TRANSITION CLASSES*/
 .movedLeft {
   position: relative;
@@ -183,6 +185,19 @@ canvas {
   top: 34%;
 }
 
+
+/*-------------------------------------------------------------------CLICKABLE*/
+.centerClickableCell {
+  /*might not use this & have shadow over the non clickable navitems instead*/
+  font-size: 1.2em;
+}
+.centerClickableCell:hover {
+  cursor: hand;
+}
+
+.carouselControl:hover {
+  cursor: hand;
+}
 
 /*----------------------------------------------------------------BREAK POINTS*/
 /*REPLACE WIDTH WITH DEVICE-WIDTH AFTER TESTING!*/

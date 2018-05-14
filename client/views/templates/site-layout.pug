@@ -1,0 +1,49 @@
+//- portfolio
+//- site-layout.pug
+
+//- File description: 
+//- Page layout template
+
+html
+  block head
+    head
+      meta(name='viewport', content='width=device-width, initial-scale=1.0')
+      title portfolio - #{title}
+      block styles
+        //- link(rel='stylesheet', href='/font-awesome-4.7.0/css/font-awesome.min.css')
+        link(rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous")
+        link(rel='stylesheet', type='text/css', href='https://fonts.googleapis.com/css?family=Lato')
+        link(rel='stylesheet', type='text/css', href='/css/site-layout.css')
+            
+  body(onscroll='reposNav()') 
+    header 
+      div#upperHeader(onclick='randomAni1Colors()') 
+        canvas(width=140 height=140)#canvasLogo
+        div #{title}
+        canvas(width=140 height=140)#canvas1
+      nav#nav.scrollTopNav
+        ul#navButtList
+          i.fa.fa-bars.navButt#navButtSmallScreen(onclick='expandNav()')
+          a.navButt.navButtBigScreen(href='/home') Home
+          a.navButt.navButtBigScreen(href='/fcc-projects') FCC Projects
+          a.navButt.navButtBigScreen(href='/widgetrons') Widgetrons
+          a.navButt.navButtBigScreen(href='/campervan') Campervan
+          a.navButt.navButtBigScreen(href='/search-page') To Do
+      //-Used to take up the space that nav leaves behind when changing position prop in css
+      div#antiNav.antiNavGone
+    main
+      block pageContent
+    footer
+      ul#footerLinks
+        li
+          a(href='https://twitter.com/markhopcraft')
+            i.fa.fa-twitter
+        li
+          a(href='https://github.com/Hoppy1982?tab=repositories')
+            i.fa.fa-github
+        li
+          a(href='http://codepen.io/Hoppington/')
+            i.fa.fa-codepen
+      p Mark Hopcraft
+      block scripts
+        script(src='/bundled-js/bundled-site-layout.js')

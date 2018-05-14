@@ -1,0 +1,46 @@
+//- portfolio
+//- fcc-projects-calculator.pug
+
+//- File description: 
+//-
+
+extends templates/site-layout.pug
+
+block prepend scripts
+  script(src='/bundled-js/bundled-fcc-projects-calculator.js')
+
+block append styles 
+  link(rel='stylesheet', type='text/css', href='/css/fcc-projects-calculator.css')
+  link(rel='stylesheet', type='text/css', href='//fonts.googleapis.com/css?family=Orbitron')
+
+block pageContent
+  div#wasMain
+    #calculator
+      #badge ELECTRONIC CALCULATOR
+      #screen
+        #calculation 0
+        #calcHistory
+      #keypad
+        section#keypadLeft
+          #AC.button.buttonClear(onclick='buttClear(this.id)') AC
+          #CE.button.buttonClear(onclick='buttClear(this.id)') CE
+          #div.button(onclick='buttVal(this.id)') /
+          #sev.button(onclick='buttVal(this.id)') 7
+          #eig.button(onclick='buttVal(this.id)') 8
+          #nin.button(onclick='buttVal(this.id)') 9
+          #fou.button(onclick='buttVal(this.id)') 4
+          #fiv.button(onclick='buttVal(this.id)') 5
+          #six.button(onclick='buttVal(this.id)') 6
+          #one.button(onclick='buttVal(this.id)') 1
+          #two.button(onclick='buttVal(this.id)') 2
+          #thr.button(onclick='buttVal(this.id)') 3
+        section#keypadRight
+          #mul.button(onclick='buttVal(this.id)') x
+          #sub.button(onclick='buttVal(this.id)') -
+          #add.button(onclick='buttVal(this.id)') +
+          #equ.button(onclick='buttEq(this.id)') =
+        section#keypadBottom
+          #zer.button(onclick='buttVal(this.id)') 0
+          #dec.button(onclick='buttVal(this.id)') .
+    #footer
+      | Built by Mark Hopcraft

@@ -1,0 +1,195 @@
+/*
+portfolio
+fcc-projects-pomodoro.css
+
+File description: stylesheet specifically linked to fcc-projects-pomodoro.pug
+*/
+
+/*******************************************/
+/***************VARIABLES*******************/
+:root {
+  --main-theme-colorB: #34495e;
+  --main-theme-colorBLighter: #34495e;
+  --main-theme-colorA: #16a085;
+  --main-text-color: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+}
+
+main {
+  /*self*/
+  height: 480px;
+  background-color: var(--main-theme-colorB);
+  color: var(--main-text-color);
+  /*flex self*/
+  flex-grow: 0;
+  flex-shrink: 0;
+  /*flex container*/
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+section {
+  width: 100%;
+}
+
+#heading {
+  /*self*/
+  font-family: Lato;
+  font-size: 40px;
+  height: 15%;
+  /*flex self*/
+  /*flex container*/
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+#options {
+  /*self*/
+  max-width: 480px;
+  height: 15%;
+  /*flex self*/
+  /*flex container*/
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+#break, #session {
+  /*self*/
+  height: 100%;
+  /*flex self*/
+  /*flex container*/
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+#break > div, #session  > div {
+  /*self*/
+  /*flex self*/
+  /*flex container*/
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.controls {
+  /*self*/
+  width: 100%;
+  /*flex self*/
+  /*flex container*/
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+#timer {
+  /*self*/
+  height: 200px;
+  width: 200px;
+  border-radius: 50%;
+  background-color: var(--main-theme-colorBLighter);
+  /*flex self*/
+  /*flex container*/
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#positionHelper {
+  position: relative;
+}
+
+#fillAnimation {
+  position: absolute;
+  top: -100px;
+  left: -100px;
+  border-radius: 50%;
+}
+
+#msg {
+  font-family: Lato;
+  font-size: 24px;
+  font-weight: 900;
+}
+
+#minsLeft {
+  position: absolute;
+  z-index: 2;
+  width: 100px;
+  text-align: center;
+  font-weight: 900;
+  font-family: Lato;
+
+}
+
+.minsLeftPosSizeInitial {
+  font-size: 44px;
+  top: -24px;
+  left: -64px;
+}
+
+.minsLeftPosSize {
+  font-size: 70px;
+  top: -50px;
+  left: -48px;
+}
+
+.minsLeftPulse {
+  font-size: 72px;
+  color: var(--main-theme-colorA);
+  transition: color 0.2s;
+  transition: font-size 0.2s;
+}
+
+.minsLeftNoPulse {
+  font-size: 70px;
+  color: var(--main-text-color);
+  transition: color 0.2s;
+  transition: font-size 0.2s;
+}
+
+#secsLeft {
+  position: absolute;
+  z-index: 2;
+  width: 100px;
+  text-align: center;
+  font-weight: 100;
+  font-family: Lato;
+  font-size: 56px;
+  bottom: -80px;
+  left: -48px;
+}
+
+#footing {
+  text-align: center;
+  font-family: Lato;
+}
+
+#sessionTime, #breakTime {
+  font-family: Lato;
+  font-weight: 900;
+}
+
+span {
+  margin: 4px;
+}
+
+@media (max-width: 480px) {
+  #heading {
+    font-size: 30px;
+  }
+}

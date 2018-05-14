@@ -1,0 +1,41 @@
+//- portfolio
+//- fcc-projects-pomodoro.pug
+
+//- File description: 
+//- 
+extends templates/site-layout.pug
+
+block prepend scripts
+  script(src='/bundled-js/bundled-fcc-projects-pomodoro.js')
+block append styles  
+  link(rel='stylesheet', type='text/css', href='/css/fcc-projects-pomodoro.css')
+
+block pageContent
+  section#heading
+    span(style='font-family:Lato; font-weight:300') FREE
+    span(style='font-family:Lato; font-weight:900') CODE CAMP
+  section#options
+    #break
+      div
+        span(style='font-family:Lato; font-weight:900') BREAK
+        span(style='font-family:Lato; font-weight:300') LENGTH
+      .controls
+        div(onclick='changeTime("brk", -1)') -
+        #breakTime 2
+        div(onclick='changeTime("brk", 1)') +
+    #session
+      div
+        span(style='font-family:Lato; font-weight:900') SESSION
+        span(style='font-family:Lato; font-weight:300') LENGTH
+      .controls
+        div(onclick='changeTime("sess", -1)') -
+        #sessionTime 2
+        div(onclick='changeTime("sess", 1)') +
+  #msg SESSION
+  section#timer(onclick='toggleCountdown()')
+    #positionHelper
+      canvas#fillAnimation(width='200', height='200')
+      #minsLeft.minsLeftPosSizeInitial START
+      #secsLeft
+  section#footing
+    | By Mark Hopcraft

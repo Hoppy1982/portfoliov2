@@ -1,0 +1,33 @@
+/*
+portfolio
+fcc-projects.css
+
+File description: stylesheet specifically linked to fcc-projects.pug
+*/
+
+* {
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+}
+
+#thumbnails {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+#thumbnails .fccProjLink {
+  border: 2px solid black;
+  flex: 0 0 auto;
+  height: 240px;
+  width: 240px;
+  margin: 24px;
+}
+
+#thumbnails .fccProjLink img {
+  max-width: 100%;
+  height: auto;
+}

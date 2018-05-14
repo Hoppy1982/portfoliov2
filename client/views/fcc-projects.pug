@@ -1,0 +1,22 @@
+//- portfolio
+//- fcc-projects.pug
+
+//- File description: 
+//- 
+
+extends templates/site-layout.pug
+
+block append styles
+   
+  link(rel='stylesheet', type='text/css', href='/css/fcc-projects.css')
+
+block pageContent
+  div#thumbnails
+    a.fccProjLink(href='/fcc-projects-simon')
+      img(src='/images/simon-link.png')
+    a.fccProjLink(href='/fcc-projects-pomodoro')
+      img(src='/images/pomodoro-link.png')
+    a.fccProjLink(href='/fcc-projects-calculator')
+      img(src='/images/calculator-link.png')
+    a.fccProjLink(href='/fcc-projects-tictactoe')
+      img(src='/images/tictactoe-link.png')

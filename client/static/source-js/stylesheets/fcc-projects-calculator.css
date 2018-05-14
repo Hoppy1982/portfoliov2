@@ -1,0 +1,182 @@
+/*
+portfolio
+fcc-projects-calculator.css
+
+File description: stylesheet specifically linked to fcc-projects-calculator.pug
+*/
+
+/*******************************************/
+/***************VARIABLES*******************/
+:root {
+  --calc-case-color: #d4d6d8;
+  --calc-border-color: #5e5e5e;
+  --calc-shadow-color: #252525;
+  --calc-inner-shadow-color: #858585;
+  --calc-screen-border-color: black;
+  --calc-buttA-color: #383737;
+  --calc-buttB-color: #a01837;
+  --calc-screen-color: #bcb19a;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+}
+
+#wasMain {
+  /*own properties*/
+  font-family: 'Orbitron', sans-serif;
+  height: 480px;
+  /*flex container properties*/
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  /*flex child properties*/
+}
+
+#calculator {
+  /*own properties*/
+  margin-top: 20px;
+  width:300px;
+  height: 400px;
+  background-color: var(--calc-case-color);
+  border: outset var(--calc-border-color 2px);
+  box-shadow: 10px 10px 20px var(--calc-shadow-color), inset 0 0 10px var(--calc-inner-shadow-color);
+  border-radius: 28px;
+  /*flex container properties*/
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  /*flex child properties*/
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+#badge {
+  /*own properties*/
+  /*flex container properties*/
+  /*flex child properties*/
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+#screen {
+  /*own properties*/
+  height: 40px;
+  border: solid black 2px;
+  border-radius: 8px;
+  width: 90%;
+  overflow: hidden;
+  font-size: 14px;
+  background-color: var(--calc-screen-color);
+  /*flex container properties*/
+  /*flex child properties*/
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+#keypad {
+  /*own properties*/
+  height: 300px;
+  width: 100%;
+
+  /*flex container properties*/
+  /*flex child properties*/
+}
+
+#keypadLeft {
+  /*own properties*/
+  float: left;
+  width: 75%;
+  height: 80%;
+  /*flex container properties*/
+  /*flex child properties*/
+}
+
+#keypadRight {
+  /*own properties*/
+  float: right;
+  height: 100%;
+  width: 25%;
+  /*flex container properties*/
+  /*flex child properties*/
+}
+
+#keypadBottom {
+  /*own properties*/
+  float: left;
+  height: 20%;
+  width: 75%;
+  /*flex container properties*/
+  /*flex child properties*/
+}
+
+.button {
+  /*own properties*/
+  margin-top: 6px;
+  margin-bottom: 6px;
+  width: 56px;
+  height: 48px;
+  box-shadow: 0px 3px 0px var(--calc-shadow-color), inset 0 0 10px var(--calc-inner-shadow-color);
+  display: inline-block;
+  float: left;
+  border-radius: 8px;
+  background-color: var(--calc-buttA-color);
+  color: #ffffff;
+  font-weight: bolder;
+  position: relative;
+  transition: all ease 0.2s;
+  /*flex container properties*/
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /*flex child properties*/
+}
+
+.buttonClear {
+  background-color: var(--calc-buttB-color);
+}
+
+#keypadLeft .button {
+  margin-left: 14px;
+}
+
+#keypadRight .button {
+  margin-left: 2px;
+}
+
+#keypadBottom .button {
+  margin-left: 14px;
+}
+
+#zer {
+  width: 126px;
+}
+
+#equ {
+  height: 108px;
+}
+
+#footer {
+  /*own properties*/
+  /*flex container properties*/
+  /*flex child properties*/
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+  /*own properties*/
+  /*flex container properties*/
+  /*flex child properties*/
+
+.buttonOnMouseDown {
+  box-shadow: 0px 0px 0px var(--calc-shadow-color), inset 0 0 10px var(--calc-inner-shadow-color);
+  top: 3px;
+}
+
+.button:active {
+  transform: translate(0, 3px);
+  box-shadow: none;
+}

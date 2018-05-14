@@ -1,0 +1,285 @@
+/*
+portfolio
+fcc-projects-simon.css
+
+File description: stylesheet specifically linked to fcc-projects-simon.pug
+*/
+
+/*******************************************/
+/***************VARIABLES*******************/
+:root {
+  --simon-corner-green-off: green;
+  --simon-corner-red-off: #a5251c;
+  --simon-corner-yellow-off: #a39c1b;
+  --simon-corner-blue-off: #1f1c75;
+  --simon-corner-green-on: #37f430;
+  --simon-corner-red-on: #ef3c2f;
+  --simon-corner-yellow-on: #f9f8a2;
+  --simon-corner-blue-on: #3047f4;
+  --simon-bg-color: #111;
+  --simon-txt-color: #ffffff;
+  --simon-game-bg-color: #4e4f51;
+  --simon-counter-bg-color: #440d07;
+  --simon-center-circle-bg-color: #b0b2b2;
+  --simon-game-txt-color: #000000;
+}
+
+/*******************************************/
+/***********GENERAL PAGE STYLING************/
+* {
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+}
+
+#pageWrapper {
+  background-color: var(--simon-bg-color);
+}
+
+.fccProjWrapper {width: 100%;}
+
+.projDesc {
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 80px;
+}
+
+.projHeader {
+  width: 100%;
+  text-align: center;
+  margin: 0px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+/*******************************************/
+/***********FCC SIMON GAME STYLING**********/
+#simonHeader {
+  background-color: var(--simon-bg-color);
+  color: var(--simon-txt-color);
+}
+
+#fccSimonWrapper {
+  background-color: var(--simon-bg-color);
+  color: var(--simon-txt-color);
+  display: flex;
+  flex-direction: row;
+  flex-wrap:wrap;
+  justify-content: space-around;
+  align-items: center;
+}
+
+#simonGameArea {
+  flex: 0 0 auto;
+  height: 400px;
+  width: 400px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+  background-color: var(--simon-game-bg-color);
+  position: relative;
+  z-index: 0;
+  color: var(--simon-game-txt-color);
+}/*#gameArea*/
+
+
+.corner {
+  width: 45%;
+  height: 45%;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+#cornerGreen {
+  border-top-left-radius: 100%;
+  margin: 0% -1.5% -1.5% 0%
+}
+#cornerRed {
+  border-top-right-radius: 100%;
+  margin: 0% 0% -1.5% -1.5%;
+}
+#cornerYellow {
+  border-bottom-left-radius: 100%;
+  margin: -1.5% -1.5% 0% 0%;
+}
+#cornerBlue {
+  border-bottom-right-radius: 100%;
+  margin: -1.5% 0% 0% -1.5%;
+}
+
+
+#centerCircle {
+  font-family: 'Orbitron', sans-serif;
+  width: 50%;
+  height: 50%;
+  border-radius: 50%;
+  border: 15px solid var(--simon-game-bg-color);
+  position: absolute;
+  background-color: var(--simon-center-circle-bg-color);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+}/*#centerCircle*/
+#centerCircleLabel {
+  font-size: 1.8em;
+  width: 90%;
+  height: 20%;
+  text-align: center;
+}/*#centerCircleLabel*/
+
+
+#counterWrapper {
+  width: 30%;
+  height: 30%;
+  position: relative;
+}/*#counterWrapper*/
+#counter {
+  width: 90%;
+  height: 60%;
+  border: 3px solid var(--simon-game-bg-color);
+  border-radius: 8px;
+  background-color: var(--simon-counter-bg-color);
+  margin: auto;
+  text-align: center;
+  color: var(--simon-corner-red-off);
+  font-size: 1.2em;
+}/*#counter*/
+#counterLabel {
+  width: 100%;
+  text-align: center;
+  font-size: 0.6em;
+  position: absolute;
+  bottom: 0;
+}/*#counterLabel*/
+
+
+#startWrapper {
+  width: 30%;
+  height: 30%;
+  position: relative;
+}/*#startWrapper*/
+#start {
+  width: 50%;
+  height: 50%;
+  border-radius: 50%;
+  border: 3px solid var(--simon-game-bg-color);
+  background-color: var(--simon-corner-red-off);
+  position: absolute;
+  bottom: 35%;
+  left: 25%;
+}/*#start*/
+#startLabel {
+  width: 100%;
+  text-align: center;
+  font-size: 0.6em;
+  position: absolute;
+  bottom: 0;
+}/*#startLabel*/
+
+
+#strictWrapper {
+  width: 30%;
+  height: 30%;
+  position: relative;
+}/*#strictWrapper*/
+#strictStatus {
+  width: 12%;
+  height: 12%;
+  border-radius: 50%;
+  margin: auto;
+  border: 1px solid var(--simon-game-bg-color);
+}/*#strictStatus*/
+#strict {
+  width: 50%;
+  height: 50%;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 35%;
+  left: 25%;
+  border: 3px solid var(--simon-bg-color);
+  background-color: var(--simon-corner-yellow-off);
+}/*#strict*/
+#strictLabel {
+  width: 100%;
+  text-align: center;
+  font-size: 0.6em;
+  position: absolute;
+  bottom: 0;
+}/*#strictLabel*/
+
+
+#OffOnWrapper {
+  width: 50%;
+  height: 10%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}/*#OffOnWrapper*/
+#offOn {
+  width: 40%;
+  height: 100%;
+  border: 2px solid var(--simon-game-bg-color);
+  background-color: black;
+}/*#offOn*/
+#offOnSwitch {
+  height: 100%;
+  width: 50%;
+  background-color: #5371a0;
+  border-radius: 4px;
+}/*#offOnSwitch*/
+#offLabel, #onLabel {
+  height: 100%;
+  text-align: center;
+  font-size: 0.7em;
+}/*#offLabel, #onLabel*/
+
+
+/*******************************************/
+/****FCC SIMON GAME TRANSITIONAL CLASSES****/
+.switchRight {float: right;}
+.strictModeOn {background-color: red;}
+.strictModeOff {background-color: black;}
+.cornerGreenOff {background-color: var(--simon-corner-green-off);}
+.cornerRedOff {background-color: var(--simon-corner-red-off);}
+.cornerYellowOff {background-color: var(--simon-corner-yellow-off);}
+.cornerBlueOff {background-color: var(--simon-corner-blue-off);}
+.cornerGreenOn {background-color: var(--simon-corner-green-on);}
+.cornerRedOn {background-color: var(--simon-corner-red-on);}
+.cornerYellowOn {background-color: var(--simon-corner-yellow-on);}
+.cornerBlueOn {background-color: var(--simon-corner-blue-on);}
+
+/*******************************************/
+/***************SMALL SCREEN****************/
+@media only screen and (max-width: 500px) {
+  #simonGameArea {
+    height: 240px;
+    width: 240px;
+  }
+
+  #centerCircle {border: 4px solid var(--simon-game-bg-color);}
+
+  #centerCircleLabel {font-size: 1.0em;}
+
+  #counter {
+    border: 2px solid var(--simon-game-bg-color);
+    border-radius: 6px;
+    font-size: 0.8em;
+  }
+
+  #counterLabel {font-size: 0.5em;}
+
+  #start {border: 2px solid var(--simon-game-bg-color);}
+
+  #startLabel {font-size: 0.5em;}
+
+  #strict {border: 2px solid var(--simon-bg-color);}
+
+  #strictLabel {font-size: 0.5em;}
+
+  #offLabel, #onLabel {font-size: 0.5em;}
+}

@@ -1,0 +1,59 @@
+//- portfolio
+//- fcc-projects-simon.pug
+
+//- File description: 
+//-
+
+extends templates/site-layout.pug
+  
+block prepend scripts
+  script(src='/bundled-js/bundled-fcc-projects-simon.js')
+block append styles
+  link(rel='stylesheet', type='text/css', href='/css/fcc-projects-simon.css')
+  link(rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Orbitron")
+
+block pageContent
+  div
+    h3.projHeader#simonHeader FCC SIMON GAME
+    div.fccProjWrapper#fccSimonWrapper
+      
+      div#simonGameArea
+        div#cornerGreen.corner.cornerGreenOff(onclick='simonUserCornerPress(this.id)')
+        div#cornerRed.corner.cornerRedOff(onclick='simonUserCornerPress(this.id)')
+        div#cornerYellow.corner.cornerYellowOff(onclick='simonUserCornerPress(this.id)')
+        div#cornerBlue.corner.cornerBlueOff(onclick='simonUserCornerPress(this.id)')
+        div#centerCircle
+          div#centerCircleLabel Simon
+          div#counterWrapper
+            div#counter
+            div#counterLabel COUNT
+          div#startWrapper
+            div#start(onclick='simonStart()')
+            div#startLabel START  
+          div#strictWrapper
+            div#strictStatus.strictModeOff
+            div#strict(onclick='simonStrictMode("toggle")')
+            div#strictLabel STRICT  
+          div#OffOnWrapper
+            div#offLabel OFF
+            div#offOn(onclick='simonToggleoffOn()')
+              div#offOnSwitch  
+            div#onLabel ON
+      div.projDesc
+        h3 Project Description
+        p
+          | I found this difficult enough to make on codepen but transfering over to my site was horrendous. 
+          | It would have been so much easier if I wanted each project to live on their own individual page.
+          | I moved the code into a module with browserify then used a tiny bit of code in the pages script file 
+          | to take each onclick action and pass it to the functions in the module. Most of the pain came from renaming
+          | things that I'd made too generic when doing it originally in codepen.
+        h3 Bugs
+        p Fixed size of 400px so doesn't work well on mobile
+        p Should've used mousedowns instead of onclicks
+        p It goes nuts unless you're very slow and deliberate on the buttons
+        p Sometimes it just all goes nuts
+        p 
+          | Turning the power off isn't instant if A. It's still demoing a sequence, B it's in nuts mode
+          | This is obviously intentional to reflect the capacitor discharge time
+
+        

@@ -1,10 +1,10 @@
 const CAROUSEL_DATA = [
-  {text: ' TOPIC ZERO', navItems: [
-    {text: 'nav link zero a', desc: 'Description of the thing nav link zero a points at'},
-    {text: 'nav link zero b', desc: 'Description of the thing nav link zero b points at'},
-    {text: 'nav link zero c', desc: 'Description of the thing nav link zero c points at'},
-    {text: 'nav link zero d', desc: 'Description of the thing nav link zero d points at'},
-    {text: 'nav link zero e', desc: 'Description of the thing nav link zero e points at'}
+  {text: 'Free Code Camp Projects', navItems: [
+    {text: 'FCC Projects Page', desc: 'A possibly redundant page with links to each FCC project', link: '/fcc-projects'},
+    {text: 'Calculator', desc: 'Tesco Calculator lookalikey, for this I mainly concentrated on seeing how close I could it looking to someone elses design.', link: '/fcc-projects-calculator'},
+    {text: 'Pomodoro Timer', desc: 'Description of the thing nav link zero b points at', link: '/fcc-projects-pomodoro'},
+    {text: 'Simon Game', desc: 'Description of the thing nav link zero c points at', link: '/fcc-projects-simon'},
+    {text: 'Noughts And Crosses', desc: 'Description of the thing nav link zero d points at', link: '/fcc-projects-tictactoe'}
   ]},
   {text: 'TOPIC ONE', navItems: [
     {text: 'nav link one a', desc: 'Description of the thing nav link one a points at'},
@@ -82,6 +82,7 @@ function render() {
   updateCarouselState()
   populateCarouselColumns()
   populateCarouselCells()
+  addClickableNav()
   updateCarouselState()
 }
 
@@ -218,6 +219,18 @@ function populateCarouselCells() {
       carouselElements[CAROUSEL_COLS - 1 - i][j].innerHTML = CAROUSEL_DATA[x].navItems[y].text
     }
   }
+}
+
+
+function addClickableNav() {
+  carouselElements[CENTER_COL][CENTER_ROW].classList.add('centerClickableCell')
+
+  let y = [selectedRowInCols[selectedCol] + CENTER_ROW]
+  while(y >= CAROUSEL_DATA[selectedCol].navItems.length) {y = y - CAROUSEL_DATA[selectedCol].navItems.length}
+
+  carouselElements[CENTER_COL][CENTER_ROW].addEventListener('click', function(){
+    location.href = CAROUSEL_DATA[selectedCol].navItems[y].link
+  }, false)
 }
 
 

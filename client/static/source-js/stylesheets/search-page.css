@@ -1,0 +1,22 @@
+/*
+portfolio
+ search-page.css
+
+File description: stylesheet specifically linked to search-page.pug
+ */
+
+form {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+
+  background-color: #3333ff;
+}
+
+output {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+
+  background-color: #ffffff;
+}

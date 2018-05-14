@@ -1,0 +1,135 @@
+/*
+portfolio
+widgetrons.css
+
+File description: stylesheet specifically linked to widgetrons.pug
+ */
+
+:root {
+   --colorOne: #222;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+}
+
+/*ANIMATION PICKER STYLING*/
+#animationPicker {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+
+  width: 300px;
+  height: 40px;
+  margin: 24px;
+  background-color: var(--colorOne);
+}
+
+.animationSelector {
+  flex: 0 0 auto;
+  color: white;
+  font-size: 2em;
+}
+.animationSelector:hover {color: grey;}
+
+#selectedAnimation {
+  flex: 0 0 auto;
+  background-color: white;
+  text-align: center;
+  height: 60%;
+  width: 70%;
+}
+
+/*All ANIMATIONS STYLING*/
+.animation {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-around;
+  width: 100%;
+}
+.animationCanvas {
+  width: 50%;
+  min-width: 400px;
+}
+.individualAnimationControls {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  width: 50%;
+  max-width: 240px;
+}
+.individualAnimationControls div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  margin-top: 24px;
+}
+button {
+  color: var(--colorOne);
+  font-size: 1.2em;
+  font-weight: bold;
+  padding: 0.2em;
+  text-decoration: none;
+}
+button:hover {
+  background-color: var(--colorOne);
+  color: #fff;
+}
+
+
+/*toggled by js*/
+.animationControlPaused {
+  border: solid red 3px;
+}
+.animationControlUnpaused {
+  border: solid green 3px;
+}
+
+/*BOUNCING COLORED DOTS STYLING*/
+#BCDCanvas {
+  background-color: #000;
+}
+/*MECHANICAL LETTERS STYLING*/
+#mechanicalLetters {
+  display: none;
+}
+#MLCanvas {
+  /*border: solid black 1px;*/
+}
+/*LOZENGE TESTER STYLING*/
+#lozengeTester {
+  display: none;
+}
+#LTCanvas {  /*border: solid black 1px;*/
+}
+/*LOGO2 STYLING*/
+#lozengeSpirrograph {
+  display: none;
+}
+#LSCanvas {
+  /*border: solid black 1px;*/
+}
+
+
+/*MEDIA QUERIES*/
+@media screen and (max-width: 640px) {
+  .animation {
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+  }
+  .individualAnimationControls {
+    align-items: center;
+  }
+  .animationCanvas {
+    width: 100%;
+    min-width: 200px;
+  }
+}

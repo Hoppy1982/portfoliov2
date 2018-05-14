@@ -1,0 +1,21 @@
+//- portfolio
+//- fcc-projects-tictactoe.pug
+
+//- File description: 
+//-
+
+extends templates/site-layout.pug
+
+block prepend scripts
+  script(src='/bundled-js/bundled-fcc-projects-tictactoe.js')
+
+block append styles  
+  link(rel='stylesheet', type='text/css', href='/css/fcc-projects-tictactoe.css')
+
+
+block pageContent
+  div#tictactoe
+    section#gameOverall
+      #gameCentral.gameCentralDefault
+    #newGameButtSpacer
+      button#newGameButt(onclick='resetGame()') NEW GAME

@@ -1,0 +1,71 @@
+//- portfolio
+//- widgetrons.pug
+
+//- File description:
+//- 
+
+extends templates/site-layout.pug
+
+block prepend scripts
+  script(src='/bundled-js/bundled-widgetrons.js')
+block append styles
+  link(rel='stylesheet', type='text/css', href='/css/widgetrons.css')
+    
+block pageContent
+  section#animationPicker
+    i.fa.fa-arrow-left.animationSelector#prevAnimation
+    div#selectedAnimation
+    i.fa.fa-arrow-right.animationSelector#nextAnimation
+  
+  section.animation#bouncingColoredDots
+    canvas(width=400 height=400).animationCanvas#BCDCanvas
+    div.individualAnimationControls#BCDControls
+      div
+        button#BCDTogglePause Toggle Pause
+      div
+        button#BCDReRun Re-run
+      div
+        label(for='BCDInputNCircles') nCircles 
+        input(type='range' min='0' max='2000' value='200')#BCDInputNCircles
+      div
+        label(for='BCDInputRadius') Radius 
+        input(type='range' min='1' max='20' value='2')#BCDInputRadius
+      div
+        label(for='BCDInputAOE') AoE 
+        input(type='range' min='0' max='200' value='60')#BCDInputAoE
+    
+  section.animation#mechanicalLetters
+    canvas(width=400 height=120).animationCanvas#MLCanvas
+    div.individualAnimationControls#MLControls
+      div
+        button#MLTogglePause Toggle Pause
+      div
+        button#MLReRun Re-run
+      
+  section.animation#lozengeTester
+    canvas(width=400 height=400).animationCanvas#LTCanvas
+    div.individualAnimationControls#LTControls
+      div
+        label(for='#LTx1') x1 
+        input(type='range' min='50' max='350' value='50')#LTx1
+      div
+        label(for='#LTy1') y1 
+        input(type='range' min='50' max='350' value='300')#LTy1
+      div
+        label(for='#LTx2') x2
+        input(type='range' min='50' max='350' value='300')#LTx2
+      div
+        label(for='#LTy2') y2
+        input(type='range' min='50' max='350' value='50')#LTy2
+        
+  section.animation#lozengeSpirrograph
+    canvas(width=400 height=400).animationCanvas#LSCanvas
+    div.individualAnimationControls#LSControls
+      div
+        button#LSReverseDXButt Reverse dx
+      div
+        button#LSReverseDYButt Reverse dy
+      div
+        button#LSSwitchXYButt Switch xy
+ 
+      
