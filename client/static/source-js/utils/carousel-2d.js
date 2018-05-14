@@ -6,9 +6,9 @@ const CAROUSEL_DATA = [
     {text: 'Simon Game', desc: 'Works....ish', link: '/fcc-projects-simon'},
     {text: 'Noughts And Crosses', desc: '...meh', link: '/fcc-projects-tictactoe'}
   ]},
-  {text: 'TOPIC ONE', navItems: [
-    {text: 'nav link one a', desc: 'Description of the thing nav link one a points at', link: '/404'},
-    {text: 'nav link one b', desc: 'Description of the thing nav link one b points at', link: '/404'},
+  {text: 'Misc', navItems: [
+    {text: 'Widgetrons', desc: 'Half finished gubbins and ideasa', link: '/widgetrons'},
+    {text: 'Van', desc: 'Why I am poor', link: '/campervan'},
     {text: 'nav link one c', desc: 'Description of the thing nav link one c points at', link: '/404'},
     {text: 'nav link one d', desc: 'Description of the thing nav link one d points at', link: '/404'},
     {text: 'nav link one e', desc: 'Description of the thing nav link one e points at', link: '/404'}
