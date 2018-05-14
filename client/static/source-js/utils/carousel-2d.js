@@ -2,45 +2,45 @@ const CAROUSEL_DATA = [
   {text: 'Free Code Camp Projects', navItems: [
     {text: 'FCC Projects Page', desc: 'A possibly redundant page with links to each FCC project', link: '/fcc-projects'},
     {text: 'Calculator', desc: 'Tesco Calculator lookalikey, for this I mainly concentrated on seeing how close I could it looking to someone elses design.', link: '/fcc-projects-calculator'},
-    {text: 'Pomodoro Timer', desc: 'Description of the thing nav link zero b points at', link: '/fcc-projects-pomodoro'},
-    {text: 'Simon Game', desc: 'Description of the thing nav link zero c points at', link: '/fcc-projects-simon'},
-    {text: 'Noughts And Crosses', desc: 'Description of the thing nav link zero d points at', link: '/fcc-projects-tictactoe'}
+    {text: 'Pomodoro Timer', desc: 'Pretty sure this used to sort of work', link: '/fcc-projects-pomodoro'},
+    {text: 'Simon Game', desc: 'Works....ish', link: '/fcc-projects-simon'},
+    {text: 'Noughts And Crosses', desc: '...meh', link: '/fcc-projects-tictactoe'}
   ]},
   {text: 'TOPIC ONE', navItems: [
-    {text: 'nav link one a', desc: 'Description of the thing nav link one a points at'},
-    {text: 'nav link one b', desc: 'Description of the thing nav link one b points at'},
-    {text: 'nav link one c', desc: 'Description of the thing nav link one c points at'},
-    {text: 'nav link one d', desc: 'Description of the thing nav link one d points at'},
-    {text: 'nav link one e', desc: 'Description of the thing nav link one e points at'}
+    {text: 'nav link one a', desc: 'Description of the thing nav link one a points at', link: '/404'},
+    {text: 'nav link one b', desc: 'Description of the thing nav link one b points at', link: '/404'},
+    {text: 'nav link one c', desc: 'Description of the thing nav link one c points at', link: '/404'},
+    {text: 'nav link one d', desc: 'Description of the thing nav link one d points at', link: '/404'},
+    {text: 'nav link one e', desc: 'Description of the thing nav link one e points at', link: '/404'}
   ]},
   {text: 'TOPIC TWO', navItems: [
-    {text: 'nav link two a', desc: 'Description of the thing nav link two a points at'},
-    {text: 'nav link two b', desc: 'Description of the thing nav link two b points at'},
-    {text: 'nav link two c', desc: 'Description of the thing nav link two c points at'},
-    {text: 'nav link two d', desc: 'Description of the thing nav link two d points at'},
-    {text: 'nav link two e', desc: 'Description of the thing nav link two e points at'}
+    {text: 'nav link two a', desc: 'Description of the thing nav link two a points at', link: '/404'},
+    {text: 'nav link two b', desc: 'Description of the thing nav link two b points at', link: '/404'},
+    {text: 'nav link two c', desc: 'Description of the thing nav link two c points at', link: '/404'},
+    {text: 'nav link two d', desc: 'Description of the thing nav link two d points at', link: '/404'},
+    {text: 'nav link two e', desc: 'Description of the thing nav link two e points at', link: '/404'}
   ]},
   {text: 'TOPIC THREE', navItems: [
-    {text: 'nav link three a', desc: 'Description of the thing nav link three a points at'},
-    {text: 'nav link three b', desc: 'Description of the thing nav link three b points at'},
-    {text: 'nav link three c', desc: 'Description of the thing nav link three c points at'},
-    {text: 'nav link three d', desc: 'Description of the thing nav link three d points at'},
-    {text: 'nav link three e', desc: 'Description of the thing nav link three e points at'}
+    {text: 'nav link three a', desc: 'Description of the thing nav link three a points at', link: '/404'},
+    {text: 'nav link three b', desc: 'Description of the thing nav link three b points at', link: '/404'},
+    {text: 'nav link three c', desc: 'Description of the thing nav link three c points at', link: '/404'},
+    {text: 'nav link three d', desc: 'Description of the thing nav link three d points at', link: '/404'},
+    {text: 'nav link three e', desc: 'Description of the thing nav link three e points at', link: '/404'}
   ]},
   {text: 'TOPIC FOUR', navItems: [
-    {text: 'nav link four a', desc: 'Description of the thing nav link four a points at'},
-    {text: 'nav link four b', desc: 'Description of the thing nav link four b points at'},
-    {text: 'nav link four c', desc: 'Description of the thing nav link four c points at'},
-    {text: 'nav link four d', desc: 'Description of the thing nav link four d points at'},
-    {text: 'nav link four e', desc: 'Description of the thing nav link four e points at'}
+    {text: 'nav link four a', desc: 'Description of the thing nav link four a points at', link: '/404'},
+    {text: 'nav link four b', desc: 'Description of the thing nav link four b points at', link: '/404'},
+    {text: 'nav link four c', desc: 'Description of the thing nav link four c points at', link: '/404'},
+    {text: 'nav link four d', desc: 'Description of the thing nav link four d points at', link: '/404'},
+    {text: 'nav link four e', desc: 'Description of the thing nav link four e points at', link: '/404'}
   ]},
   {text: 'TOPIC FIVE', navItems: [
-    {text: 'nav link five a', desc: 'Description of the thing nav link five a points at'},
-    {text: 'nav link five b', desc: 'Description of the thing nav link five b points at'},
-    {text: 'nav link five c', desc: 'Description of the thing nav link five c points at'},
-    {text: 'nav link five d', desc: 'Description of the thing nav link five d points at'},
-    {text: 'nav link five e', desc: 'Description of the thing nav link five e points at'},
-    {text: 'nav link five f', desc: 'Description of the thing nav link five f points at'}
+    {text: 'nav link five a', desc: 'Description of the thing nav link five a points at', link: '/404'},
+    {text: 'nav link five b', desc: 'Description of the thing nav link five b points at', link: '/404'},
+    {text: 'nav link five c', desc: 'Description of the thing nav link five c points at', link: '/404'},
+    {text: 'nav link five d', desc: 'Description of the thing nav link five d points at', link: '/404'},
+    {text: 'nav link five e', desc: 'Description of the thing nav link five e points at', link: '/404'},
+    {text: 'nav link five f', desc: 'Description of the thing nav link five f points at', link: '/404'}
   ]}
 ]
 const CAROUSEL_COLS = 5
