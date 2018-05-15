@@ -8,39 +8,7 @@ const CAROUSEL_DATA = [
   ]},
   {text: 'Misc', navItems: [
     {text: 'Widgetrons', desc: 'Half finished gubbins and ideasa', link: '/widgetrons'},
-    {text: 'Van', desc: 'Why I am poor', link: '/campervan'},
-    {text: 'nav link one c', desc: 'Description of the thing nav link one c points at', link: '/404'},
-    {text: 'nav link one d', desc: 'Description of the thing nav link one d points at', link: '/404'},
-    {text: 'nav link one e', desc: 'Description of the thing nav link one e points at', link: '/404'}
-  ]},
-  {text: 'TOPIC TWO', navItems: [
-    {text: 'nav link two a', desc: 'Description of the thing nav link two a points at', link: '/404'},
-    {text: 'nav link two b', desc: 'Description of the thing nav link two b points at', link: '/404'},
-    {text: 'nav link two c', desc: 'Description of the thing nav link two c points at', link: '/404'},
-    {text: 'nav link two d', desc: 'Description of the thing nav link two d points at', link: '/404'},
-    {text: 'nav link two e', desc: 'Description of the thing nav link two e points at', link: '/404'}
-  ]},
-  {text: 'TOPIC THREE', navItems: [
-    {text: 'nav link three a', desc: 'Description of the thing nav link three a points at', link: '/404'},
-    {text: 'nav link three b', desc: 'Description of the thing nav link three b points at', link: '/404'},
-    {text: 'nav link three c', desc: 'Description of the thing nav link three c points at', link: '/404'},
-    {text: 'nav link three d', desc: 'Description of the thing nav link three d points at', link: '/404'},
-    {text: 'nav link three e', desc: 'Description of the thing nav link three e points at', link: '/404'}
-  ]},
-  {text: 'TOPIC FOUR', navItems: [
-    {text: 'nav link four a', desc: 'Description of the thing nav link four a points at', link: '/404'},
-    {text: 'nav link four b', desc: 'Description of the thing nav link four b points at', link: '/404'},
-    {text: 'nav link four c', desc: 'Description of the thing nav link four c points at', link: '/404'},
-    {text: 'nav link four d', desc: 'Description of the thing nav link four d points at', link: '/404'},
-    {text: 'nav link four e', desc: 'Description of the thing nav link four e points at', link: '/404'}
-  ]},
-  {text: 'TOPIC FIVE', navItems: [
-    {text: 'nav link five a', desc: 'Description of the thing nav link five a points at', link: '/404'},
-    {text: 'nav link five b', desc: 'Description of the thing nav link five b points at', link: '/404'},
-    {text: 'nav link five c', desc: 'Description of the thing nav link five c points at', link: '/404'},
-    {text: 'nav link five d', desc: 'Description of the thing nav link five d points at', link: '/404'},
-    {text: 'nav link five e', desc: 'Description of the thing nav link five e points at', link: '/404'},
-    {text: 'nav link five f', desc: 'Description of the thing nav link five f points at', link: '/404'}
+    {text: 'Van', desc: 'Why I am poor', link: '/campervan'}
   ]}
 ]
 const CAROUSEL_COLS = 5

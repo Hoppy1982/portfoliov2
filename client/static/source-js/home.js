@@ -227,7 +227,7 @@ function setLayout() {
   if (body.clientHeight > body.clientWidth && body.clientWidth <= 480) {
     console.log('SCREEN: small width in portrait')
     canvasWidth = body.clientWidth
-    canvasHeight = body.clientHeight * 0.5
+    canvasHeight = body.clientHeight * 0.6
   }
   //small height in landscape
   if (body.clientHeight < body.clientWidth && body.clientHeight <= 480) {
