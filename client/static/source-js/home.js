@@ -233,7 +233,7 @@ function setLayout() {
   if (body.clientHeight < body.clientWidth && body.clientHeight <= 480) {
     console.log('SCREEN: small height in landscape')
     canvasWidth = body.clientWidth * 0.5
-    canvasHeight = body.clientHeight
+    canvasHeight = body.clientHeight - 2//-2 is a horrible hack to stop the vertical scroll bar appearing at clientHeights
   }
   //medium width in portrait
   if (body.clientHeight > body.clientWidth && body.clientWidth <= 1024 && body.clientWidth > 480) {
